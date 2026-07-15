@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Knowledge | FallGuard+</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+🛡️ FallGuard+
+</div>
+
+<div class="welcome">
+
+<h2>ความรู้ป้องกันการหกล้ม 📚</h2>
+
+<p>ข้อมูลสำหรับผู้สูงอายุและผู้ดูแล</p>
+
+</div>
+
+</header>
+
+
+
+<section class="menu">
+
+
+<div class="card" onclick="showKnowledge('home')">
+
+<h2>🏠</h2>
+
+<h3>จัดบ้านปลอดภัย</h3>
+
+<p>ลดสิ่งเสี่ยงต่อการสะดุดล้ม</p>
+
+</div>
+
+
+
+<div class="card" onclick="showKnowledge('medicine')">
+
+<h2>💊</h2>
+
+<h3>การใช้ยา</h3>
+
+<p>ระวังยาที่เพิ่มความเสี่ยงหกล้ม</p>
+
+</div>
+
+
+
+<div class="card" onclick="showKnowledge('eye')">
+
+<h2>👀</h2>
+
+<h3>ดูแลสายตา</h3>
+
+<p>การมองเห็นกับการป้องกันล้ม</p>
+
+</div>
+
+
+
+<div class="card" onclick="showKnowledge('shoe')">
+
+<h2>👟</h2>
+
+<h3>รองเท้าที่เหมาะสม</h3>
+
+<p>เพิ่มความมั่นคงขณะเดิน</p>
+
+</div>
+
+
+</section>
+
+
+
+<div style="text-align:center;margin:30px;">
+
+<a href="index.html">
+
+<button>
+กลับหน้าหลัก
+</button>
+
+</a>
+
+</div>
+
+
+
+
+<div id="popup" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+align-items:center;
+justify-content:center;
+">
+
+
+<div style="
+background:white;
+padding:25px;
+border-radius:20px;
+width:80%;
+text-align:center;
+">
+
+
+<h2 id="title"></h2>
+
+<p id="detail"></p>
+
+
+<button onclick="closeKnowledge()">
+ปิด
+</button>
+
+
+</div>
+
+</div>
+
+
+
+<script>
+
+
+function showKnowledge(type){
+
+
+let title="";
+let detail="";
+
+
+if(type=="home"){
+
+title="🏠 จัดบ้านปลอดภัย";
+
+detail="\
+✓ เก็บของไม่ให้กีดขวางทางเดิน\
+<br>✓ เพิ่มแสงสว่างภายในบ้าน\
+<br>✓ ติดราวจับในห้องน้ำ\
+<br>✓ ระวังพื้นเปียกลื่น";
+
+}
+
+
+else if(type=="medicine"){
+
+title="💊 การใช้ยาอย่างปลอดภัย";
+
+detail="\
+✓ ใช้ยาตามคำสั่งแพทย์\
+<br>✓ ระวังยาที่ทำให้เวียนศีรษะ\
+<br>✓ ไม่หยุดยาเอง";
+
+}
+
+
+else if(type=="eye"){
+
+title="👀 ดูแลสายตา";
+
+detail="\
+✓ ตรวจสายตาสม่ำเสมอ\
+<br>✓ ใส่แว่นตามคำแนะนำ\
+<br>✓ เปิดไฟให้เพียงพอ";
+
+}
+
+
+else{
+
+title="👟 รองเท้าที่เหมาะสม";
+
+detail="\
+✓ เลือกรองเท้าพอดีเท้า\
+<br>✓ พื้นรองเท้าไม่ลื่น\
+<br>✓ หลีกเลี่ยงรองเท้าส้นสูง";
+
+}
+
+
+
+document.getElementById("title").innerHTML=title;
+
+document.getElementById("detail").innerHTML=detail;
+
+document.getElementById("popup").style.display="flex";
+
+
+}
+
+
+
+function closeKnowledge(){
+
+document.getElementById("popup").style.display="none";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
