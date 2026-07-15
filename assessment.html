@@ -112,6 +112,23 @@ result="🔴 ความเสี่ยงสูง ("+score+" คะแนน)
 
 document.getElementById("result").innerHTML=result;
 
+// บันทึกคะแนนไว้ในเครื่อง
+localStorage.setItem("mfsScore", score);
+
+let level = "";
+
+if(score < 25){
+    level = "ต่ำ";
+}
+else if(score < 45){
+    level = "ปานกลาง";
+}
+else{
+    level = "สูง";
+}
+
+localStorage.setItem("riskLevel", level);
+
 }
 
 </script>
