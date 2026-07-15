@@ -159,6 +159,14 @@ width:80%;
 text-align:center;
 ">
 
+<img id="exerciseImg" 
+src="" 
+style="
+width:220px;
+border-radius:20px;
+margin-bottom:15px;
+">
+
 <h2 id="title"></h2>
 
 <p id="detail"></p>
@@ -178,33 +186,46 @@ function showDetail(type){
 
 let title="";
 let detail="";
+let img="";
 
 
 if(type=="tai chi"){
 
 title="🧘 Tai Chi";
-detail="ฝึกการเคลื่อนไหวช้า ๆ ต่อเนื่อง ช่วยเพิ่มสมดุลและลดความเสี่ยงการหกล้ม";
+
+img="images/tai-chi.png";
+
+detail="ฝึกการเคลื่อนไหวช้า ๆ ช่วยเพิ่มสมดุลและลดความเสี่ยงการหกล้ม";
 
 }
 
 else if(type=="leg"){
 
 title="🦵 ฝึกกล้ามเนื้อขา";
-detail="ฝึกลุก-นั่งจากเก้าอี้ 10 ครั้ง เพื่อเพิ่มกำลังกล้ามเนื้อขา";
+
+img="images/leg-exercise.png";
+
+detail="ฝึกลุก-นั่งจากเก้าอี้ เพื่อเพิ่มกำลังกล้ามเนื้อขาและช่วยให้เดินมั่นคงขึ้น";
 
 }
 
 else if(type=="balance"){
 
 title="⚖️ ฝึกการทรงตัว";
-detail="ฝึกยืนขาเดียว เดินเป็นเส้นตรง ควรมีผู้ดูแลอยู่ใกล้เพื่อความปลอดภัย";
+
+img="images/balance.png";
+
+detail="ฝึกยืนทรงตัว เดินเป็นเส้นตรง ควรมีผู้ดูแลอยู่ใกล้เพื่อความปลอดภัย";
 
 }
 
 else{
 
 title="🚶 เดินเพื่อสุขภาพ";
-detail="เดินตามความเหมาะสม วันละ 20–30 นาที เพื่อเพิ่มความแข็งแรง";
+
+img="images/walking.png";
+
+detail="เดินตามความเหมาะสมประมาณ 20–30 นาที ช่วยเพิ่มความแข็งแรง";
 
 }
 
@@ -219,7 +240,7 @@ document.getElementById("popup").style.display="flex";
 
 
 function closeDetail(){
-
+document.getElementById("exerciseImg").src=img;
 document.getElementById("popup").style.display="none";
 
 }
