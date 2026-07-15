@@ -53,22 +53,21 @@
 <section class="menu">
 
 
-<div class="card">
+<div class="card" onclick="showDetail('tai chi')">
 
 <h2>🧘</h2>
 
 <h3>ไทชี่ (Tai Chi)</h3>
 
 <p>
-ช่วยฝึกการทรงตัว
-และการควบคุมร่างกาย
+แตะเพื่อดูรายละเอียด
 </p>
 
 </div>
 
 
 
-<div class="card">
+<div class="card" onclick="showDetail('leg')">
 
 <h2>🦵</h2>
 
@@ -83,7 +82,7 @@
 
 
 
-<div class="card">
+<div class="card" onclick="showDetail('balance')">
 
 <h2>⚖️</h2>
 
@@ -99,7 +98,7 @@
 
 
 
-<div class="card">
+<div class="card" onclick="showDetail('walk')">
 
 <h2>🚶</h2>
 
@@ -140,7 +139,92 @@ font-size:18px;
 </div>
 
 
+<div id="popup" style="
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+align-items:center;
+justify-content:center;
+">
 
+<div style="
+background:white;
+padding:25px;
+border-radius:20px;
+width:80%;
+text-align:center;
+">
+
+<h2 id="title"></h2>
+
+<p id="detail"></p>
+
+<button onclick="closeDetail()">
+ปิด
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+function showDetail(type){
+
+let title="";
+let detail="";
+
+
+if(type=="tai chi"){
+
+title="🧘 Tai Chi";
+detail="ฝึกการเคลื่อนไหวช้า ๆ ต่อเนื่อง ช่วยเพิ่มสมดุลและลดความเสี่ยงการหกล้ม";
+
+}
+
+else if(type=="leg"){
+
+title="🦵 ฝึกกล้ามเนื้อขา";
+detail="ฝึกลุก-นั่งจากเก้าอี้ 10 ครั้ง เพื่อเพิ่มกำลังกล้ามเนื้อขา";
+
+}
+
+else if(type=="balance"){
+
+title="⚖️ ฝึกการทรงตัว";
+detail="ฝึกยืนขาเดียว เดินเป็นเส้นตรง ควรมีผู้ดูแลอยู่ใกล้เพื่อความปลอดภัย";
+
+}
+
+else{
+
+title="🚶 เดินเพื่อสุขภาพ";
+detail="เดินตามความเหมาะสม วันละ 20–30 นาที เพื่อเพิ่มความแข็งแรง";
+
+}
+
+
+document.getElementById("title").innerHTML=title;
+
+document.getElementById("detail").innerHTML=detail;
+
+document.getElementById("popup").style.display="flex";
+
+}
+
+
+function closeDetail(){
+
+document.getElementById("popup").style.display="none";
+
+}
+
+</script>
 </body>
 
 </html>
