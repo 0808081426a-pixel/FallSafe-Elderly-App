@@ -8,6 +8,7 @@
 body{
     background:#f5fbff;
     color:#333;
+    padding-bottom:80px;
 }
 
 header{
@@ -95,11 +96,14 @@ header{
 nav{
     position:fixed;
     bottom:0;
+    left:0;
     width:100%;
     background:white;
     display:flex;
     justify-content:space-around;
+    align-items:center;
     padding:15px;
+    z-index:999;
     box-shadow:0 -4px 15px rgba(0,0,0,.08);
 }
 
