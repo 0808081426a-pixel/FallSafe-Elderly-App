@@ -226,26 +226,20 @@ title="🚶 เดินเพื่อสุขภาพ";
 img="images/walking.png";
 
 detail="เดินตามความเหมาะสมประมาณ 20–30 นาที ช่วยเพิ่มความแข็งแรง";
-
 }
-
-
 document.getElementById("title").innerHTML=title;
 
 document.getElementById("detail").innerHTML=detail;
 
-
-
-}
-
-
-function closeDetail(){
 document.getElementById("exerciseImg").src=img;
-  
+
+document.getElementById("popup").style.display="flex";
+}
+  function closeDetail(){
+
 document.getElementById("popup").style.display="none";
 
 }
-
 </script>
 </body>
 
