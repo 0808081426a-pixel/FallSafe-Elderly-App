@@ -1,1 +1,117 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Prompt',sans-serif;
+}
 
+body{
+    background:#f5fbff;
+    color:#333;
+}
+
+header{
+    background:linear-gradient(135deg,#63c7ff,#8be3c5);
+    padding:35px 25px 80px;
+    color:white;
+    border-bottom-left-radius:35px;
+    border-bottom-right-radius:35px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+}
+
+.welcome{
+    margin-top:30px;
+}
+
+.welcome h2{
+    font-size:30px;
+}
+
+.welcome p{
+    margin-top:8px;
+    opacity:.95;
+}
+
+.risk-card{
+    width:90%;
+    margin:-45px auto 25px;
+    background:white;
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,.08);
+}
+
+.risk-card h3{
+    color:#777;
+    font-size:18px;
+}
+
+.risk-card h1{
+    font-size:48px;
+    margin:15px 0;
+    color:#20b15a;
+}
+
+.menu{
+    width:90%;
+    margin:auto;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.menu a{
+    text-decoration:none;
+}
+
+.card{
+    background:white;
+    border-radius:22px;
+    padding:30px 20px;
+    text-align:center;
+    box-shadow:0 8px 20px rgba(0,0,0,.06);
+    transition:.25s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card i{
+    font-size:38px;
+    color:#3da9fc;
+    margin-bottom:15px;
+}
+
+.card h3{
+    color:#444;
+}
+
+nav{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:white;
+    display:flex;
+    justify-content:space-around;
+    padding:15px;
+    box-shadow:0 -4px 15px rgba(0,0,0,.08);
+}
+
+nav a{
+    color:#3da9fc;
+    font-size:24px;
+}
+
+@media(max-width:600px){
+
+.menu{
+grid-template-columns:1fr 1fr;
+}
+
+}
