@@ -105,7 +105,9 @@ nav{
 
 nav a{
     color:#3da9fc;
-    font-size:24px;
+    font-size:22px;
+    flex:1;
+    taxt-align:center;
 }
 
 @media(max-width:600px){
