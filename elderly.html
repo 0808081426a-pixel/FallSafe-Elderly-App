@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Elderly | FallGuard+</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+
+<header>
+
+<div class="logo">
+🛡️ FallGuard+
+</div>
+
+<div class="welcome">
+
+<h2>รายชื่อผู้สูงอายุ 👥</h2>
+
+<p>จัดการข้อมูลผู้รับการประเมิน</p>
+
+</div>
+
+</header>
+
+
+
+<section class="risk-card">
+
+<h2>เพิ่มผู้สูงอายุ</h2>
+
+
+<input id="name" placeholder="ชื่อ-นามสกุล">
+
+<br><br>
+
+<input id="age" type="number" placeholder="อายุ">
+
+<br><br>
+
+<input id="disease" placeholder="โรคประจำตัว">
+
+<br><br>
+
+
+<button onclick="addElderly()">
+เพิ่มข้อมูล
+</button>
+
+
+</section>
+
+
+
+<section class="menu">
+
+<div id="list"></div>
+
+</section>
+
+
+
+<div style="text-align:center;margin:30px">
+
+<a href="index.html">
+
+<button>
+กลับหน้าหลัก
+</button>
+
+</a>
+
+</div>
+
+
+
+<script>
+
+
+let elderly = JSON.parse(
+localStorage.getItem("elderly")
+) || [];
+
+
+
+function addElderly(){
+
+
+let person={
+
+name:
+document.getElementById("name").value,
+
+age:
+document.getElementById("age").value,
+
+disease:
+document.getElementById("disease").value
+
+};
+
+
+
+elderly.push(person);
+
+
+localStorage.setItem(
+"elderly",
+JSON.stringify(elderly)
+);
+
+
+showList();
+
+
+}
+
+
+
+function showList(){
+
+
+let html="";
+
+
+elderly.forEach((p,index)=>{
+
+
+html += `
+
+<div class="card">
+
+<h3>👤 ${p.name}</h3>
+
+<p>อายุ ${p.age} ปี</p>
+
+<p>โรคประจำตัว: ${p.disease}</p>
+
+
+<button onclick="selectElder(${index})">
+
+เลือกประเมิน
+
+</button>
+
+
+</div>
+
+`;
+
+});
+
+
+document.getElementById("list").innerHTML=html;
+
+
+}
+
+
+
+function selectElder(index){
+
+
+localStorage.setItem(
+"currentElder",
+JSON.stringify(elderly[index])
+);
+
+
+alert("เลือกผู้สูงอายุเรียบร้อย");
+
+
+}
+
+
+
+showList();
+
+
+</script>
+
+
+</body>
+
+</html>
