@@ -1,1 +1,121 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Morse Fall Scale</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<header>
+<div class="logo">🛡️ FallGuard+</div>
+<div class="welcome">
+<h2>ประเมินความเสี่ยงหกล้ม</h2>
+<p>Morse Fall Scale (MFS)</p>
+</div>
+</header>
+
+
+<section class="risk-card">
+
+<h2>แบบประเมิน MFS</h2>
+
+<form id="mfsForm">
+
+<p>1. เคยมีประวัติหกล้มหรือไม่</p>
+<select id="fall">
+<option value="0">ไม่เคย (0 คะแนน)</option>
+<option value="25">เคย (25 คะแนน)</option>
+</select>
+
+
+<p>2. มีโรคร่วมมากกว่า 1 โรคหรือไม่</p>
+<select id="diagnosis">
+<option value="0">ไม่มี (0 คะแนน)</option>
+<option value="15">มี (15 คะแนน)</option>
+</select>
+
+
+<p>3. ใช้อุปกรณ์ช่วยเดินหรือไม่</p>
+<select id="aid">
+<option value="0">ไม่มี (0 คะแนน)</option>
+<option value="15">ใช้ไม้เท้า/Walker (15 คะแนน)</option>
+<option value="30">เกาะเฟอร์นิเจอร์ (30 คะแนน)</option>
+</select>
+
+
+<p>4. มีการให้น้ำเกลือหรือ Heparin lock</p>
+<select id="iv">
+<option value="0">ไม่มี (0 คะแนน)</option>
+<option value="20">มี (20 คะแนน)</option>
+</select>
+
+
+<p>5. ลักษณะการเดิน</p>
+<select id="gait">
+<option value="0">ปกติ (0 คะแนน)</option>
+<option value="10">อ่อนแรง (10 คะแนน)</option>
+<option value="20">บกพร่อง (20 คะแนน)</option>
+</select>
+
+
+<p>6. การรับรู้ความสามารถของตนเอง</p>
+<select id="mental">
+<option value="0">รู้ข้อจำกัด (0 คะแนน)</option>
+<option value="15">ประเมินตนเองสูงเกินจริง (15 คะแนน)</option>
+</select>
+
+
+<button type="button" onclick="calculateMFS()">
+ประเมินผล
+</button>
+
+
+<h2 id="result"></h2>
+
+</form>
+
+</section>
+
+
+<script>
+
+function calculateMFS(){
+
+let score =
+Number(fall.value)+
+Number(diagnosis.value)+
+Number(aid.value)+
+Number(iv.value)+
+Number(gait.value)+
+Number(mental.value);
+
+
+let result="";
+
+
+if(score < 25){
+result="🟢 ความเสี่ยงต่ำ ("+score+" คะแนน)";
+}
+else if(score <45){
+result="🟡 ความเสี่ยงปานกลาง ("+score+" คะแนน)";
+}
+else{
+result="🔴 ความเสี่ยงสูง ("+score+" คะแนน)";
+}
+
+
+document.getElementById("result").innerHTML=result;
+
+}
+
+</script>
+
+
+</body>
+</html>
