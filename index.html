@@ -37,9 +37,11 @@
 
 <h3>ระดับความเสี่ยงวันนี้</h3>
 
-<h1>🟢 ต่ำ</h1>
+<h1 id="riskStatus">🟢 ต่ำ</h1>
 
-<p>ยังไม่มีปัจจัยเสี่ยงรุนแรง</p>
+<p id="riskText">
+ยังไม่มีปัจจัยเสี่ยงรุนแรง
+</p>
 
 </section>
 
@@ -108,7 +110,38 @@
 <a href="#"><i class="fa-solid fa-user"></i></a>
 
 </nav>
+<script>
+let score = localStorage.getItem("mfsScore");
+let level = localStorage.getItem("riskLevel");
 
+if(score && level){
+
+let status = document.getElementById("riskStatus");
+let text = document.getElementById("riskText");
+
+
+if(level=="ต่ำ"){
+
+status.innerHTML="🟢 ความเสี่ยงต่ำ";
+text.innerHTML="ควรรักษาพฤติกรรมสุขภาพที่ดี";
+
+}
+
+else if(level=="ปานกลาง"){
+
+status.innerHTML="🟡 ความเสี่ยงปานกลาง";
+text.innerHTML="ควรเฝ้าระวังและปรับพฤติกรรมป้องกันการล้ม";
+
+}
+
+else{
+
+status.innerHTML="🔴 ความเสี่ยงสูง";
+text.innerHTML="ควรได้รับการดูแลและป้องกันการพลัดตกหกล้ม";
+
+}
+
+}
 <script src="script.js"></script>
 
 </body>
