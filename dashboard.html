@@ -38,10 +38,9 @@
 
 <h2>ผลการประเมินล่าสุด</h2>
 
-<h1 id="level">-</h1>
+<div id="levelCircle"></div>
 
-<p id="score">คะแนน MFS: -</p>
-
+<h1 id="score"></h1>
 <p id="date"></p>
 
 </section>
@@ -86,8 +85,26 @@ document.getElementById("score").innerHTML =
 "คะแนน MFS: " + score + " คะแนน";
 
 
-document.getElementById("level").innerHTML =
-level;
+let circle = document.getElementById("levelCircle");
+
+
+if(level=="ต่ำ"){
+
+circle.innerHTML="🟢 ความเสี่ยงต่ำ";
+
+}
+
+else if(level=="ปานกลาง"){
+
+circle.innerHTML="🟡 ความเสี่ยงปานกลาง";
+
+}
+
+else{
+
+circle.innerHTML="🔴 ความเสี่ยงสูง";
+
+}
 
 
 
