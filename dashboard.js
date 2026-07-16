@@ -84,7 +84,7 @@ async function loadDashboard() {
     highRisk,
     notAssessed
 );
-        );
+        
 
         const feedbackSnapshot =
             await getDocs(collection(db, "feedback"));
