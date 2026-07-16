@@ -224,6 +224,119 @@ body{
         font-size:27px;
     }
 }
+    .pie-section{
+    display:grid;
+    grid-template-columns:280px 1fr;
+    align-items:center;
+    gap:30px;
+}
+
+.risk-pie{
+    width:260px;
+    height:260px;
+    margin:auto;
+    border-radius:50%;
+    background:conic-gradient(
+        #39b979 0% 0%,
+        #ee6c6c 0% 0%,
+        #aebbc2 0% 100%
+    );
+    position:relative;
+    box-shadow:0 10px 28px rgba(0,0,0,.12);
+    transition:background .6s ease;
+}
+
+.pie-center{
+    position:absolute;
+    inset:50%;
+    transform:translate(-50%,-50%);
+    width:135px;
+    height:135px;
+    border-radius:50%;
+    background:white;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    box-shadow:0 5px 18px rgba(0,0,0,.10);
+}
+
+.pie-center strong{
+    font-size:42px;
+    color:#23734f;
+    line-height:1;
+}
+
+.pie-center span{
+    margin-top:7px;
+    font-size:19px;
+    color:#60746b;
+}
+
+.pie-legend{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+.legend-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    background:#f8fcfa;
+    border-radius:17px;
+    padding:15px;
+}
+
+.legend-color{
+    width:24px;
+    height:24px;
+    min-width:24px;
+    border-radius:50%;
+}
+
+.legend-low{
+    background:#39b979;
+}
+
+.legend-high{
+    background:#ee6c6c;
+}
+
+.legend-none{
+    background:#aebbc2;
+}
+
+.legend-item strong{
+    font-size:20px;
+}
+
+.legend-item p{
+    margin:4px 0 0;
+    font-size:18px;
+    color:#61736b;
+}
+
+@media(max-width:650px){
+
+    .pie-section{
+        grid-template-columns:1fr;
+    }
+
+    .risk-pie{
+        width:230px;
+        height:230px;
+    }
+
+    .pie-center{
+        width:120px;
+        height:120px;
+    }
+
+    .pie-center strong{
+        font-size:36px;
+    }
+}
 </style>
 </head>
 
@@ -317,55 +430,65 @@ body{
 
     <section class="chart-card">
 
-        <h2>สัดส่วนระดับความเสี่ยง</h2>
+    <h2>สัดส่วนระดับความเสี่ยง</h2>
 
-        <div class="chart-row">
+    <div class="pie-section">
 
-            <div class="chart-label">
-                <span>🟢 ความเสี่ยงต่ำ</span>
-                <span id="lowRiskLabel"></span>
-            </div>
+        <div id="riskPie" class="risk-pie">
 
-            <div class="chart-track">
-                <div
-                    id="chartLow"
-                    class="chart-bar chart-low"
-                ></div>
+            <div class="pie-center">
+                <strong id="pieTotal">0</strong>
+                <span>คน</span>
             </div>
 
         </div>
 
-        <div class="chart-row">
+        <div class="pie-legend">
 
-            <div class="chart-label">
-                <span>🔴 มีความเสี่ยง</span>
+            <div class="legend-item">
+                <span class="legend-color legend-low"></span>
+
+                <div>
+                    <strong>ความเสี่ยงต่ำ</strong>
+                    <p>
+                        <span id="lowPercent">0%</span>
+                        ·
+                        <span id="lowLegendCount">0 คน</span>
+                    </p>
+                </div>
             </div>
 
-            <div class="chart-track">
-                <div
-                    id="chartHigh"
-                    class="chart-bar chart-high"
-                ></div>
+            <div class="legend-item">
+                <span class="legend-color legend-high"></span>
+
+                <div>
+                    <strong>มีความเสี่ยง</strong>
+                    <p>
+                        <span id="highPercent">0%</span>
+                        ·
+                        <span id="highLegendCount">0 คน</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="legend-item">
+                <span class="legend-color legend-none"></span>
+
+                <div>
+                    <strong>ยังไม่ได้ประเมิน</strong>
+                    <p>
+                        <span id="nonePercent">0%</span>
+                        ·
+                        <span id="noneLegendCount">0 คน</span>
+                    </p>
+                </div>
             </div>
 
         </div>
 
-        <div class="chart-row">
+    </div>
 
-            <div class="chart-label">
-                <span>⚪ ยังไม่ได้ประเมิน</span>
-            </div>
-
-            <div class="chart-track">
-                <div
-                    id="chartNone"
-                    class="chart-bar chart-none"
-                ></div>
-            </div>
-
-        </div>
-
-    </section>
+</section>
 
     <section class="satisfaction-card">
 
