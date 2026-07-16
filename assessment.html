@@ -345,6 +345,9 @@ body {
                 <span>
                     ยืนต่อเท้าเป็นเส้นตรงได้นาน
                     10 วินาที — 0 คะแนน
+                    ตัวอย่าง:ยืนตรง
+วางเท้าข้างหนึ่งไว้ด้านหน้าของอีกข้าง โดยให้ ส้นเท้าหน้าแตะปลายเท้าหลัง (Heel-to-toe)
+กางแขนไว้ข้างลำตัวตามสบายมองตรงจับเวลา 10 วินาที
                 </span>
             </label>
         </section>
@@ -425,7 +428,18 @@ body {
     </form>
 
     <section class="result-card" id="resultCard">
-
+<div
+    id="savedNotice"
+    style="
+        display:none;
+        background:#dcf7ed;
+        color:#08734f;
+        padding:14px;
+        border-radius:14px;
+        font-size:20px;
+        margin-bottom:16px;
+    "
+></div>
         <div class="result-icon" id="resultIcon">🟢</div>
 
         <h2 id="resultLevel"></h2>
@@ -469,7 +483,17 @@ body {
 
 </main>
 
-<script>
+<script type="module">
+import { db } from "./firebase.js";
+
+import {
+    doc,
+    updateDoc,
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
 const assessmentForm = document.getElementById("thaiFratForm");
 
 assessmentForm.addEventListener("change", updateProgress);
@@ -508,14 +532,10 @@ function getSelectedScore(groupName) {
         'input[name="' + groupName + '"]:checked'
     );
 
-    if (!selected) {
-        return null;
-    }
-
-    return Number(selected.value);
+    return selected ? Number(selected.value) : null;
 }
 
-function calculateThaiFRAT() {
+window.calculateThaiFRAT = async function() {
     const gender = getSelectedScore("gender");
     const vision = getSelectedScore("vision");
     const balance = getSelectedScore("balance");
@@ -558,60 +578,42 @@ function calculateThaiFRAT() {
         fallHistory +
         home;
 
-    let level = "";
-    let resultIcon = "";
-    let description = "";
-    let advice = "";
+    const level = score <= 3 ? "ต่ำ" : "สูง";
 
-    if (score <= 3) {
-        level = "ต่ำ";
-        resultIcon = "🟢";
+    const resultIcon =
+        level === "ต่ำ" ? "🟢" : "🔴";
 
-        description =
-            "ยังไม่พบความเสี่ยงตามเกณฑ์ Thai-FRAT " +
-            "ควรรักษาพฤติกรรมสุขภาพและประเมินซ้ำเป็นระยะ";
+    const resultTitle =
+        level === "ต่ำ"
+            ? "ความเสี่ยงต่ำ"
+            : "มีความเสี่ยงต่อการพลัดตกหกล้ม";
 
-        advice = `
-            <h3>คำแนะนำสำหรับความเสี่ยงต่ำ</h3>
+    const description =
+        level === "ต่ำ"
+            ? "ยังไม่พบความเสี่ยงตามเกณฑ์ Thai-FRAT"
+            : "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
 
-            <p>✅ ออกกำลังกายเพื่อเพิ่มความแข็งแรงและการทรงตัว</p>
-
-            <p>✅ สวมรองเท้าที่กระชับและมีพื้นกันลื่น</p>
-
-            <p>✅ ตรวจสอบทางเดินและห้องน้ำให้ปลอดภัย</p>
-
-            <p>✅ ตรวจสายตาและทบทวนการใช้ยาอย่างสม่ำเสมอ</p>
-        `;
-    } else {
-        level = "สูง";
-        resultIcon = "🔴";
-
-        description =
-            "มีความเสี่ยงต่อการพลัดตกหกล้ม " +
-            "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
-
-        advice = `
-            <h3>คำแนะนำสำหรับผู้มีความเสี่ยง</h3>
-
-            <p>✅ แจ้งพยาบาลหรือบุคลากรสุขภาพเพื่อประเมินเพิ่มเติม</p>
-
-            <p>✅ จัดบ้านให้สว่าง เก็บสิ่งกีดขวาง และป้องกันพื้นลื่น</p>
-
-            <p>✅ ติดราวจับในห้องน้ำและบริเวณที่ต้องขึ้นลง</p>
-
-            <p>✅ ฝึกกล้ามเนื้อขาและการทรงตัวโดยมีผู้ดูแล</p>
-
-            <p>✅ ทบทวนยาที่ใช้อยู่ร่วมกับแพทย์หรือเภสัชกร</p>
-        `;
-    }
+    const advice =
+        level === "ต่ำ"
+            ? `
+                <h3>คำแนะนำ</h3>
+                <p>✅ ออกกำลังกายและฝึกการทรงตัวสม่ำเสมอ</p>
+                <p>✅ ตรวจสอบบ้านให้ปลอดภัย</p>
+                <p>✅ ประเมินซ้ำเป็นระยะ</p>
+              `
+            : `
+                <h3>คำแนะนำสำหรับผู้มีความเสี่ยง</h3>
+                <p>✅ ปรับบ้านและป้องกันพื้นลื่น</p>
+                <p>✅ ติดราวจับในจุดเสี่ยง</p>
+                <p>✅ ฝึกกล้ามเนื้อโดยมีผู้ดูแล</p>
+                <p>✅ พบพยาบาลหรือบุคลากรสุขภาพ</p>
+              `;
 
     document.getElementById("resultIcon").textContent =
         resultIcon;
 
     document.getElementById("resultLevel").textContent =
-        level === "ต่ำ"
-            ? "ความเสี่ยงต่ำ"
-            : "มีความเสี่ยงต่อการพลัดตกหกล้ม";
+        resultTitle;
 
     document.getElementById("scoreNumber").textContent =
         score + " คะแนน";
@@ -627,27 +629,59 @@ function calculateThaiFRAT() {
 
     resultCard.style.display = "block";
 
-    /*
-      เก็บชื่อเดิม mfsScore ไว้ชั่วคราว
-      เพื่อให้ Dashboard เดิมของปูยังอ่านคะแนนได้
-    */
     localStorage.setItem("mfsScore", score);
     localStorage.setItem("thaiFratScore", score);
     localStorage.setItem("riskLevel", level);
-    localStorage.setItem(
-        "assessmentType",
-        "Thai-FRAT"
-    );
-    localStorage.setItem(
-        "date",
-        new Date().toLocaleDateString("th-TH")
-    );
+
+    const elderId =
+        localStorage.getItem("currentElderId");
+
+    const elderName =
+        localStorage.getItem("currentElderName");
+
+    if (elderId) {
+        try {
+            const elderRef =
+                doc(db, "elderly", elderId);
+
+            await updateDoc(elderRef, {
+                latestScore: score,
+                riskLevel: level,
+                lastAssessment: serverTimestamp()
+            });
+
+            await addDoc(
+                collection(db, "elderly", elderId, "assessments"),
+                {
+                    score: score,
+                    riskLevel: level,
+                    assessmentType: "Thai-FRAT",
+                    assessedAt: serverTimestamp()
+                }
+            );
+
+            const savedNotice =
+                document.getElementById("savedNotice");
+
+            if (savedNotice) {
+                savedNotice.innerHTML =
+                    `✅ บันทึกผลของ ${elderName || "ผู้สูงอายุ"} เรียบร้อย`;
+                savedNotice.style.display = "block";
+            }
+        } catch (error) {
+            console.error("บันทึกผลไม่สำเร็จ:", error);
+
+            alert(
+                "คำนวณคะแนนได้ แต่บันทึกข้อมูลออนไลน์ไม่สำเร็จ"
+            );
+        }
+    }
 
     resultCard.scrollIntoView({
         behavior: "smooth",
         block: "start"
     });
-}
+};
 </script>
 
 </body>
