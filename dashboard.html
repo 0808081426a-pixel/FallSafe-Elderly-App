@@ -1,146 +1,430 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dashboard | FallGuard+</title>
+<title>ผลการประเมิน | FallGuard+</title>
 
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    background:#f4fbf7;
+    color:#23352d;
+    font-family:"Prompt",sans-serif;
+    padding-bottom:40px;
+}
+
+.dashboard-header{
+    background:linear-gradient(135deg,#25a56b,#72d7ad);
+    color:white;
+    padding:30px 22px 58px;
+    border-radius:0 0 34px 34px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
+}
+
+.dashboard-header h1{
+    margin:24px 0 8px;
+    font-size:30px;
+}
+
+.dashboard-header p{
+    margin:0;
+    font-size:20px;
+    line-height:1.6;
+}
+
+.dashboard-container{
+    width:92%;
+    max-width:900px;
+    margin:-30px auto 0;
+}
+
+.status-message{
+    background:white;
+    border-radius:18px;
+    padding:15px;
+    margin-bottom:20px;
+    text-align:center;
+    font-size:19px;
+    color:#317458;
+    box-shadow:0 7px 22px rgba(31,108,75,.10);
+}
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+}
+
+.summary-card{
+    background:white;
+    border-radius:23px;
+    padding:22px;
+    box-shadow:0 8px 24px rgba(31,108,75,.10);
+}
+
+.summary-icon{
+    font-size:42px;
+}
+
+.summary-card h2{
+    font-size:20px;
+    margin:12px 0 6px;
+    color:#546d61;
+}
+
+.summary-number{
+    font-size:32px;
+    font-weight:700;
+}
+
+.total-card{
+    border:3px solid #329ed8;
+}
+
+.low-card{
+    border:3px solid #39b979;
+}
+
+.high-card{
+    border:3px solid #ee6c6c;
+}
+
+.none-card{
+    border:3px solid #aebbc2;
+}
+
+.chart-card,
+.satisfaction-card{
+    background:white;
+    border-radius:24px;
+    padding:24px;
+    margin-top:20px;
+    box-shadow:0 8px 24px rgba(31,108,75,.10);
+}
+
+.chart-card h2,
+.satisfaction-card h2{
+    margin:0 0 18px;
+    font-size:26px;
+    color:#23734f;
+}
+
+.chart-row{
+    margin-bottom:18px;
+}
+
+.chart-label{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    font-size:19px;
+    margin-bottom:8px;
+}
+
+.chart-track{
+    width:100%;
+    height:28px;
+    overflow:hidden;
+    background:#edf2ef;
+    border-radius:999px;
+}
+
+.chart-bar{
+    width:0;
+    height:100%;
+    border-radius:999px;
+    transition:width .7s ease;
+}
+
+.chart-low{
+    background:#39b979;
+}
+
+.chart-high{
+    background:#ee6c6c;
+}
+
+.chart-none{
+    background:#aebbc2;
+}
+
+.satisfaction-number{
+    font-size:45px;
+    font-weight:700;
+    color:#c14d88;
+    margin:8px 0;
+}
+
+.satisfaction-card p{
+    font-size:20px;
+    line-height:1.7;
+}
+
+.privacy-box{
+    margin-top:20px;
+    padding:18px;
+    background:#eef8f3;
+    border-radius:18px;
+    font-size:18px;
+    line-height:1.7;
+    color:#365f4c;
+}
+
+.button-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:13px;
+    margin-top:22px;
+}
+
+.next-button,
+.home-button{
+    min-height:62px;
+    border:none;
+    border-radius:18px;
+    font-family:"Prompt",sans-serif;
+    font-size:21px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.next-button{
+    background:#e27d25;
+    color:white;
+}
+
+.home-button{
+    background:#dff3e9;
+    color:#23734f;
+}
+
+@media(max-width:650px){
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .button-grid{
+        grid-template-columns:1fr;
+    }
+
+    .dashboard-header h1{
+        font-size:27px;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
+<header class="dashboard-header">
 
-<header>
+    <div class="logo">🛡️ FallGuard+</div>
 
-<div class="logo">
-🛡️ FallGuard+
-</div>
+    <h1>ผลการประเมิน</h1>
 
-<div class="welcome">
-
-<h2>Dashboard 📊</h2>
-
-<p>ติดตามผลการประเมินความเสี่ยง</p>
-
-</div>
+    <p>
+        สรุปข้อมูลความเสี่ยงและความพึงพอใจ
+        โดยไม่แสดงชื่อผู้สูงอายุ
+    </p>
 
 </header>
 
+<main class="dashboard-container">
 
+    <div
+        id="dashboardMessage"
+        class="status-message"
+    >
+        กำลังเตรียมข้อมูล...
+    </div>
 
-<section class="risk-card">
+    <section class="summary-grid">
 
-<h2>ผลการประเมินล่าสุด</h2>
+        <article class="summary-card total-card">
 
-<div id="levelCircle"></div>
+            <div class="summary-icon">👥</div>
 
-<h1 id="score"></h1>
-<p id="date"></p>
+            <h2>ผู้สูงอายุทั้งหมด</h2>
 
-</section>
+            <div
+                id="totalElderly"
+                class="summary-number"
+            >
+                0 คน
+            </div>
 
+        </article>
 
+        <article class="summary-card low-card">
 
-<section class="risk-card">
+            <div class="summary-icon">🟢</div>
 
-<h3>คำแนะนำ</h3>
+            <h2>ความเสี่ยงต่ำ</h2>
 
-<p id="advice">
--
-</p>
+            <div
+                id="lowRisk"
+                class="summary-number"
+            >
+                0 คน
+            </div>
 
-</section>
+        </article>
 
+        <article class="summary-card high-card">
 
+            <div class="summary-icon">🔴</div>
 
-<div style="text-align:center;margin:30px;">
+            <h2>มีความเสี่ยงต่อการพลัดตกหกล้ม</h2>
 
-<a href="index.html">
+            <div
+                id="highRisk"
+                class="summary-number"
+            >
+                0 คน
+            </div>
 
-<button>
-กลับหน้าหลัก
-</button>
+        </article>
 
-</a>
+        <article class="summary-card none-card">
 
-</div>
+            <div class="summary-icon">⚪</div>
 
+            <h2>ยังไม่ได้ประเมิน</h2>
 
+            <div
+                id="notAssessed"
+                class="summary-number"
+            >
+                0 คน
+            </div>
 
-<script>
+        </article>
 
+    </section>
 
-let score = localStorage.getItem("mfsScore");
+    <section class="chart-card">
 
-let level = localStorage.getItem("riskLevel");
+        <h2>สัดส่วนระดับความเสี่ยง</h2>
 
+        <div class="chart-row">
 
-document.getElementById("score").innerHTML =
-"คะแนน MFS: " + score + " คะแนน";
+            <div class="chart-label">
+                <span>🟢 ความเสี่ยงต่ำ</span>
+                <span id="lowRiskLabel"></span>
+            </div>
 
+            <div class="chart-track">
+                <div
+                    id="chartLow"
+                    class="chart-bar chart-low"
+                ></div>
+            </div>
 
-let circle = document.getElementById("levelCircle");
+        </div>
 
+        <div class="chart-row">
 
-if(level=="ต่ำ"){
+            <div class="chart-label">
+                <span>🔴 มีความเสี่ยง</span>
+            </div>
 
-circle.innerHTML="🟢 ความเสี่ยงต่ำ";
+            <div class="chart-track">
+                <div
+                    id="chartHigh"
+                    class="chart-bar chart-high"
+                ></div>
+            </div>
 
-}
+        </div>
 
-else if(level=="ปานกลาง"){
+        <div class="chart-row">
 
-circle.innerHTML="🟡 ความเสี่ยงปานกลาง";
+            <div class="chart-label">
+                <span>⚪ ยังไม่ได้ประเมิน</span>
+            </div>
 
-}
+            <div class="chart-track">
+                <div
+                    id="chartNone"
+                    class="chart-bar chart-none"
+                ></div>
+            </div>
 
-else{
+        </div>
 
-circle.innerHTML="🔴 ความเสี่ยงสูง";
+    </section>
 
-}
+    <section class="satisfaction-card">
 
+        <h2>💗 ความพึงพอใจในการใช้งาน</h2>
 
+        <div
+            id="satisfactionAverage"
+            class="satisfaction-number"
+        >
+            ยังไม่มีข้อมูล
+        </div>
 
-let today = new Date();
+        <p>
+            จำนวนแบบประเมินความพึงพอใจ:
+            <strong id="feedbackCount">0 ครั้ง</strong>
+        </p>
 
-document.getElementById("date").innerHTML =
-"วันที่ประเมิน: " +
-today.toLocaleDateString("th-TH");
+    </section>
 
+    <div class="privacy-box">
 
+        🔒 Dashboard นี้แสดงเฉพาะข้อมูลสรุป
+        ไม่แสดงชื่อ เบอร์โทรศัพท์ โรคประจำตัว
+        หรือข้อมูลระบุตัวบุคคลของผู้สูงอายุ
 
-if(level=="ต่ำ"){
+    </div>
 
-document.getElementById("advice").innerHTML =
-"รักษาพฤติกรรมสุขภาพที่ดี และออกกำลังกายอย่างสม่ำเสมอ";
+    <div class="button-grid">
 
-}
+        <a href="exercise.html">
 
-else if(level=="ปานกลาง"){
+            <button
+                class="next-button"
+                type="button"
+            >
+                ขั้นตอนที่ 3: ฝึกตามวิดีโอ
+            </button>
 
-document.getElementById("advice").innerHTML =
-"ควรปรับสภาพแวดล้อมและเฝ้าระวังการเดิน";
+        </a>
 
-}
+        <a href="index.html">
 
-else{
+            <button
+                class="home-button"
+                type="button"
+            >
+                กลับหน้าหลัก
+            </button>
 
-document.getElementById("advice").innerHTML =
-"ควรมีผู้ดูแล ปรับบ้านให้ปลอดภัย และประเมินซ้ำ";
+        </a>
 
-}
+    </div>
 
+</main>
 
-</script>
-
+<script
+    type="module"
+    src="dashboard.js"
+></script>
 
 </body>
-
 </html>
