@@ -78,11 +78,12 @@ async function loadDashboard() {
         notAssessedElement.textContent =
             notAssessed + " คน";
 
-        updateRiskChart(
-            totalElderly,
-            lowRisk,
-            highRisk,
-            notAssessed
+        updateRiskPie(
+    totalElderly,
+    lowRisk,
+    highRisk,
+    notAssessed
+);
         );
 
         const feedbackSnapshot =
@@ -133,17 +134,62 @@ async function loadDashboard() {
     }
 }
 
-function updateRiskChart(
+function updateRiskPie(
     total,
     low,
     high,
     none
 ) {
 
-    if (total === 0) {
-        chartLow.style.width = "0%";
-        chartHigh.style.width = "0%";
-        chartNone.style.width = "0%";
+    const pie =
+        document.getElementById("riskPie");
+
+    const pieTotal =
+        document.getElementById("pieTotal");
+
+    const lowPercentElement =
+        document.getElementById("lowPercent");
+
+    const highPercentElement =
+        document.getElementById("highPercent");
+
+    const nonePercentElement =
+        document.getElementById("nonePercent");
+
+    const lowLegendCount =
+        document.getElementById("lowLegendCount");
+
+    const highLegendCount =
+        document.getElementById("highLegendCount");
+
+    const noneLegendCount =
+        document.getElementById("noneLegendCount");
+
+    pieTotal.textContent = total;
+
+    lowLegendCount.textContent =
+        low + " คน";
+
+    highLegendCount.textContent =
+        high + " คน";
+
+    noneLegendCount.textContent =
+        none + " คน";
+
+    if(total === 0){
+
+        pie.style.background =
+            "#dfe7e3";
+
+        lowPercentElement.textContent =
+            "0%";
+
+        highPercentElement.textContent =
+            "0%";
+
+        nonePercentElement.textContent =
+            "0%";
+
         return;
     }
 
@@ -156,29 +202,27 @@ function updateRiskChart(
     const nonePercent =
         (none / total) * 100;
 
-    chartLow.style.width =
-        lowPercent + "%";
+    const lowEnd =
+        lowPercent;
 
-    chartHigh.style.width =
-        highPercent + "%";
+    const highEnd =
+        lowPercent + highPercent;
 
-    chartNone.style.width =
-        nonePercent + "%";
+    pie.style.background =
+        `conic-gradient(
+            #39b979 0% ${lowEnd}%,
+            #ee6c6c ${lowEnd}% ${highEnd}%,
+            #aebbc2 ${highEnd}% 100%
+        )`;
 
-    chartLow.title =
-        "ความเสี่ยงต่ำ " +
-        lowPercent.toFixed(1) +
-        "%";
+    lowPercentElement.textContent =
+        lowPercent.toFixed(1) + "%";
 
-    chartHigh.title =
-        "มีความเสี่ยง " +
-        highPercent.toFixed(1) +
-        "%";
+    highPercentElement.textContent =
+        highPercent.toFixed(1) + "%";
 
-    chartNone.title =
-        "ยังไม่ได้ประเมิน " +
-        nonePercent.toFixed(1) +
-        "%";
+    nonePercentElement.textContent =
+        nonePercent.toFixed(1) + "%";
 }
 
 loadDashboard();
