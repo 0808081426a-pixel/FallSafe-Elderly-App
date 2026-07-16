@@ -301,13 +301,41 @@ body{
                 </select>
             </div>
 
-            <div class="form-group">
-                <label for="disease">โรคประจำตัว</label>
-                <textarea
-                    id="disease"
-                    placeholder="เช่น ความดันโลหิตสูง เบาหวาน"
-                ></textarea>
-            </div>
+           <div class="form-group">
+
+<label>โรคประจำตัว (เลือกได้หลายข้อ)</label>
+
+<div class="disease-list">
+
+<label><input type="checkbox" name="disease" value="ไม่มีโรคประจำตัว"> ไม่มีโรคประจำตัว</label><br>
+
+<label><input type="checkbox" name="disease" value="ความดันโลหิตสูง"> ความดันโลหิตสูง</label><br>
+
+<label><input type="checkbox" name="disease" value="เบาหวาน"> เบาหวาน</label><br>
+
+<label><input type="checkbox" name="disease" value="โรคหัวใจ"> โรคหัวใจ</label><br>
+
+<label><input type="checkbox" name="disease" value="โรคหลอดเลือดสมอง"> โรคหลอดเลือดสมอง (Stroke)</label><br>
+
+<label><input type="checkbox" name="disease" value="ข้อเข่าเสื่อม"> ข้อเข่าเสื่อม</label><br>
+
+<label><input type="checkbox" name="disease" value="พาร์กินสัน"> พาร์กินสัน</label><br>
+
+<label><input type="checkbox" name="disease" value="กระดูกพรุน"> กระดูกพรุน</label><br>
+
+<label><input type="checkbox" name="disease" value="สายตาพร่ามัว / ต้อกระจก"> สายตาพร่ามัว / ต้อกระจก</label><br>
+
+<label><input type="checkbox" id="otherDisease"> อื่น ๆ</label>
+
+<input
+type="text"
+id="otherDiseaseText"
+placeholder="ระบุโรค"
+style="margin-top:10px;">
+
+</div>
+
+</div>
 
             <div class="form-group">
                 <label for="caregiver">ชื่อผู้ดูแล</label>
