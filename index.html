@@ -161,17 +161,55 @@
     </div>
 
 </div>
+<script>
+
+window.onload = function(){
+
+    let hideGuide = localStorage.getItem("hideGuide");
+
+    if(hideGuide != "yes"){
+        document.getElementById("guidePopup").style.display = "flex";
+    }
+
+    let score = localStorage.getItem("mfsScore");
+    let level = localStorage.getItem("riskLevel");
+
+    let status = document.getElementById("riskStatus");
+    let text = document.getElementById("riskText");
+
+    if(score && level){
+
+        if(level=="ต่ำ"){
+            status.innerHTML="🟢 ความเสี่ยงต่ำ";
+            text.innerHTML="ควรรักษาพฤติกรรมสุขภาพที่ดี";
+        }
+
+        else if(level=="ปานกลาง"){
+            status.innerHTML="🟡 ความเสี่ยงปานกลาง";
+            text.innerHTML="ควรเฝ้าระวังและปรับพฤติกรรมป้องกันการล้ม";
+        }
+
+        else{
+            status.innerHTML="🔴 ความเสี่ยงสูง";
+            text.innerHTML="ควรได้รับการดูแลและป้องกันการพลัดตกหกล้ม";
+        }
+
+    }
+
+}
+
 function closeGuide(){
 
-    let dontShow =
-        document.getElementById("dontShowGuide").checked;
+    let dontShow = document.getElementById("dontShowGuide").checked;
 
     if(dontShow){
         localStorage.setItem("hideGuide","yes");
     }
 
     document.getElementById("guidePopup").style.display="none";
+
 }
+
 </script>
 <script src="script.js"></script>
 
