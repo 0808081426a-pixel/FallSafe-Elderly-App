@@ -225,3 +225,184 @@ font-weight:700;
     font-weight:700;
     cursor:pointer;
 }
+.step-menu{
+    width:90%;
+    max-width:760px;
+    margin:0 auto 110px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.step-card{
+    position:relative;
+    display:grid;
+    grid-template-columns:58px 54px 1fr 28px;
+    align-items:center;
+    gap:12px;
+    min-height:126px;
+    padding:18px;
+    border-radius:24px;
+    text-decoration:none;
+    color:#263238;
+    box-shadow:0 9px 24px rgba(0,0,0,.10);
+    border:3px solid transparent;
+    transition:.2s;
+}
+
+.step-card:hover{
+    transform:translateY(-3px);
+}
+
+.step-number{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    color:white;
+    font-size:28px;
+    font-weight:700;
+}
+
+.step-icon{
+    font-size:35px;
+    text-align:center;
+}
+
+.step-content h3{
+    margin:4px 0 5px;
+    font-size:22px;
+    line-height:1.45;
+}
+
+.step-content p{
+    margin:0;
+    font-size:17px;
+    line-height:1.5;
+}
+
+.step-label{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:999px;
+    font-size:16px;
+    font-weight:700;
+}
+
+.step-arrow{
+    font-size:38px;
+    font-weight:700;
+}
+
+/* ขั้นที่ 1 สีน้ำเงิน */
+.step-blue{
+    background:#e8f4ff;
+    border-color:#2f9ce3;
+}
+
+.step-blue .step-number{
+    background:#167dc1;
+}
+
+.step-blue .step-icon,
+.step-blue .step-arrow{
+    color:#167dc1;
+}
+
+.step-blue .step-label{
+    background:#167dc1;
+    color:white;
+}
+
+/* ขั้นที่ 2 สีเขียว */
+.step-green{
+    background:#e5f8ee;
+    border-color:#36b878;
+}
+
+.step-green .step-number{
+    background:#22975e;
+}
+
+.step-green .step-icon,
+.step-green .step-arrow{
+    color:#22975e;
+}
+
+.step-green .step-label{
+    background:#22975e;
+    color:white;
+}
+
+/* ขั้นที่ 3 สีส้ม */
+.step-orange{
+    background:#fff0df;
+    border-color:#ed9738;
+}
+
+.step-orange .step-number{
+    background:#d97816;
+}
+
+.step-orange .step-icon,
+.step-orange .step-arrow{
+    color:#d97816;
+}
+
+.step-orange .step-label{
+    background:#d97816;
+    color:white;
+}
+
+/* ขั้นที่ 4 สีม่วง */
+.step-purple{
+    background:#f1eaff;
+    border-color:#8f69d7;
+}
+
+.step-purple .step-number{
+    background:#7750bd;
+}
+
+.step-purple .step-icon,
+.step-purple .step-arrow{
+    color:#7750bd;
+}
+
+.step-purple .step-label{
+    background:#7750bd;
+    color:white;
+}
+
+@media(max-width:600px){
+
+    .step-card{
+        grid-template-columns:50px 44px 1fr 22px;
+        gap:9px;
+        padding:15px;
+    }
+
+    .step-number{
+        width:46px;
+        height:46px;
+        font-size:25px;
+    }
+
+    .step-icon{
+        font-size:30px;
+    }
+
+    .step-content h3{
+        font-size:20px;
+    }
+
+    .step-content p{
+        font-size:16px;
+    }
+
+    .step-label{
+        font-size:14px;
+    }
+}
