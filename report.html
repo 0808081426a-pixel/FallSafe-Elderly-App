@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>รายงานผลการประเมิน | FallGuard+</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    background:#eef6fb;
+    color:#263238;
+    font-family:"Prompt",sans-serif;
+    padding:28px 14px 50px;
+}
+
+.report{
+    width:100%;
+    max-width:820px;
+    margin:auto;
+    background:#fff;
+    border-radius:24px;
+    overflow:hidden;
+    box-shadow:0 10px 35px rgba(0,0,0,.10);
+}
+
+.report-header{
+    background:linear-gradient(135deg,#1687cf,#57c9b0);
+    color:#fff;
+    padding:30px;
+}
+
+.brand{
+    font-size:29px;
+    font-weight:700;
+}
+
+.report-header h1{
+    margin:22px 0 7px;
+    font-size:30px;
+    line-height:1.45;
+}
+
+.report-header p{
+    margin:0;
+    font-size:18px;
+}
+
+.report-body{
+    padding:28px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+}
+
+.info-box{
+    background:#f4f9fc;
+    border:2px solid #d7eaf4;
+    border-radius:18px;
+    padding:17px;
+}
+
+.info-label{
+    color:#607d8b;
+    font-size:17px;
+}
+
+.info-value{
+    margin-top:6px;
+    font-size:22px;
+    font-weight:700;
+    color:#174f72;
+}
+
+.result-card{
+    margin-top:22px;
+    padding:24px;
+    text-align:center;
+    border-radius:22px;
+}
+
+.result-card.low{
+    background:#e3f8ec;
+    border:3px solid #39b979;
+}
+
+.result-card.high{
+    background:#ffe9e9;
+    border:3px solid #e96161;
+}
+
+.result-card.none{
+    background:#edf2f4;
+    border:3px solid #aebbc2;
+}
+
+.result-icon{
+    font-size:58px;
+}
+
+.result-card h2{
+    margin:10px 0 6px;
+    font-size:28px;
+}
+
+.result-score{
+    font-size:24px;
+    font-weight:700;
+}
+
+.advice{
+    margin-top:22px;
+    background:#f7fbfd;
+    border-radius:20px;
+    padding:22px;
+}
+
+.advice h2{
+    margin:0 0 14px;
+    color:#146c94;
+    font-size:25px;
+}
+
+.advice ul{
+    margin:0;
+    padding-left:26px;
+}
+
+.advice li{
+    margin-bottom:11px;
+    font-size:19px;
+    line-height:1.65;
+}
+
+.note{
+    margin-top:20px;
+    padding:16px;
+    border-radius:16px;
+    background:#fff6df;
+    color:#74460a;
+    font-size:17px;
+    line-height:1.65;
+}
+
+.actions{
+    width:100%;
+    max-width:820px;
+    margin:20px auto 0;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.actions button{
+    min-height:62px;
+    border:0;
+    border-radius:17px;
+    font-family:"Prompt",sans-serif;
+    font-size:21px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.pdf-button{
+    background:linear-gradient(135deg,#1687cf,#43b8dc);
+    color:white;
+}
+
+.home-button{
+    background:#dceff8;
+    color:#145b82;
+}
+
+.report-footer{
+    padding:18px 28px 26px;
+    color:#607d8b;
+    font-size:15px;
+    line-height:1.6;
+}
+
+@media(max-width:650px){
+    .info-grid{grid-template-columns:1fr}
+    .actions{grid-template-columns:1fr}
+    .report-header h1{font-size:26px}
+}
+
+@media print{
+    @page{
+        size:A4;
+        margin:12mm;
+    }
+
+    body{
+        background:white;
+        padding:0;
+    }
+
+    .report{
+        max-width:none;
+        border-radius:0;
+        box-shadow:none;
+    }
+
+    .actions{
+        display:none !important;
+    }
+
+    .report-footer{
+        padding-bottom:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<article class="report">
+
+    <header class="report-header">
+        <div class="brand">🛡️ FallGuard+</div>
+
+        <h1>
+            รายงานผลการประเมินความเสี่ยง<br>
+            การพลัดตกหกล้มในผู้สูงอายุ
+        </h1>
+
+        <p>แบบประเมิน Thai Falls Risk Assessment Test (Thai-FRAT)</p>
+    </header>
+
+    <main class="report-body">
+
+        <section class="info-grid">
+
+            <div class="info-box">
+                <div class="info-label">ผู้รับการประเมิน</div>
+                <div id="elderName" class="info-value">ไม่ระบุชื่อ</div>
+            </div>
+
+            <div class="info-box">
+                <div class="info-label">วันที่ประเมิน</div>
+                <div id="assessmentDate" class="info-value">-</div>
+            </div>
+
+        </section>
+
+        <section id="resultCard" class="result-card none">
+
+            <div id="resultIcon" class="result-icon">⚪</div>
+
+            <h2 id="riskTitle">ยังไม่มีผลการประเมิน</h2>
+
+            <div id="scoreText" class="result-score">0 คะแนน</div>
+
+        </section>
+
+        <section class="advice">
+
+            <h2>คำแนะนำ</h2>
+
+            <ul id="adviceList"></ul>
+
+        </section>
+
+        <div class="note">
+            ⚠️ รายงานนี้เป็นผลจากการคัดกรองเบื้องต้น
+            ไม่ใช้แทนการวินิจฉัยของแพทย์หรือบุคลากรสุขภาพ
+            หากมีอาการผิดปกติหรือเคยหกล้ม ควรปรึกษาบุคลากรสุขภาพ
+        </div>
+
+    </main>
+
+    <footer class="report-footer">
+        สร้างรายงานโดยระบบ FallGuard+ เพื่อใช้ประกอบการดูแล
+        การติดตาม และการให้คำแนะนำแก่ผู้สูงอายุและผู้ดูแล
+    </footer>
+
+</article>
+
+<div class="actions">
+
+    <button class="pdf-button" type="button" onclick="downloadPDF()">
+        📄 ดาวน์โหลด / บันทึกเป็น PDF
+    </button>
+
+    <button class="home-button" type="button" onclick="window.location.href='index.html'">
+        กลับหน้าหลัก
+    </button>
+
+</div>
+
+<script>
+function getTodayThai(){
+    return new Date().toLocaleDateString("th-TH", {
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+    });
+}
+
+function loadReport(){
+
+    const name =
+        localStorage.getItem("currentElderName") ||
+        localStorage.getItem("elderName") ||
+        "ไม่ระบุชื่อ";
+
+    const savedScore =
+        localStorage.getItem("thaiFratScore") ??
+        localStorage.getItem("mfsScore");
+
+    const score =
+        savedScore !== null && savedScore !== ""
+            ? Number(savedScore)
+            : 0;
+
+    const level =
+        localStorage.getItem("riskLevel") ||
+        "ยังไม่ได้ประเมิน";
+
+    const savedDate =
+        localStorage.getItem("date");
+
+    document.getElementById("elderName").textContent = name;
+    document.getElementById("assessmentDate").textContent =
+        savedDate || getTodayThai();
+
+    const card = document.getElementById("resultCard");
+    const icon = document.getElementById("resultIcon");
+    const title = document.getElementById("riskTitle");
+    const scoreText = document.getElementById("scoreText");
+    const adviceList = document.getElementById("adviceList");
+
+    scoreText.textContent = score + " คะแนน";
+
+    let advice = [];
+
+    if(level === "ต่ำ"){
+
+        card.className = "result-card low";
+        icon.textContent = "🟢";
+        title.textContent = "ความเสี่ยงต่ำ";
+
+        advice = [
+            "ออกกำลังกายเพื่อเสริมกำลังกล้ามเนื้อและฝึกการทรงตัวอย่างสม่ำเสมอ",
+            "จัดทางเดินภายในบ้านให้โล่งและมีแสงสว่างเพียงพอ",
+            "สวมรองเท้าที่พอดีเท้าและมีพื้นยึดเกาะ",
+            "ประเมินความเสี่ยงซ้ำเมื่อสุขภาพหรือความสามารถในการเดินเปลี่ยนแปลง"
+        ];
+
+    }else if(level === "สูง"){
+
+        card.className = "result-card high";
+        icon.textContent = "🔴";
+        title.textContent = "มีความเสี่ยงต่อการพลัดตกหกล้ม";
+
+        advice = [
+            "ควรมีผู้ดูแลอยู่ใกล้เมื่อเดินหรือทำกิจกรรมที่เสี่ยง",
+            "ติดราวจับในห้องน้ำ บริเวณบันได และจุดที่ลุกนั่ง",
+            "นำพรม สายไฟ และสิ่งกีดขวางออกจากทางเดิน",
+            "ใช้อุปกรณ์ช่วยเดินตามคำแนะนำของบุคลากรสุขภาพ",
+            "ปรึกษาพยาบาล แพทย์ หรือนักกายภาพบำบัดเพื่อประเมินเพิ่มเติม"
+        ];
+
+    }else{
+
+        card.className = "result-card none";
+        icon.textContent = "⚪";
+        title.textContent = "ยังไม่มีผลการประเมิน";
+
+        advice = [
+            "กรุณาทำแบบประเมิน Thai-FRAT ก่อนสร้างรายงาน",
+            "กลับหน้าหลักและเลือกขั้นตอนที่ 1 ประเมินความเสี่ยง"
+        ];
+    }
+
+    adviceList.innerHTML =
+        advice.map(function(item){
+            return "<li>" + item + "</li>";
+        }).join("");
+}
+
+function downloadPDF(){
+
+    const originalTitle = document.title;
+
+    const name =
+        localStorage.getItem("currentElderName") ||
+        "FallGuard";
+
+    document.title =
+        "FallGuard_Report_" +
+        name.replaceAll(" ", "_");
+
+    window.print();
+
+    setTimeout(function(){
+        document.title = originalTitle;
+    }, 500);
+}
+
+loadReport();
+</script>
+
+</body>
+</html>
