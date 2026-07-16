@@ -310,9 +310,10 @@ function getTodayThai(){
 function loadReport(){
 
     const name =
-        localStorage.getItem("currentElderName") ||
-        localStorage.getItem("elderName") ||
-        "ไม่ระบุชื่อ";
+    localStorage.getItem("currentElderName") ||
+    localStorage.getItem("elderName") ||
+    localStorage.getItem("name") ||
+    "ไม่ระบุชื่อ";
 
     const savedScore =
         localStorage.getItem("thaiFratScore") ??
