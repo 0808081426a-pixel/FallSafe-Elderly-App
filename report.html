@@ -463,27 +463,15 @@ async function downloadPDF(){
             "ไม่สามารถสร้าง PDF ได้ กรุณาลองใหม่อีกครั้ง"
         );
 
-    }finally{
+   }finally{
 
-        button.disabled = false;
+    button.disabled = false;
 
-        <button class="pdf-button" type="button" onclick="downloadPDF()">
-    📄 ดาวน์โหลดรายงาน PDF
-</button>
+    button.textContent =
+        "📄 ดาวน์โหลดรายงาน PDF";
+}
+
 loadReport();
-        .info-box,
-.result-card,
-.advice,
-.note,
-.report-footer{
-    break-inside:avoid;
-    page-break-inside:avoid;
-}
-
-.pdf-button:disabled{
-    opacity:.65;
-    cursor:not-allowed;
-}
 </script>
 
 </body>
