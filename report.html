@@ -296,6 +296,8 @@ body{
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
 <script>
 function getTodayThai(){
     return new Date().toLocaleDateString("th-TH", {
@@ -387,26 +389,101 @@ function loadReport(){
         }).join("");
 }
 
-function downloadPDF(){
+async function downloadPDF(){
 
-    const originalTitle = document.title;
+    const report =
+        document.querySelector(".report");
+
+    const button =
+        document.querySelector(".pdf-button");
 
     const name =
         localStorage.getItem("currentElderName") ||
-        "FallGuard";
+        localStorage.getItem("elderName") ||
+        "ผู้สูงอายุ";
 
-    document.title =
+    const safeName =
+        name
+            .trim()
+            .replace(/[\\/:*?"<>|]/g, "")
+            .replace(/\s+/g, "_");
+
+    const fileName =
         "FallGuard_Report_" +
-        name.replaceAll(" ", "_");
+        safeName +
+        ".pdf";
 
-    window.print();
+    const options = {
 
-    setTimeout(function(){
-        document.title = originalTitle;
-    }, 500);
+        margin: [8, 8, 8, 8],
+
+        filename: fileName,
+
+        image: {
+            type: "jpeg",
+            quality: 0.98
+        },
+
+        html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            scrollY: 0
+        },
+
+        jsPDF: {
+            unit: "mm",
+            format: "a4",
+            orientation: "portrait"
+        },
+
+        pagebreak: {
+            mode: ["avoid-all", "css", "legacy"]
+        }
+    };
+
+    try{
+
+        button.disabled = true;
+        button.textContent = "กำลังสร้าง PDF...";
+
+        await html2pdf()
+            .set(options)
+            .from(report)
+            .save();
+
+    }catch(error){
+
+        console.error(
+            "สร้าง PDF ไม่สำเร็จ:",
+            error
+        );
+
+        alert(
+            "ไม่สามารถสร้าง PDF ได้ กรุณาลองใหม่อีกครั้ง"
+        );
+
+    }finally{
+
+        button.disabled = false;
+
+        <button class="pdf-button" type="button" onclick="downloadPDF()">
+    📄 ดาวน์โหลดรายงาน PDF
+</button>
+loadReport();
+        .info-box,
+.result-card,
+.advice,
+.note,
+.report-footer{
+    break-inside:avoid;
+    page-break-inside:avoid;
 }
 
-loadReport();
+.pdf-button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+}
 </script>
 
 </body>
