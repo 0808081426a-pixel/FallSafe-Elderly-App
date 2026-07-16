@@ -529,3 +529,89 @@ font-weight:700;
     background:#c34f88;
     color:white;
 }
+/* ===== Splash Screen ===== */
+
+.splash-screen{
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:linear-gradient(135deg,#238ed1,#79dbc1);
+    color:white;
+    transition:opacity .6s ease, visibility .6s ease;
+}
+
+.splash-screen.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.splash-content{
+    width:90%;
+    max-width:460px;
+    text-align:center;
+    animation:splashFadeIn .8s ease;
+}
+
+.splash-logo{
+    width:120px;
+    height:120px;
+    margin:0 auto 20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:35px;
+    background:rgba(255,255,255,.20);
+    border:3px solid rgba(255,255,255,.55);
+    font-size:68px;
+    box-shadow:0 15px 35px rgba(0,0,0,.15);
+}
+
+.splash-content h1{
+    margin:0 0 12px;
+    font-size:42px;
+    font-weight:700;
+}
+
+.splash-content p{
+    margin:0;
+    font-size:22px;
+    line-height:1.7;
+}
+
+.splash-content span{
+    display:block;
+    margin-top:14px;
+    font-size:18px;
+    opacity:.95;
+}
+
+.splash-loader{
+    width:50px;
+    height:50px;
+    margin:28px auto 0;
+    border:5px solid rgba(255,255,255,.35);
+    border-top-color:white;
+    border-radius:50%;
+    animation:splashSpin 1s linear infinite;
+}
+
+@keyframes splashSpin{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes splashFadeIn{
+    from{
+        opacity:0;
+        transform:translateY(18px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
