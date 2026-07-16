@@ -409,7 +409,7 @@ font-weight:700;
 /* ===== ปรับ Step Menu ให้เด่นและเหมาะกับผู้สูงอายุ ===== */
 
 .step-menu::before{
-    content:"ขั้นตอนการใช้งาน  ① → ② → ③ → ④";
+   content:"ขั้นตอนการใช้งาน  ① → ② → ③ → ④ → ⑤";
     display:block;
     text-align:center;
     font-size:24px;
@@ -508,4 +508,24 @@ font-weight:700;
     .step-arrow{
         font-size:38px;
     }
+}
+/* ขั้นที่ 5 สีชมพู */
+
+.step-pink{
+    background:#fff0f7;
+    border-color:#df70a6;
+}
+
+.step-pink .step-number{
+    background:#c34f88;
+}
+
+.step-pink .step-icon,
+.step-pink .step-arrow{
+    color:#c34f88;
+}
+
+.step-pink .step-label{
+    background:#c34f88;
+    color:white;
 }
