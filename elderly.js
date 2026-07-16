@@ -24,7 +24,18 @@ elderlyForm.addEventListener("submit", async function (event) {
     const name = document.getElementById("name").value.trim();
     const age = Number(document.getElementById("age").value);
     const gender = document.getElementById("gender").value;
-    const disease = document.getElementById("disease").value.trim();
+    const disease = Array.from(
+document.querySelectorAll(
+'input[name="disease"]:checked'
+))
+.map(item => item.value);
+
+const otherDisease =
+document.getElementById("otherDiseaseText").value.trim();
+
+if(otherDisease){
+disease.push(otherDisease);
+}
     const caregiver = document.getElementById("caregiver").value.trim();
 
     if (!name || !age || !gender) {
