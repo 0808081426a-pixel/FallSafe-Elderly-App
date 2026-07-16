@@ -1,252 +1,268 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Exercise | FallGuard+</title>
+<title>กิจกรรมป้องกันการพลัดตกหกล้ม | FallGuard+</title>
 
 <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{
+    margin:0;
+    background:#f5fbff;
+    font-family:"Prompt",sans-serif;
+    color:#263238;
+    padding-bottom:40px;
+}
 
+.activity-header{
+    background:linear-gradient(135deg,#63c7ff,#8be3c5);
+    color:white;
+    padding:30px 22px 55px;
+    border-radius:0 0 34px 34px;
+}
+
+.activity-header h1{
+    margin:24px 0 8px;
+    font-size:29px;
+    line-height:1.45;
+}
+
+.activity-header p{
+    margin:0;
+    font-size:20px;
+    line-height:1.6;
+}
+
+.activity-container{
+    width:92%;
+    max-width:760px;
+    margin:-30px auto 0;
+}
+
+.intro-card,
+.video-card{
+    background:white;
+    border-radius:24px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+
+.intro-card h2{
+    margin-top:0;
+    font-size:27px;
+    color:#146c94;
+}
+
+.intro-card p{
+    font-size:21px;
+    line-height:1.7;
+}
+
+.video-card h2{
+    font-size:25px;
+    margin:0 0 12px;
+}
+
+.video-card p{
+    font-size:20px;
+    line-height:1.65;
+    margin-bottom:18px;
+}
+
+.video-wrap{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    overflow:hidden;
+    border-radius:18px;
+    background:#000;
+}
+
+.video-wrap iframe{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+.warning-box{
+    background:#fff4df;
+    border:2px solid #ffb74d;
+    border-radius:18px;
+    padding:18px;
+    margin:20px 0;
+    font-size:20px;
+    line-height:1.7;
+}
+
+.home-button{
+    width:100%;
+    min-height:64px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(135deg,#3da9fc,#39c99b);
+    color:white;
+    font-family:"Prompt",sans-serif;
+    font-size:23px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+@media(max-width:600px){
+    .activity-header h1{
+        font-size:26px;
+    }
+
+    .video-card h2{
+        font-size:23px;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
+<header class="activity-header">
 
-<header>
+<div class="logo">🛡️ FallGuard+</div>
 
-<div class="logo">
-🛡️ FallGuard+
-</div>
+<h1>กิจกรรมป้องกันการพลัดตกหกล้ม</h1>
 
-<div class="welcome">
-
-<h2>ออกกำลังกาย 🏃</h2>
-
-<p>เสริมความแข็งแรง ลดความเสี่ยงหกล้ม</p>
-
-</div>
+<p>
+เรียนรู้และฝึกปฏิบัติผ่านวิดีโอ
+เพื่อเพิ่มความแข็งแรง การทรงตัว
+และความมั่นใจในการเคลื่อนไหว
+</p>
 
 </header>
 
+<main class="activity-container">
 
+<section class="intro-card">
 
-<section class="risk-card">
-
-<h2>โปรแกรมฝึกสำหรับผู้สูงอายุ</h2>
+<h2>วิธีเลือกกิจกรรม</h2>
 
 <p>
-ควรออกกำลังกายอย่างสม่ำเสมอ
-เพื่อเพิ่มความแข็งแรงของกล้ามเนื้อ
-และการทรงตัว
+เลือกดูวิดีโอทีละกิจกรรม ฝึกตามอย่างช้า ๆ
+และควรมีผู้ดูแลอยู่ใกล้ในผู้ที่มีความเสี่ยงต่อการหกล้ม
 </p>
 
 </section>
 
 
+<section class="video-card">
 
-<section class="menu">
-
-
-<div class="card" onclick="showDetail('tai chi')">
-
-<h2>🧘</h2>
-
-<h3>ไทชี่ (Tai Chi)</h3>
+<h2>1. ฝึกการทรงตัว</h2>
 
 <p>
-แตะเพื่อดูรายละเอียด
+ช่วยเพิ่มความมั่นคงขณะยืนและเดิน
+ลดโอกาสเสียสมดุล
 </p>
 
-</div>
+<div class="video-wrap">
 
-
-
-<div class="card" onclick="showDetail('leg')">
-
-<h2>🦵</h2>
-
-<h3>ฝึกกล้ามเนื้อขา</h3>
-
-<p>
-เช่น ลุก-นั่งจากเก้าอี้
-เพื่อเพิ่มกำลังกล้ามเนื้อ
-</p>
+<iframe
+src="https://www.youtube.com/embed/VIDEO_ID_1"
+title="วิดีโอฝึกการทรงตัว"
+allowfullscreen>
+</iframe>
 
 </div>
-
-
-
-<div class="card" onclick="showDetail('balance')">
-
-<h2>⚖️</h2>
-
-<h3>ฝึกการทรงตัว</h3>
-
-<p>
-ยืนขาเดียว
-เดินเป็นเส้นตรง
-ภายใต้ความปลอดภัย
-</p>
-
-</div>
-
-
-
-<div class="card" onclick="showDetail('walk')">
-
-<h2>🚶</h2>
-
-<h3>เดินเพื่อสุขภาพ</h3>
-
-<p>
-เดินเบา ๆ ตามความเหมาะสม
-อย่างต่อเนื่อง
-</p>
-
-</div>
-
-
 
 </section>
 
 
+<section class="video-card">
 
-<div style="text-align:center;margin:30px;">
+<h2>2. ลุก–นั่งจากเก้าอี้อย่างปลอดภัย</h2>
+
+<p>
+ช่วยเพิ่มกำลังกล้ามเนื้อขา
+และช่วยให้ลุกยืนได้มั่นคงขึ้น
+</p>
+
+<div class="video-wrap">
+
+<iframe
+src="https://www.youtube.com/embed/VIDEO_ID_2"
+title="วิดีโอลุกนั่งจากเก้าอี้"
+allowfullscreen>
+</iframe>
+
+</div>
+
+</section>
+
+
+<section class="video-card">
+
+<h2>3. เดินอย่างมั่นคง</h2>
+
+<p>
+ฝึกจังหวะการเดิน การยกเท้า
+และการมองทางเดินอย่างปลอดภัย
+</p>
+
+<div class="video-wrap">
+
+<iframe
+src="https://www.youtube.com/embed/VIDEO_ID_3"
+title="วิดีโอเดินอย่างมั่นคง"
+allowfullscreen>
+</iframe>
+
+</div>
+
+</section>
+
+
+<section class="video-card">
+
+<h2>4. การใช้อุปกรณ์ช่วยเดิน</h2>
+
+<p>
+เรียนรู้การใช้ไม้เท้าหรืออุปกรณ์ช่วยเดิน
+อย่างถูกวิธี
+</p>
+
+<div class="video-wrap">
+
+<iframe
+src="https://www.youtube.com/embed/VIDEO_ID_4"
+title="วิดีโอการใช้อุปกรณ์ช่วยเดิน"
+allowfullscreen>
+</iframe>
+
+</div>
+
+</section>
+
+
+<div class="warning-box">
+
+⚠️ หยุดกิจกรรมทันที หากมีอาการเวียนศีรษะ
+เจ็บหน้าอก หายใจลำบาก ปวดมาก
+หรือรู้สึกเสียการทรงตัว และควรปรึกษาบุคลากรสุขภาพ
+
+</div>
+
 
 <a href="index.html">
 
-<button style="
-padding:15px 35px;
-border:none;
-border-radius:20px;
-background:#3da9fc;
-color:white;
-font-size:18px;
-">
-
+<button class="home-button" type="button">
 กลับหน้าหลัก
-
 </button>
 
 </a>
 
-</div>
+</main>
 
-
-<div id="popup" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-align-items:center;
-justify-content:center;
-">
-
-<div style="
-background:white;
-padding:25px;
-border-radius:20px;
-width:80%;
-text-align:center;
-">
-
-<img id="exerciseImg" 
-src="" 
-style="
-width:220px;
-border-radius:20px;
-margin-bottom:15px;
-">
-
-<h2 id="title"></h2>
-
-<p id="detail"></p>
-
-<button onclick="closeDetail()">
-ปิด
-</button>
-
-</div>
-
-</div>
-
-
-<script>
-
-function showDetail(type){
-
-let title="";
-let detail="";
-let img="";
-
-
-if(type=="tai chi"){
-
-title="🧘 Tai Chi";
-
-img="images/tai-chi.png";
-
-detail="ฝึกการเคลื่อนไหวช้า ๆ ช่วยเพิ่มสมดุลและลดความเสี่ยงการหกล้ม";
-
-}
-
-else if(type=="leg"){
-
-title="🦵 ฝึกกล้ามเนื้อขา";
-
-img="images/leg-exercise.png";
-
-detail="ฝึกลุก-นั่งจากเก้าอี้ เพื่อเพิ่มกำลังกล้ามเนื้อขาและช่วยให้เดินมั่นคงขึ้น";
-
-}
-
-else if(type=="balance"){
-
-title="⚖️ ฝึกการทรงตัว";
-
-img="images/balance.png";
-
-detail="ฝึกยืนทรงตัว เดินเป็นเส้นตรง ควรมีผู้ดูแลอยู่ใกล้เพื่อความปลอดภัย";
-
-}
-
-else{
-
-title="🚶 เดินเพื่อสุขภาพ";
-
-img="images/walking.png";
-
-detail="เดินตามความเหมาะสมประมาณ 20–30 นาที ช่วยเพิ่มความแข็งแรง";
-
-}
-
-
-document.getElementById("title").innerHTML=title;
-
-document.getElementById("detail").innerHTML=detail;
-
-document.getElementById("exerciseImg").src=img;
-
-document.getElementById("popup").style.display="flex";
-
-}
-
-
-function closeDetail(){
-
-document.getElementById("popup").style.display="none";
-
-}
-</script>
 </body>
-
 </html>
