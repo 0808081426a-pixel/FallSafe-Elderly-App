@@ -44,8 +44,27 @@
 </p>
 
 </section>
+<div style="width:90%;margin:0 auto 20px;text-align:center;">
 
+<button
+type="button"
+onclick="openGuide()"
+style="
+background:#3da9fc;
+color:white;
+border:none;
+padding:14px 22px;
+border-radius:15px;
+font-size:20px;
+font-family:Prompt;
+cursor:pointer;
+">
 
+📖 ดูวิธีใช้งาน
+
+</button>
+
+</div>
 <section class="menu">
 
 <a href="assessment.html">
@@ -149,10 +168,7 @@
             <p>ศึกษากิจกรรมและวิธีป้องกันการพลัดตกหกล้มที่บ้าน</p>
         </div>
 
-        <label class="dont-show-label">
-            <input type="checkbox" id="dontShowGuide">
-            ไม่ต้องแสดงคำแนะนำนี้อีก
-        </label>
+        
 
         <button type="button" class="guide-button" onclick="closeGuide()">
             เริ่มใช้งาน
@@ -165,11 +181,7 @@
 
 window.onload = function(){
 
-    let hideGuide = localStorage.getItem("hideGuide");
-
-    if(hideGuide != "yes"){
-        document.getElementById("guidePopup").style.display = "flex";
-    }
+    document.getElementById("guidePopup").style.display = "flex";
 
     let score = localStorage.getItem("mfsScore");
     let level = localStorage.getItem("riskLevel");
@@ -179,34 +191,34 @@ window.onload = function(){
 
     if(score && level){
 
-        if(level=="ต่ำ"){
-            status.innerHTML="🟢 ความเสี่ยงต่ำ";
-            text.innerHTML="ควรรักษาพฤติกรรมสุขภาพที่ดี";
+        if(level === "ต่ำ"){
+            status.innerHTML = "🟢 ความเสี่ยงต่ำ";
+            text.innerHTML = "ควรรักษาพฤติกรรมสุขภาพที่ดี";
         }
 
-        else if(level=="ปานกลาง"){
-            status.innerHTML="🟡 ความเสี่ยงปานกลาง";
-            text.innerHTML="ควรเฝ้าระวังและปรับพฤติกรรมป้องกันการล้ม";
+        else if(level === "ปานกลาง"){
+            status.innerHTML = "🟡 ความเสี่ยงปานกลาง";
+            text.innerHTML =
+                "ควรเฝ้าระวังและปรับพฤติกรรมป้องกันการล้ม";
         }
 
         else{
-            status.innerHTML="🔴 ความเสี่ยงสูง";
-            text.innerHTML="ควรได้รับการดูแลและป้องกันการพลัดตกหกล้ม";
+            status.innerHTML =
+                "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
+            text.innerHTML =
+                "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
         }
-
     }
+}
+function closeGuide(){
+
+    document.getElementById("guidePopup").style.display="none";
 
 }
 
-function closeGuide(){
+function openGuide(){
 
-    let dontShow = document.getElementById("dontShowGuide").checked;
-
-    if(dontShow){
-        localStorage.setItem("hideGuide","yes");
-    }
-
-    document.getElementById("guidePopup").style.display="none";
+    document.getElementById("guidePopup").style.display="flex";
 
 }
 
