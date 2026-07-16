@@ -406,3 +406,106 @@ font-weight:700;
         font-size:14px;
     }
 }
+/* ===== ปรับ Step Menu ให้เด่นและเหมาะกับผู้สูงอายุ ===== */
+
+.step-menu::before{
+    content:"ขั้นตอนการใช้งาน  ① → ② → ③ → ④";
+    display:block;
+    text-align:center;
+    font-size:24px;
+    font-weight:700;
+    color:#155f94;
+    background:white;
+    border-radius:20px;
+    padding:16px;
+    margin-bottom:5px;
+    box-shadow:0 7px 20px rgba(0,0,0,.08);
+}
+
+/* ทำขั้นที่ 1 ให้เด่นที่สุด */
+.step-blue{
+    min-height:150px;
+    transform:scale(1.02);
+    box-shadow:0 12px 30px rgba(22,125,193,.22);
+}
+
+.step-blue:hover{
+    transform:scale(1.02) translateY(-4px);
+}
+
+/* เพิ่มไอคอนหน้าหมายเลข */
+.step-blue .step-number::after{
+    content:" 📋";
+    font-size:20px;
+}
+
+.step-green .step-number::after{
+    content:" 📊";
+    font-size:20px;
+}
+
+.step-orange .step-number::after{
+    content:" ▶";
+    font-size:20px;
+}
+
+.step-purple .step-number::after{
+    content:" 🏠";
+    font-size:20px;
+}
+
+/* ขยายลูกศร */
+.step-arrow{
+    font-size:46px;
+}
+
+/* เพิ่มเงาให้ทุกการ์ด */
+.step-card{
+    box-shadow:0 11px 28px rgba(0,0,0,.13);
+}
+
+/* เพิ่มความชัดของตัวอักษร */
+.step-content h3{
+    font-size:24px;
+    font-weight:700;
+}
+
+.step-content p{
+    font-size:18px;
+}
+
+/* ปรับข้อความป้ายกำกับให้อ่านง่าย */
+.step-label{
+    font-size:17px;
+    padding:5px 12px;
+}
+
+/* มือถือ */
+@media(max-width:600px){
+
+    .step-menu::before{
+        font-size:20px;
+        line-height:1.6;
+    }
+
+    .step-blue{
+        min-height:145px;
+        transform:none;
+    }
+
+    .step-blue:hover{
+        transform:translateY(-3px);
+    }
+
+    .step-content h3{
+        font-size:21px;
+    }
+
+    .step-content p{
+        font-size:16px;
+    }
+
+    .step-arrow{
+        font-size:38px;
+    }
+}
