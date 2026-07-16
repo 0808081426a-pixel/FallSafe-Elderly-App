@@ -14,17 +14,68 @@
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-    setTimeout(function(){
+    const splash = document.getElementById("splashScreen");
+    const popup = document.getElementById("guidePopup");
 
-        const splash = document.getElementById("splashScreen");
+    setTimeout(function(){
 
         if(splash){
             splash.style.display = "none";
         }
 
+        if(popup){
+            popup.style.display = "flex";
+        }
+
     }, 800);
 
+    const score = localStorage.getItem("mfsScore");
+    const level = localStorage.getItem("riskLevel");
+
+    const status = document.getElementById("riskStatus");
+    const text = document.getElementById("riskText");
+
+    if(score && level && status && text){
+
+        if(level === "ต่ำ"){
+            status.innerHTML = "🟢 ความเสี่ยงต่ำ";
+            text.innerHTML = "ควรรักษาพฤติกรรมสุขภาพที่ดี";
+        }
+
+        else if(level === "ปานกลาง"){
+            status.innerHTML = "🟡 ความเสี่ยงปานกลาง";
+            text.innerHTML =
+                "ควรเฝ้าระวังและปรับพฤติกรรมป้องกันการล้ม";
+        }
+
+        else{
+            status.innerHTML =
+                "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
+
+            text.innerHTML =
+                "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
+        }
+    }
+
 });
+
+function closeGuide(){
+
+    const popup = document.getElementById("guidePopup");
+
+    if(popup){
+        popup.style.display = "none";
+    }
+}
+
+function openGuide(){
+
+    const popup = document.getElementById("guidePopup");
+
+    if(popup){
+        popup.style.display = "flex";
+    }
+}
 </script>
 <body>
 <div id="splashScreen" class="splash-screen">
