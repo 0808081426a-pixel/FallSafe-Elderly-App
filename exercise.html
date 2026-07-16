@@ -277,6 +277,27 @@ body{
         min-height:180px;
     }
 }
+
+.source-note h2{
+    margin:0 0 18px;
+    color:#0b5fa8;
+    font-size:25px;
+}
+
+.source-note p{
+    margin:0 0 18px;
+    padding-left:28px;
+    text-indent:-28px;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.source-note a{
+    color:#0876c5;
+    font-weight:600;
+    word-break:break-word;
+}
+
 </style>
 </head>
 
@@ -409,13 +430,49 @@ body{
     </div>
 
 
+    
     <section class="source-note">
 
-        <strong>แหล่งวิดีโอ:</strong>
-        คณะแพทยศาสตร์ศิริราชพยาบาล กรมอนามัย
-        และสื่อสุขภาพที่มีผู้เชี่ยวชาญด้านกายภาพบำบัด
+        <h2>เอกสารอ้างอิงวิดีโอ (APA 7)</h2>
+
+        <p>
+            ภาควิชาเวชศาสตร์ฟื้นฟู ศิริราช Official. (ม.ป.ป.).
+            <i>Series (SIRI)RAJ EP 75 การออกกำลังกายเพื่อป้องกันการพลัดตกหกล้มในผู้สูงอายุ</i>
+            [วิดีโอ]. YouTube.
+            <a href="https://www.youtube.com/watch?v=C8L7C49HZCo" target="_blank" rel="noopener noreferrer">
+                https://www.youtube.com/watch?v=C8L7C49HZCo
+            </a>
+        </p>
+
+        <p>
+            Thai PBS. (2019, 14 พฤศจิกายน).
+            <i>ท่าฝึกการทรงตัวในผู้สูงอายุ: ข.ขยับ (14 พ.ย. 62)</i>
+            [วิดีโอ]. YouTube.
+            <a href="https://www.youtube.com/watch?v=hJylZ-7L_3A" target="_blank" rel="noopener noreferrer">
+                https://www.youtube.com/watch?v=hJylZ-7L_3A
+            </a>
+        </p>
+
+        <p>
+            กองกิจกรรมทางกายเพื่อสุขภาพ. (2018, 22 เมษายน).
+            <i>E75_2 การออกกำลังกายเพื่อผู้สูงวัยแข็งแรงและกระฉับกระเฉง E75</i>
+            [วิดีโอ]. YouTube.
+            <a href="https://www.youtube.com/watch?v=KxrE6CQuR9E" target="_blank" rel="noopener noreferrer">
+                https://www.youtube.com/watch?v=KxrE6CQuR9E
+            </a>
+        </p>
+
+        <p>
+            Thai PBS. (2021, 13 เมษายน).
+            <i>เก๋าไม่ล้ม บริหารง่าย ๆ ป้องกันการหกล้ม: เก๋ายังฟิต (13 เม.ย. 64)</i>
+            [วิดีโอ]. YouTube.
+            <a href="https://www.youtube.com/watch?v=xy9PKX4r3jc" target="_blank" rel="noopener noreferrer">
+                https://www.youtube.com/watch?v=xy9PKX4r3jc
+            </a>
+        </p>
 
     </section>
+
 
 
     <a class="home-link" href="index.html">
@@ -472,6 +529,7 @@ body{
 </div>
 
 
+
 <script>
 const videoData = {
 
@@ -479,38 +537,35 @@ const videoData = {
         title:"การออกกำลังกายเพื่อป้องกันการพลัดตกหกล้ม",
         videoId:"C8L7C49HZCo",
         description:
-            "วิดีโอจากภาควิชาเวชศาสตร์ฟื้นฟู " +
-            "คณะแพทยศาสตร์ศิริราชพยาบาล " +
-            "แนะนำการออกกำลังกายเพื่อป้องกันการพลัดตกหกล้ม"
+            "วิดีโอแนะนำการออกกำลังกายเพื่อป้องกันการพลัดตกหกล้มในผู้สูงอายุ " +
+            "(ภาควิชาเวชศาสตร์ฟื้นฟู ศิริราช Official, ม.ป.ป.)"
     },
 
     balance:{
-        title:"ฝึกการทรงตัวสำหรับผู้สูงอายุ",
+        title:"ท่าฝึกการทรงตัวในผู้สูงอายุ",
         videoId:"hJylZ-7L_3A",
         description:
-            "ท่าฝึกการทรงตัวอย่างง่าย " +
-            "ช่วยเสริมกล้ามเนื้อแกนกลางและความมั่นคงของร่างกาย"
+            "ท่าฝึกการทรงตัวเพื่อเสริมความแข็งแรงของกล้ามเนื้อแกนกลางลำตัว " +
+            "และเพิ่มความมั่นคงในการเคลื่อนไหว (Thai PBS, 2019)"
     },
 
     e75:{
         title:"โปรแกรมออกกำลังกาย E75",
         videoId:"KxrE6CQuR9E",
         description:
-            "โปรแกรมจากกองกิจกรรมทางกายเพื่อสุขภาพ " +
-            "กรมอนามัย กระทรวงสาธารณสุข " +
-            "สำหรับเสริมความแข็งแรงของผู้สูงอายุ"
+            "โปรแกรมการออกกำลังกายเพื่อเสริมความแข็งแรงและความกระฉับกระเฉงของผู้สูงอายุ " +
+            "(กองกิจกรรมทางกายเพื่อสุขภาพ, 2018)"
     },
 
     easyExercise:{
         title:"บริหารง่าย ๆ เพื่อป้องกันการหกล้ม",
         videoId:"xy9PKX4r3jc",
         description:
-            "กิจกรรมบริหารร่างกายสำหรับผู้สูงอายุ " +
-            "โดยผู้เชี่ยวชาญด้านกายภาพบำบัด"
+            "ท่าบริหารร่างกายเพื่อช่วยป้องกันการหกล้มในผู้สูงอายุ " +
+            "(Thai PBS, 2021)"
     }
 
 };
-
 
 function openVideo(type){
 
@@ -535,7 +590,6 @@ function openVideo(type){
         "flex";
 }
 
-
 function closeVideo(){
 
     document.getElementById("videoFrame").src = "";
@@ -543,7 +597,6 @@ function closeVideo(){
     document.getElementById("videoPopup").style.display =
         "none";
 }
-
 
 document
     .getElementById("videoPopup")
@@ -555,6 +608,7 @@ document
 
     });
 </script>
+
 
 </body>
 </html>
