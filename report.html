@@ -287,7 +287,7 @@ body{
 <div class="actions">
 
     <button class="pdf-button" type="button" onclick="downloadPDF()">
-        📄 ดาวน์โหลด / บันทึกเป็น PDF
+       📄 ดาวน์โหลดรายงาน PDF
     </button>
 
     <button class="home-button" type="button" onclick="window.location.href='index.html'">
@@ -463,13 +463,18 @@ async function downloadPDF(){
             "ไม่สามารถสร้าง PDF ได้ กรุณาลองใหม่อีกครั้ง"
         );
 
-   }finally{
+  }finally{
 
     button.disabled = false;
 
     button.textContent =
         "📄 ดาวน์โหลดรายงาน PDF";
 }
+
+}
+
+loadReport();
+</script>
 
 loadReport();
 </script>
