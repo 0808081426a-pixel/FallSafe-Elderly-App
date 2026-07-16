@@ -10,96 +10,158 @@
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
-    background:#f5fbff;
+    background:#f3f8fc;
+    color:#17324d;
     font-family:"Prompt",sans-serif;
-    color:#263238;
     padding-bottom:40px;
 }
 
 .activity-header{
-    background:linear-gradient(135deg,#63c7ff,#8be3c5);
+    background:linear-gradient(135deg,#0d78c9,#52b7ec);
     color:white;
-    padding:30px 22px 55px;
+    padding:30px 22px 58px;
     border-radius:0 0 34px 34px;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:700;
 }
 
 .activity-header h1{
     margin:24px 0 8px;
-    font-size:29px;
+    font-size:30px;
     line-height:1.45;
 }
 
 .activity-header p{
     margin:0;
     font-size:20px;
-    line-height:1.6;
+    line-height:1.65;
 }
 
 .activity-container{
     width:92%;
-    max-width:760px;
+    max-width:820px;
     margin:-30px auto 0;
 }
 
-.intro-card,
-.video-card{
+.intro-card{
     background:white;
     border-radius:24px;
-    padding:22px;
-    margin-bottom:20px;
-    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    padding:23px;
+    margin-bottom:22px;
+    box-shadow:0 8px 24px rgba(17,88,142,.10);
 }
 
 .intro-card h2{
-    margin-top:0;
+    margin:0 0 10px;
+    color:#0b5fa8;
     font-size:27px;
-    color:#146c94;
 }
 
 .intro-card p{
-    font-size:21px;
+    margin:0;
+    font-size:20px;
     line-height:1.7;
 }
 
-.video-card h2{
-    font-size:25px;
-    margin:0 0 12px;
+.activity-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
 }
 
-.video-card p{
-    font-size:20px;
-    line-height:1.65;
-    margin-bottom:18px;
-}
-
-.video-wrap{
-    position:relative;
-    width:100%;
-    padding-top:56.25%;
+.video-card{
+    border:none;
+    background:white;
+    border-radius:24px;
     overflow:hidden;
-    border-radius:18px;
-    background:#000;
+    padding:0;
+    cursor:pointer;
+    text-align:left;
+    font-family:"Prompt",sans-serif;
+    box-shadow:0 8px 24px rgba(17,88,142,.10);
+    transition:.2s;
 }
 
-.video-wrap iframe{
+.video-card:hover{
+    transform:translateY(-4px);
+}
+
+.thumbnail{
+    min-height:190px;
+    background:linear-gradient(135deg,#d9f1ff,#dff8ef);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.thumbnail-icon{
+    font-size:72px;
+}
+
+.play-icon{
     position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    border:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:rgba(7,101,169,.92);
+    color:white;
+    font-size:32px;
+    box-shadow:0 8px 20px rgba(0,0,0,.18);
+}
+
+.card-content{
+    padding:19px;
+}
+
+.card-content h2{
+    margin:0 0 9px;
+    color:#0b5fa8;
+    font-size:23px;
+    line-height:1.45;
+}
+
+.card-content p{
+    margin:0;
+    font-size:19px;
+    line-height:1.6;
+    color:#455a64;
+}
+
+.watch-text{
+    display:block;
+    margin-top:13px;
+    color:#0876c5;
+    font-size:19px;
+    font-weight:700;
 }
 
 .warning-box{
     background:#fff4df;
     border:2px solid #ffb74d;
-    border-radius:18px;
-    padding:18px;
-    margin:20px 0;
+    border-radius:20px;
+    padding:19px;
+    margin-top:22px;
     font-size:20px;
     line-height:1.7;
+    color:#75420a;
+}
+
+.home-link{
+    display:block;
+    margin-top:22px;
 }
 
 .home-button{
@@ -107,7 +169,7 @@ body{
     min-height:64px;
     border:none;
     border-radius:18px;
-    background:linear-gradient(135deg,#3da9fc,#39c99b);
+    background:linear-gradient(135deg,#0877c9,#35a8ec);
     color:white;
     font-family:"Prompt",sans-serif;
     font-size:23px;
@@ -115,13 +177,104 @@ body{
     cursor:pointer;
 }
 
-@media(max-width:600px){
-    .activity-header h1{
-        font-size:26px;
+/* Popup วิดีโอ */
+
+.video-popup{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:99999;
+    background:rgba(3,29,54,.72);
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+}
+
+.popup-box{
+    width:100%;
+    max-width:820px;
+    max-height:92vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:27px;
+    padding:22px;
+    box-shadow:0 18px 60px rgba(0,0,0,.3);
+}
+
+.popup-box h2{
+    font-size:27px;
+    color:#0b5fa8;
+    line-height:1.45;
+    margin:0 0 14px;
+}
+
+.video-wrap{
+    position:relative;
+    width:100%;
+    padding-top:56.25%;
+    overflow:hidden;
+    border-radius:19px;
+    background:#000;
+}
+
+.video-wrap iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+}
+
+.popup-description{
+    font-size:20px;
+    line-height:1.7;
+    margin:17px 0;
+}
+
+.popup-warning{
+    background:#fff4df;
+    border-radius:15px;
+    padding:14px;
+    font-size:18px;
+    line-height:1.65;
+    margin-bottom:16px;
+}
+
+.close-button{
+    width:100%;
+    min-height:60px;
+    border:none;
+    border-radius:17px;
+    background:#0b67af;
+    color:white;
+    font-family:"Prompt",sans-serif;
+    font-size:22px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.source-note{
+    background:white;
+    border-radius:20px;
+    padding:18px;
+    margin-top:20px;
+    font-size:17px;
+    line-height:1.7;
+    color:#52656d;
+}
+
+@media(max-width:680px){
+
+    .activity-grid{
+        grid-template-columns:1fr;
     }
 
-    .video-card h2{
-        font-size:23px;
+    .activity-header h1{
+        font-size:27px;
+    }
+
+    .thumbnail{
+        min-height:180px;
     }
 }
 </style>
@@ -131,138 +284,277 @@ body{
 
 <header class="activity-header">
 
-<div class="logo">🛡️ FallGuard+</div>
+    <div class="logo">🛡️ FallGuard+</div>
 
-<h1>กิจกรรมป้องกันการพลัดตกหกล้ม</h1>
+    <h1>กิจกรรมป้องกันการพลัดตกหกล้ม</h1>
 
-<p>
-เรียนรู้และฝึกปฏิบัติผ่านวิดีโอ
-เพื่อเพิ่มความแข็งแรง การทรงตัว
-และความมั่นใจในการเคลื่อนไหว
-</p>
+    <p>
+        เลือกกิจกรรมและฝึกตามวิดีโออย่างช้า ๆ
+        เพื่อเพิ่มกำลังกล้ามเนื้อและการทรงตัว
+    </p>
 
 </header>
 
 <main class="activity-container">
 
-<section class="intro-card">
+    <section class="intro-card">
 
-<h2>วิธีเลือกกิจกรรม</h2>
+        <h2>แตะกิจกรรมเพื่อดูวิดีโอ</h2>
 
-<p>
-เลือกดูวิดีโอทีละกิจกรรม ฝึกตามอย่างช้า ๆ
-และควรมีผู้ดูแลอยู่ใกล้ในผู้ที่มีความเสี่ยงต่อการหกล้ม
-</p>
+        <p>
+            ควรฝึกในบริเวณที่ปลอดภัย ใกล้ราวจับหรือเก้าอี้ที่มั่นคง
+            และควรมีผู้ดูแลอยู่ใกล้สำหรับผู้ที่มีความเสี่ยงสูง
+        </p>
 
-</section>
+    </section>
 
+    <section class="activity-grid">
 
-<section class="video-card">
+        <button
+            class="video-card"
+            type="button"
+            onclick="openVideo('fallPrevention')"
+        >
+            <div class="thumbnail">
+                <div class="thumbnail-icon">👵</div>
+                <div class="play-icon">▶</div>
+            </div>
 
-<h2>1. ฝึกการทรงตัว</h2>
+            <div class="card-content">
+                <h2>การออกกำลังกายป้องกันการหกล้ม</h2>
 
-<p>
-ช่วยเพิ่มความมั่นคงขณะยืนและเดิน
-ลดโอกาสเสียสมดุล
-</p>
+                <p>
+                    ฝึกท่าที่ช่วยเพิ่มความแข็งแรงและลดโอกาสพลัดตกหกล้ม
+                </p>
 
-<div class="video-wrap">
-
-<iframe
-src="https://www.youtube.com/embed/VIDEO_ID_1"
-title="วิดีโอฝึกการทรงตัว"
-allowfullscreen>
-</iframe>
-
-</div>
-
-</section>
-
-
-<section class="video-card">
-
-<h2>2. ลุก–นั่งจากเก้าอี้อย่างปลอดภัย</h2>
-
-<p>
-ช่วยเพิ่มกำลังกล้ามเนื้อขา
-และช่วยให้ลุกยืนได้มั่นคงขึ้น
-</p>
-
-<div class="video-wrap">
-
-<iframe
-src="https://www.youtube.com/embed/VIDEO_ID_2"
-title="วิดีโอลุกนั่งจากเก้าอี้"
-allowfullscreen>
-</iframe>
-
-</div>
-
-</section>
+                <span class="watch-text">▶ ดูวิดีโอ</span>
+            </div>
+        </button>
 
 
-<section class="video-card">
+        <button
+            class="video-card"
+            type="button"
+            onclick="openVideo('balance')"
+        >
+            <div class="thumbnail">
+                <div class="thumbnail-icon">⚖️</div>
+                <div class="play-icon">▶</div>
+            </div>
 
-<h2>3. เดินอย่างมั่นคง</h2>
+            <div class="card-content">
+                <h2>ฝึกการทรงตัว</h2>
 
-<p>
-ฝึกจังหวะการเดิน การยกเท้า
-และการมองทางเดินอย่างปลอดภัย
-</p>
+                <p>
+                    เพิ่มความมั่นคงขณะยืน เดิน และเปลี่ยนท่าทาง
+                </p>
 
-<div class="video-wrap">
-
-<iframe
-src="https://www.youtube.com/embed/VIDEO_ID_3"
-title="วิดีโอเดินอย่างมั่นคง"
-allowfullscreen>
-</iframe>
-
-</div>
-
-</section>
-
-
-<section class="video-card">
-
-<h2>4. การใช้อุปกรณ์ช่วยเดิน</h2>
-
-<p>
-เรียนรู้การใช้ไม้เท้าหรืออุปกรณ์ช่วยเดิน
-อย่างถูกวิธี
-</p>
-
-<div class="video-wrap">
-
-<iframe
-src="https://www.youtube.com/embed/VIDEO_ID_4"
-title="วิดีโอการใช้อุปกรณ์ช่วยเดิน"
-allowfullscreen>
-</iframe>
-
-</div>
-
-</section>
+                <span class="watch-text">▶ ดูวิดีโอ</span>
+            </div>
+        </button>
 
 
-<div class="warning-box">
+        <button
+            class="video-card"
+            type="button"
+            onclick="openVideo('e75')"
+        >
+            <div class="thumbnail">
+                <div class="thumbnail-icon">🦵</div>
+                <div class="play-icon">▶</div>
+            </div>
 
-⚠️ หยุดกิจกรรมทันที หากมีอาการเวียนศีรษะ
-เจ็บหน้าอก หายใจลำบาก ปวดมาก
-หรือรู้สึกเสียการทรงตัว และควรปรึกษาบุคลากรสุขภาพ
+            <div class="card-content">
+                <h2>เสริมความแข็งแรงของร่างกาย</h2>
 
-</div>
+                <p>
+                    โปรแกรม E75 สำหรับผู้สูงอายุวัยแข็งแรงและกระฉับกระเฉง
+                </p>
+
+                <span class="watch-text">▶ ดูวิดีโอ</span>
+            </div>
+        </button>
 
 
-<a href="index.html">
+        <button
+            class="video-card"
+            type="button"
+            onclick="openVideo('easyExercise')"
+        >
+            <div class="thumbnail">
+                <div class="thumbnail-icon">🪑</div>
+                <div class="play-icon">▶</div>
+            </div>
 
-<button class="home-button" type="button">
-กลับหน้าหลัก
-</button>
+            <div class="card-content">
+                <h2>ท่าบริหารง่าย ๆ ป้องกันการหกล้ม</h2>
 
-</a>
+                <p>
+                    กิจกรรมที่สามารถฝึกได้ที่บ้านสำหรับผู้สูงอายุ
+                </p>
+
+                <span class="watch-text">▶ ดูวิดีโอ</span>
+            </div>
+        </button>
+
+    </section>
+
+
+    <div class="warning-box">
+
+        ⚠️ หากมีอาการเวียนศีรษะ เจ็บหน้าอก หายใจลำบาก
+        ปวดมาก หรือเสียการทรงตัว ให้หยุดกิจกรรมทันที
+        และแจ้งผู้ดูแลหรือบุคลากรสุขภาพ
+
+    </div>
+
+
+    <section class="source-note">
+
+        <strong>แหล่งวิดีโอ:</strong>
+        คณะแพทยศาสตร์ศิริราชพยาบาล กรมอนามัย
+        และสื่อสุขภาพที่มีผู้เชี่ยวชาญด้านกายภาพบำบัด
+
+    </section>
+
+
+    <a class="home-link" href="index.html">
+
+        <button class="home-button" type="button">
+            กลับหน้าหลัก
+        </button>
+
+    </a>
 
 </main>
+
+
+<div id="videoPopup" class="video-popup">
+
+    <div class="popup-box">
+
+        <h2 id="videoTitle"></h2>
+
+        <div class="video-wrap">
+
+            <iframe
+                id="videoFrame"
+                src=""
+                title="วิดีโอกิจกรรมป้องกันการพลัดตกหกล้ม"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen
+            ></iframe>
+
+        </div>
+
+        <p
+            id="videoDescription"
+            class="popup-description"
+        ></p>
+
+        <div class="popup-warning">
+
+            ⚠️ ควรเริ่มจากท่าง่าย ทำอย่างช้า ๆ
+            และมีผู้ดูแลหรือสิ่งยึดจับที่มั่นคงอยู่ใกล้ตัว
+
+        </div>
+
+        <button
+            class="close-button"
+            type="button"
+            onclick="closeVideo()"
+        >
+            ปิดวิดีโอ
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+const videoData = {
+
+    fallPrevention:{
+        title:"การออกกำลังกายเพื่อป้องกันการพลัดตกหกล้ม",
+        videoId:"C8L7C49HZCo",
+        description:
+            "วิดีโอจากภาควิชาเวชศาสตร์ฟื้นฟู " +
+            "คณะแพทยศาสตร์ศิริราชพยาบาล " +
+            "แนะนำการออกกำลังกายเพื่อป้องกันการพลัดตกหกล้ม"
+    },
+
+    balance:{
+        title:"ฝึกการทรงตัวสำหรับผู้สูงอายุ",
+        videoId:"hJylZ-7L_3A",
+        description:
+            "ท่าฝึกการทรงตัวอย่างง่าย " +
+            "ช่วยเสริมกล้ามเนื้อแกนกลางและความมั่นคงของร่างกาย"
+    },
+
+    e75:{
+        title:"โปรแกรมออกกำลังกาย E75",
+        videoId:"KxrE6CQuR9E",
+        description:
+            "โปรแกรมจากกองกิจกรรมทางกายเพื่อสุขภาพ " +
+            "กรมอนามัย กระทรวงสาธารณสุข " +
+            "สำหรับเสริมความแข็งแรงของผู้สูงอายุ"
+    },
+
+    easyExercise:{
+        title:"บริหารง่าย ๆ เพื่อป้องกันการหกล้ม",
+        videoId:"xy9PKX4r3jc",
+        description:
+            "กิจกรรมบริหารร่างกายสำหรับผู้สูงอายุ " +
+            "โดยผู้เชี่ยวชาญด้านกายภาพบำบัด"
+    }
+
+};
+
+
+function openVideo(type){
+
+    const data = videoData[type];
+
+    if(!data){
+        return;
+    }
+
+    document.getElementById("videoTitle").textContent =
+        data.title;
+
+    document.getElementById("videoDescription").textContent =
+        data.description;
+
+    document.getElementById("videoFrame").src =
+        "https://www.youtube.com/embed/" +
+        data.videoId +
+        "?rel=0";
+
+    document.getElementById("videoPopup").style.display =
+        "flex";
+}
+
+
+function closeVideo(){
+
+    document.getElementById("videoFrame").src = "";
+
+    document.getElementById("videoPopup").style.display =
+        "none";
+}
+
+
+document
+    .getElementById("videoPopup")
+    .addEventListener("click", function(event){
+
+        if(event.target === this){
+            closeVideo();
+        }
+
+    });
+</script>
 
 </body>
 </html>
