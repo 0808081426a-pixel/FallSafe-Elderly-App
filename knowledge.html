@@ -1,227 +1,477 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Knowledge | FallGuard+</title>
+<title>การป้องกันการพลัดตกหกล้ม | FallGuard+</title>
 
 <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<style>
+body{
+    margin:0;
+    background:#f5fbff;
+    color:#263238;
+    font-family:"Prompt",sans-serif;
+    padding-bottom:40px;
+}
+
+.prevention-header{
+    background:linear-gradient(135deg,#63c7ff,#8be3c5);
+    color:white;
+    padding:30px 22px 55px;
+    border-radius:0 0 34px 34px;
+}
+
+.prevention-header h1{
+    margin:24px 0 8px;
+    font-size:29px;
+    line-height:1.45;
+}
+
+.prevention-header p{
+    margin:0;
+    font-size:20px;
+    line-height:1.6;
+}
+
+.prevention-container{
+    width:92%;
+    max-width:760px;
+    margin:-30px auto 0;
+}
+
+.intro-card{
+    background:white;
+    border-radius:24px;
+    padding:24px;
+    margin-bottom:22px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+
+.intro-card h2{
+    margin-top:0;
+    color:#146c94;
+    font-size:27px;
+}
+
+.intro-card p{
+    font-size:21px;
+    line-height:1.7;
+    margin-bottom:0;
+}
+
+.room-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+}
+
+.room-card{
+    background:white;
+    border:none;
+    border-radius:24px;
+    padding:0;
+    overflow:hidden;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    cursor:pointer;
+    text-align:left;
+    font-family:"Prompt",sans-serif;
+}
+
+.room-card img{
+    width:100%;
+    height:190px;
+    object-fit:cover;
+    display:block;
+}
+
+.room-card-content{
+    padding:18px;
+}
+
+.room-card h2{
+    font-size:24px;
+    margin:0 0 8px;
+    color:#146c94;
+}
+
+.room-card p{
+    font-size:19px;
+    line-height:1.55;
+    margin:0;
+    color:#455a64;
+}
+
+.tap-text{
+    display:block;
+    margin-top:12px;
+    font-size:18px;
+    font-weight:600;
+    color:#258fc0;
+}
+
+.home-link{
+    display:block;
+    margin-top:24px;
+}
+
+.home-button{
+    width:100%;
+    min-height:64px;
+    border:none;
+    border-radius:18px;
+    background:linear-gradient(135deg,#3da9fc,#39c99b);
+    color:white;
+    font-family:"Prompt",sans-serif;
+    font-size:23px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.popup{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    z-index:99999;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+}
+
+.popup-box{
+    width:100%;
+    max-width:560px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:26px;
+    padding:22px;
+    box-shadow:0 15px 40px rgba(0,0,0,.22);
+}
+
+.popup-box img{
+    width:100%;
+    max-height:290px;
+    object-fit:cover;
+    border-radius:20px;
+}
+
+.popup-box h2{
+    font-size:28px;
+    color:#146c94;
+    margin:18px 0 12px;
+}
+
+.popup-list{
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+.popup-list li{
+    background:#eef9ff;
+    border-radius:16px;
+    padding:15px;
+    margin-bottom:11px;
+    font-size:21px;
+    line-height:1.6;
+}
+
+.close-button{
+    width:100%;
+    min-height:60px;
+    margin-top:12px;
+    border:none;
+    border-radius:17px;
+    background:#258fc0;
+    color:white;
+    font-family:"Prompt",sans-serif;
+    font-size:22px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+@media(max-width:650px){
+    .room-grid{
+        grid-template-columns:1fr;
+    }
+
+    .room-card img{
+        height:210px;
+    }
+
+    .prevention-header h1{
+        font-size:26px;
+    }
+}
+</style>
 </head>
-
 
 <body>
 
+<header class="prevention-header">
+    <div class="logo">🛡️ FallGuard+</div>
 
-<header>
+    <h1>การป้องกันการพลัดตกหกล้มที่บ้าน</h1>
 
-<div class="logo">
-🛡️ FallGuard+
-</div>
-
-<div class="welcome">
-
-<h2>ความรู้ป้องกันการหกล้ม 📚</h2>
-
-<p>ข้อมูลสำหรับผู้สูงอายุและผู้ดูแล</p>
-
-</div>
-
+    <p>
+        เลือกพื้นที่ภายในบ้าน เพื่อดูวิธีจัดบ้านให้ปลอดภัย
+    </p>
 </header>
 
+<main class="prevention-container">
 
+    <section class="intro-card">
+        <h2>แตะที่รูปเพื่อดูคำแนะนำ</h2>
 
-<section class="menu">
+        <p>
+            รูปภาพและข้อความถูกออกแบบให้มองเห็นง่าย
+            เหมาะสำหรับผู้สูงอายุและผู้ดูแล
+        </p>
+    </section>
 
+    <section class="room-grid">
 
-<div class="card" onclick="showKnowledge('home')">
+        <button
+            class="room-card"
+            type="button"
+            onclick="showPrevention('bedroom')"
+        >
+            <img
+                src="images/bedroom-safety.png"
+                alt="ห้องนอนปลอดภัย"
+            >
 
-<h2>🏠</h2>
+            <div class="room-card-content">
+                <h2>🛏️ ห้องนอน</h2>
+                <p>จัดเตียง ทางเดิน และไฟกลางคืนให้ปลอดภัย</p>
+                <span class="tap-text">แตะเพื่อดูรายละเอียด</span>
+            </div>
+        </button>
 
-<h3>จัดบ้านปลอดภัย</h3>
+        <button
+            class="room-card"
+            type="button"
+            onclick="showPrevention('bathroom')"
+        >
+            <img
+                src="images/bathroom-safety.png"
+                alt="ห้องน้ำปลอดภัย"
+            >
 
-<p>ลดสิ่งเสี่ยงต่อการสะดุดล้ม</p>
+            <div class="room-card-content">
+                <h2>🚿 ห้องน้ำ</h2>
+                <p>ป้องกันพื้นลื่น และเพิ่มจุดจับยึด</p>
+                <span class="tap-text">แตะเพื่อดูรายละเอียด</span>
+            </div>
+        </button>
+
+        <button
+            class="room-card"
+            type="button"
+            onclick="showPrevention('stairs')"
+        >
+            <img
+                src="images/stairs-safety.png"
+                alt="บันไดปลอดภัย"
+            >
+
+            <div class="room-card-content">
+                <h2>🪜 บันได</h2>
+                <p>เพิ่มราวจับ แสงสว่าง และแถบกันลื่น</p>
+                <span class="tap-text">แตะเพื่อดูรายละเอียด</span>
+            </div>
+        </button>
+
+        <button
+            class="room-card"
+            type="button"
+            onclick="showPrevention('kitchen')"
+        >
+            <img
+                src="images/kitchen-safety.png"
+                alt="ห้องครัวปลอดภัย"
+            >
+
+            <div class="room-card-content">
+                <h2>🍳 ห้องครัว</h2>
+                <p>เก็บของให้อยู่ในระดับที่หยิบง่าย</p>
+                <span class="tap-text">แตะเพื่อดูรายละเอียด</span>
+            </div>
+        </button>
+
+        <button
+            class="room-card"
+            type="button"
+            onclick="showPrevention('walkway')"
+        >
+            <img
+                src="images/walkway-safety.png"
+                alt="ทางเดินปลอดภัย"
+            >
+
+            <div class="room-card-content">
+                <h2>🚶 ทางเดิน</h2>
+                <p>เก็บสิ่งกีดขวางและสายไฟออกจากทางเดิน</p>
+                <span class="tap-text">แตะเพื่อดูรายละเอียด</span>
+            </div>
+        </button>
+
+        <button
+            class="room-card"
+            type="button"
+            onclick="showPrevention('lighting')"
+        >
+            <img
+                src="images/lighting-safety.png"
+                alt="แสงสว่างภายในบ้าน"
+            >
+
+            <div class="room-card-content">
+                <h2>💡 แสงสว่าง</h2>
+                <p>เพิ่มไฟในบริเวณที่มืดและจุดเปลี่ยนระดับ</p>
+                <span class="tap-text">แตะเพื่อดูรายละเอียด</span>
+            </div>
+        </button>
+
+    </section>
+
+    <a class="home-link" href="index.html">
+        <button class="home-button" type="button">
+            กลับหน้าหลัก
+        </button>
+    </a>
+
+</main>
+
+<div id="preventionPopup" class="popup">
+
+    <div class="popup-box">
+
+        <img id="popupImage" src="" alt="ภาพคำแนะนำ">
+
+        <h2 id="popupTitle"></h2>
+
+        <ul id="popupList" class="popup-list"></ul>
+
+        <button
+            class="close-button"
+            type="button"
+            onclick="closePrevention()"
+        >
+            ปิด
+        </button>
+
+    </div>
 
 </div>
-
-
-
-<div class="card" onclick="showKnowledge('medicine')">
-
-<h2>💊</h2>
-
-<h3>การใช้ยา</h3>
-
-<p>ระวังยาที่เพิ่มความเสี่ยงหกล้ม</p>
-
-</div>
-
-
-
-<div class="card" onclick="showKnowledge('eye')">
-
-<h2>👀</h2>
-
-<h3>ดูแลสายตา</h3>
-
-<p>การมองเห็นกับการป้องกันล้ม</p>
-
-</div>
-
-
-
-<div class="card" onclick="showKnowledge('shoe')">
-
-<h2>👟</h2>
-
-<h3>รองเท้าที่เหมาะสม</h3>
-
-<p>เพิ่มความมั่นคงขณะเดิน</p>
-
-</div>
-
-
-</section>
-
-
-
-<div style="text-align:center;margin:30px;">
-
-<a href="index.html">
-
-<button>
-กลับหน้าหลัก
-</button>
-
-</a>
-
-</div>
-
-
-
-
-<div id="popup" style="
-display:none;
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,0.5);
-align-items:center;
-justify-content:center;
-">
-
-
-<div style="
-background:white;
-padding:25px;
-border-radius:20px;
-width:80%;
-text-align:center;
-">
-
-
-<h2 id="title"></h2>
-
-<p id="detail"></p>
-
-
-<button onclick="closeKnowledge()">
-ปิด
-</button>
-
-
-</div>
-
-</div>
-
-
 
 <script>
+const preventionData = {
+    bedroom: {
+        title: "🛏️ ห้องนอนปลอดภัย",
+        image: "images/bedroom-safety.png",
+        items: [
+            "✅ ปรับเตียงให้มีความสูงพอดี ลุกและนั่งได้สะดวก",
+            "✅ เก็บของและสายไฟไม่ให้กีดขวางทางเดิน",
+            "✅ วางโคมไฟหรือสวิตช์ไฟให้อยู่ใกล้เตียง",
+            "✅ ใช้ไฟกลางคืนเมื่อจำเป็นต้องลุกในเวลากลางคืน"
+        ]
+    },
 
+    bathroom: {
+        title: "🚿 ห้องน้ำปลอดภัย",
+        image: "images/bathroom-safety.png",
+        items: [
+            "✅ ติดราวจับบริเวณโถสุขภัณฑ์และที่อาบน้ำ",
+            "✅ ใช้แผ่นหรือพื้นกันลื่น",
+            "✅ เช็ดพื้นให้แห้งหลังใช้งาน",
+            "✅ วางของใช้ในตำแหน่งที่หยิบง่าย ไม่ต้องเอื้อมสูง"
+        ]
+    },
 
-function showKnowledge(type){
+    stairs: {
+        title: "🪜 บันไดปลอดภัย",
+        image: "images/stairs-safety.png",
+        items: [
+            "✅ ติดราวจับที่มั่นคงตลอดแนวบันได",
+            "✅ ติดแถบสีหรือแถบกันลื่นบริเวณขอบขั้น",
+            "✅ เปิดไฟให้สว่างทั้งด้านบนและด้านล่าง",
+            "✅ ไม่วางสิ่งของไว้บนขั้นบันได"
+        ]
+    },
 
+    kitchen: {
+        title: "🍳 ห้องครัวปลอดภัย",
+        image: "images/kitchen-safety.png",
+        items: [
+            "✅ เก็บของใช้บ่อยให้อยู่ในระดับเอวหรืออก",
+            "✅ ไม่ปีนเก้าอี้เพื่อหยิบของ",
+            "✅ เช็ดน้ำและน้ำมันทันทีเมื่อหก",
+            "✅ จัดทางเดินให้โล่งและไม่วางของบนพื้น"
+        ]
+    },
 
-let title="";
-let detail="";
+    walkway: {
+        title: "🚶 ทางเดินปลอดภัย",
+        image: "images/walkway-safety.png",
+        items: [
+            "✅ เก็บรองเท้า พรม และสายไฟออกจากทางเดิน",
+            "✅ ยึดพรมให้แน่นหรือหลีกเลี่ยงพรมที่เลื่อนได้",
+            "✅ จัดเฟอร์นิเจอร์ให้มีพื้นที่เดินเพียงพอ",
+            "✅ ใช้อุปกรณ์ช่วยเดินตามคำแนะนำของบุคลากรสุขภาพ"
+        ]
+    },
 
+    lighting: {
+        title: "💡 แสงสว่างเพียงพอ",
+        image: "images/lighting-safety.png",
+        items: [
+            "✅ เปิดไฟก่อนเดินในบริเวณที่มืด",
+            "✅ เพิ่มไฟบริเวณบันได ห้องน้ำ และทางเดิน",
+            "✅ ใช้ไฟกลางคืนในห้องนอน",
+            "✅ จัดสวิตช์ให้อยู่ในตำแหน่งที่เอื้อมถึงง่าย"
+        ]
+    }
+};
 
-if(type=="home"){
+function showPrevention(type){
+    const data = preventionData[type];
 
-title="🏠 จัดบ้านปลอดภัย";
+    if(!data){
+        return;
+    }
 
-detail="\
-✓ เก็บของไม่ให้กีดขวางทางเดิน\
-<br>✓ เพิ่มแสงสว่างภายในบ้าน\
-<br>✓ ติดราวจับในห้องน้ำ\
-<br>✓ ระวังพื้นเปียกลื่น";
+    document.getElementById("popupImage").src = data.image;
+    document.getElementById("popupTitle").textContent = data.title;
 
+    document.getElementById("popupList").innerHTML =
+        data.items
+            .map(function(item){
+                return "<li>" + item + "</li>";
+            })
+            .join("");
+
+    document.getElementById("preventionPopup").style.display = "flex";
 }
 
-
-else if(type=="medicine"){
-
-title="💊 การใช้ยาอย่างปลอดภัย";
-
-detail="\
-✓ ใช้ยาตามคำสั่งแพทย์\
-<br>✓ ระวังยาที่ทำให้เวียนศีรษะ\
-<br>✓ ไม่หยุดยาเอง";
-
+function closePrevention(){
+    document.getElementById("preventionPopup").style.display = "none";
 }
 
-
-else if(type=="eye"){
-
-title="👀 ดูแลสายตา";
-
-detail="\
-✓ ตรวจสายตาสม่ำเสมอ\
-<br>✓ ใส่แว่นตามคำแนะนำ\
-<br>✓ เปิดไฟให้เพียงพอ";
-
-}
-
-
-else{
-
-title="👟 รองเท้าที่เหมาะสม";
-
-detail="\
-✓ เลือกรองเท้าพอดีเท้า\
-<br>✓ พื้นรองเท้าไม่ลื่น\
-<br>✓ หลีกเลี่ยงรองเท้าส้นสูง";
-
-}
-
-
-
-document.getElementById("title").innerHTML=title;
-
-document.getElementById("detail").innerHTML=detail;
-
-document.getElementById("popup").style.display="flex";
-
-
-}
-
-
-
-function closeKnowledge(){
-
-document.getElementById("popup").style.display="none";
-
-}
-
-
+document.getElementById("preventionPopup").addEventListener(
+    "click",
+    function(event){
+        if(event.target === this){
+            closePrevention();
+        }
+    }
+);
 </script>
 
-
 </body>
-
 </html>
