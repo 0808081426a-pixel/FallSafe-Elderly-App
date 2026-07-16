@@ -4,187 +4,646 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Morse Fall Scale</title>
+<title>แบบประเมิน Thai-FRAT | FallGuard+</title>
 
 <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #f5fbff;
+    color: #263238;
+    font-family: "Prompt", sans-serif;
+    padding-bottom: 40px;
+}
+
+.assessment-header {
+    background: linear-gradient(135deg, #63c7ff, #8be3c5);
+    color: white;
+    padding: 28px 20px 55px;
+    border-radius: 0 0 34px 34px;
+}
+
+.assessment-logo {
+    font-size: 27px;
+    font-weight: 700;
+}
+
+.assessment-header h1 {
+    margin: 25px 0 8px;
+    font-size: 29px;
+    line-height: 1.45;
+}
+
+.assessment-header p {
+    margin: 0;
+    font-size: 20px;
+    line-height: 1.5;
+}
+
+.assessment-container {
+    width: 92%;
+    max-width: 760px;
+    margin: -30px auto 0;
+}
+
+.intro-card,
+.question-card,
+.result-card,
+.reference-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+.intro-card h2 {
+    margin-top: 0;
+    font-size: 27px;
+    line-height: 1.5;
+    color: #146c94;
+}
+
+.intro-card p {
+    font-size: 21px;
+    line-height: 1.7;
+    margin-bottom: 0;
+}
+
+.progress-text {
+    font-size: 20px;
+    font-weight: 600;
+    color: #146c94;
+    margin-bottom: 12px;
+}
+
+.progress-track {
+    height: 14px;
+    background: #e8f4f8;
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #46b5e8, #59d7aa);
+    transition: width 0.25s ease;
+}
+
+.question-card h3 {
+    margin: 0 0 18px;
+    font-size: 25px;
+    line-height: 1.55;
+}
+
+.option-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: #eef9ff;
+    border: 3px solid transparent;
+    border-radius: 18px;
+    padding: 19px;
+    margin-bottom: 14px;
+    font-size: 21px;
+    line-height: 1.65;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.option-label:hover {
+    border-color: #69c7ed;
+}
+
+.option-label:has(input:checked) {
+    background: #dcf7ed;
+    border-color: #35bd8a;
+}
+
+.option-label input {
+    width: 26px;
+    height: 26px;
+    min-width: 26px;
+    margin-top: 4px;
+    accent-color: #249fd0;
+}
+
+.medicine-list {
+    display: block;
+    margin-top: 8px;
+    font-size: 19px;
+    color: #455a64;
+}
+
+.action-button,
+.home-button {
+    width: 100%;
+    min-height: 66px;
+    border: none;
+    border-radius: 19px;
+    padding: 14px 18px;
+    font-family: "Prompt", sans-serif;
+    font-size: 23px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.action-button {
+    background: linear-gradient(135deg, #3da9fc, #39c99b);
+    color: white;
+    box-shadow: 0 8px 18px rgba(61, 169, 252, 0.25);
+}
+
+.home-button {
+    margin-top: 14px;
+    background: #e7f6fd;
+    color: #136b91;
+}
+
+.warning-message {
+    display: none;
+    background: #fff4df;
+    border: 2px solid #ffb74d;
+    border-radius: 16px;
+    padding: 16px;
+    margin: 18px 0;
+    font-size: 20px;
+    line-height: 1.6;
+    color: #8a4b08;
+}
+
+.result-card {
+    display: none;
+    text-align: center;
+    scroll-margin-top: 20px;
+}
+
+.result-icon {
+    font-size: 60px;
+}
+
+.result-card h2 {
+    font-size: 31px;
+    margin: 10px 0;
+}
+
+.score-number {
+    font-size: 48px;
+    font-weight: 700;
+    color: #146c94;
+    margin: 10px 0;
+}
+
+.result-description {
+    font-size: 22px;
+    line-height: 1.7;
+}
+
+.advice-box {
+    text-align: left;
+    background: #f5fbff;
+    border-radius: 18px;
+    padding: 20px;
+    margin-top: 18px;
+}
+
+.advice-box h3 {
+    font-size: 25px;
+    margin-top: 0;
+}
+
+.advice-box p {
+    font-size: 21px;
+    line-height: 1.75;
+    margin: 9px 0;
+}
+
+.reference-card {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #546e7a;
+}
+
+.reference-card h3 {
+    font-size: 21px;
+    color: #37474f;
+    margin-top: 0;
+}
+
+.reference-card a {
+    color: #146c94;
+    word-break: break-word;
+}
+
+@media (max-width: 600px) {
+    .assessment-header h1 {
+        font-size: 26px;
+    }
+
+    .assessment-header p {
+        font-size: 18px;
+    }
+
+    .question-card h3 {
+        font-size: 23px;
+    }
+
+    .option-label {
+        font-size: 20px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-<header>
-<div class="logo">🛡️ FallGuard+</div>
-<div class="welcome">
-<h2>ประเมินความเสี่ยงหกล้ม</h2>
-<p>Morse Fall Scale (MFS)</p>
-</div>
+<header class="assessment-header">
+    <div class="assessment-logo">🛡️ FallGuard+</div>
+
+    <h1>ประเมินความเสี่ยงต่อการพลัดตกหกล้มในผู้สูงอายุ</h1>
+
+    <p>Thai Falls Risk Assessment Test (Thai-FRAT)</p>
 </header>
 
+<main class="assessment-container">
 
-<section class="risk-card">
+    <section class="intro-card">
+        <h2>คำแนะนำก่อนทำแบบประเมิน</h2>
 
-<h2>แบบประเมิน MFS</h2>
+        <p>
+            กรุณาเลือกคำตอบที่ตรงกับผู้รับการประเมินมากที่สุดให้ครบทั้ง 6 ข้อ
+            จากนั้นกดปุ่ม “ประเมินความเสี่ยง”
+        </p>
+    </section>
 
-<form id="mfsForm">
+    <section class="intro-card">
+        <div class="progress-text" id="progressText">
+            ตอบแล้ว 0 จาก 6 ข้อ
+        </div>
 
-<p>1. เคยมีประวัติหกล้มหรือไม่</p>
-<select id="fall">
-<option value="0">ไม่เคย (0 คะแนน)</option>
-<option value="25">เคย (25 คะแนน)</option>
-</select>
+        <div class="progress-track">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </section>
 
+    <form id="thaiFratForm">
 
-<p>2. มีโรคร่วมมากกว่า 1 โรคหรือไม่</p>
-<select id="diagnosis">
-<option value="0">ไม่มี (0 คะแนน)</option>
-<option value="15">มี (15 คะแนน)</option>
-</select>
+        <section class="question-card">
+            <h3>1. เพศ</h3>
 
+            <label class="option-label">
+                <input type="radio" name="gender" value="1">
+                <span>หญิง — 1 คะแนน</span>
+            </label>
 
-<p>3. ใช้อุปกรณ์ช่วยเดินหรือไม่</p>
-<select id="aid">
-<option value="0">ไม่มี (0 คะแนน)</option>
-<option value="15">ใช้ไม้เท้า/Walker (15 คะแนน)</option>
-<option value="30">เกาะเฟอร์นิเจอร์ (30 คะแนน)</option>
-</select>
+            <label class="option-label">
+                <input type="radio" name="gender" value="0">
+                <span>ชาย — 0 คะแนน</span>
+            </label>
+        </section>
 
+        <section class="question-card">
+            <h3>2. การมองเห็นบกพร่อง</h3>
 
-<p>4. มีการให้น้ำเกลือหรือ Heparin lock</p>
-<select id="iv">
-<option value="0">ไม่มี (0 คะแนน)</option>
-<option value="20">มี (20 คะแนน)</option>
-</select>
+            <label class="option-label">
+                <input type="radio" name="vision" value="1">
+                <span>
+                    ไม่สามารถอ่านตัวเลขที่ระยะ 6/12 เมตร
+                    ได้มากกว่าครึ่ง — 1 คะแนน
+                </span>
+            </label>
 
+            <label class="option-label">
+                <input type="radio" name="vision" value="0">
+                <span>
+                    อ่านตัวเลขที่ระยะ 6/12 เมตร
+                    ได้มากกว่าครึ่ง — 0 คะแนน
+                </span>
+            </label>
+        </section>
 
-<p>5. ลักษณะการเดิน</p>
-<select id="gait">
-<option value="0">ปกติ (0 คะแนน)</option>
-<option value="10">อ่อนแรง (10 คะแนน)</option>
-<option value="20">บกพร่อง (20 คะแนน)</option>
-</select>
+        <section class="question-card">
+            <h3>3. การทรงตัวบกพร่อง</h3>
 
+            <label class="option-label">
+                <input type="radio" name="balance" value="2">
+                <span>
+                    ยืนต่อเท้าเป็นเส้นตรงไม่ได้
+                    หรือยืนได้ไม่ถึง 10 วินาที — 2 คะแนน
+                </span>
+            </label>
 
-<p>6. การรับรู้ความสามารถของตนเอง</p>
-<select id="mental">
-<option value="0">รู้ข้อจำกัด (0 คะแนน)</option>
-<option value="15">ประเมินตนเองสูงเกินจริง (15 คะแนน)</option>
-</select>
+            <label class="option-label">
+                <input type="radio" name="balance" value="0">
+                <span>
+                    ยืนต่อเท้าเป็นเส้นตรงได้นาน
+                    10 วินาที — 0 คะแนน
+                </span>
+            </label>
+        </section>
 
+        <section class="question-card">
+            <h3>4. การใช้ยา</h3>
 
-<button type="button" onclick="calculateMFS()">
-ประเมินผล
-</button>
+            <label class="option-label">
+                <input type="radio" name="medicine" value="1">
+                <span>
+                    กินยาต่อไปนี้ตั้งแต่ 1 ชนิดขึ้นไป — 1 คะแนน
 
+                    <span class="medicine-list">
+                        ยานอนหลับ ยากล่อมประสาท ยาลดความดันโลหิต
+                        ยาขับปัสสาวะ ยารักษาโรคข้ออักเสบ ตั้งแต่ 4 ชนิดขึ้นไป
+                        โดยรวมวิตามินด้วย
+                    </span>
+                </span>
+            </label>
 
-<h2 id="result"></h2>
-<div id="advice"></div>
-<br>
+            <label class="option-label">
+                <input type="radio" name="medicine" value="0">
+                <span>
+                    ไม่กินยาดังกล่าว หรือกินยารวมกันไม่ถึง
+                    4 ชนิด — 0 คะแนน
+                </span>
+            </label>
+        </section>
 
-<a href="index.html">
+        <section class="question-card">
+            <h3>5. ประวัติการหกล้ม</h3>
 
-<button type="button">
-กลับหน้าหลัก
-</button>
+            <label class="option-label">
+                <input type="radio" name="fallHistory" value="5">
+                <span>
+                    มีประวัติหกล้มตั้งแต่ 2 ครั้งขึ้นไป
+                    ในช่วง 6 เดือนที่ผ่านมา — 5 คะแนน
+                </span>
+            </label>
 
-</a>
+            <label class="option-label">
+                <input type="radio" name="fallHistory" value="0">
+                <span>ไม่มี — 0 คะแนน</span>
+            </label>
+        </section>
 
-</form>
+        <section class="question-card">
+            <h3>6. สภาพบ้านและที่อยู่อาศัย</h3>
 
-</section>
+            <label class="option-label">
+                <input type="radio" name="home" value="1">
+                <span>
+                    อยู่บ้านยกพื้นสูงตั้งแต่ 1.5 เมตรขึ้นไป
+                    และต้องขึ้นลงโดยใช้บันได — 1 คะแนน
+                </span>
+            </label>
 
+            <label class="option-label">
+                <input type="radio" name="home" value="0">
+                <span>
+                    ไม่ได้อยู่บ้านลักษณะดังกล่าว — 0 คะแนน
+                </span>
+            </label>
+        </section>
+
+        <div class="warning-message" id="warningMessage">
+            ⚠️ กรุณาตอบคำถามให้ครบทั้ง 6 ข้อก่อนประเมินผล
+        </div>
+
+        <button
+            class="action-button"
+            type="button"
+            onclick="calculateThaiFRAT()"
+        >
+            ประเมินความเสี่ยง
+        </button>
+
+    </form>
+
+    <section class="result-card" id="resultCard">
+
+        <div class="result-icon" id="resultIcon">🟢</div>
+
+        <h2 id="resultLevel"></h2>
+
+        <div class="score-number" id="scoreNumber"></div>
+
+        <p class="result-description" id="resultDescription"></p>
+
+        <div class="advice-box" id="adviceBox"></div>
+
+        <a href="index.html">
+            <button class="home-button" type="button">
+                กลับหน้าหลัก
+            </button>
+        </a>
+
+    </section>
+
+    <section class="reference-card">
+        <h3>เอกสารอ้างอิง</h3>
+
+        <p>
+            Thiamwong, L., Thamarpirat, J., Maneesriwongul, W.,
+            &amp; Jitapunkul, S. (2008).
+            <em>Thai falls risk assessment test (Thai-FRAT)
+            developed for community-dwelling Thai elderly</em>.
+            Journal of the Medical Association of Thailand,
+            91(12), 1823–1832.
+        </p>
+
+        <p>
+            แบบประเมินนี้ใช้สำหรับคัดกรองความเสี่ยงเบื้องต้น
+            ไม่ใช้แทนการวินิจฉัยหรือการประเมินโดยบุคลากรสุขภาพ
+        </p>
+    </section>
+
+</main>
 
 <script>
+const assessmentForm = document.getElementById("thaiFratForm");
 
-function calculateMFS(){
+assessmentForm.addEventListener("change", updateProgress);
 
-let score =
-Number(fall.value)+
-Number(diagnosis.value)+
-Number(aid.value)+
-Number(iv.value)+
-Number(gait.value)+
-Number(mental.value);
+function updateProgress() {
+    const groups = [
+        "gender",
+        "vision",
+        "balance",
+        "medicine",
+        "fallHistory",
+        "home"
+    ];
 
+    let completed = 0;
 
-let result="";
+    groups.forEach(function(groupName) {
+        const selected = document.querySelector(
+            'input[name="' + groupName + '"]:checked'
+        );
 
+        if (selected) {
+            completed++;
+        }
+    });
 
-if(score < 25){
-result="🟢 ความเสี่ยงต่ำ ("+score+" คะแนน)";
-}
-else if(score <45){
-result="🟡 ความเสี่ยงปานกลาง ("+score+" คะแนน)";
-}
-else{
-result="🔴 ความเสี่ยงสูง ("+score+" คะแนน)";
-}
+    document.getElementById("progressText").textContent =
+        "ตอบแล้ว " + completed + " จาก 6 ข้อ";
 
-
-document.getElementById("result").innerHTML =
-result + "<br>คะแนนรวม MFS = " + score + " คะแนน";
-
-
-let advice = "";
-
-if(score < 25){
-
-advice = `
-<h3>👩‍⚕️ คำแนะนำ</h3>
-<p>✓ รักษาพฤติกรรมสุขภาพที่ดี</p>
-<p>✓ ออกกำลังกายเพื่อเพิ่มความแข็งแรง</p>
-<p>✓ ตรวจสอบความปลอดภัยภายในบ้าน</p>
-`;
-
+    document.getElementById("progressBar").style.width =
+        ((completed / 6) * 100) + "%";
 }
 
-else if(score < 45){
+function getSelectedScore(groupName) {
+    const selected = document.querySelector(
+        'input[name="' + groupName + '"]:checked'
+    );
 
-advice = `
-<h3>👩‍⚕️ คำแนะนำ</h3>
-<p>✓ ระมัดระวังขณะเดินและเปลี่ยนท่า</p>
-<p>✓ จัดบ้านให้มีแสงสว่างเพียงพอ</p>
-<p>✓ ฝึกการทรงตัวและกล้ามเนื้อขา</p>
-`;
+    if (!selected) {
+        return null;
+    }
 
+    return Number(selected.value);
 }
 
-else{
+function calculateThaiFRAT() {
+    const gender = getSelectedScore("gender");
+    const vision = getSelectedScore("vision");
+    const balance = getSelectedScore("balance");
+    const medicine = getSelectedScore("medicine");
+    const fallHistory = getSelectedScore("fallHistory");
+    const home = getSelectedScore("home");
 
-advice = `
-<h3>👩‍⚕️ คำแนะนำสำหรับความเสี่ยงสูง</h3>
-<p>✓ ควรมีผู้ดูแลช่วยเหลือขณะทำกิจกรรม</p>
-<p>✓ ปรับสภาพแวดล้อม ป้องกันพื้นลื่นและสิ่งกีดขวาง</p>
-<p>✓ ใช้อุปกรณ์ช่วยเดินตามความเหมาะสม</p>
-<p>✓ ควรประเมินความเสี่ยงซ้ำและติดตามอย่างต่อเนื่อง</p>
-`;
+    const answers = [
+        gender,
+        vision,
+        balance,
+        medicine,
+        fallHistory,
+        home
+    ];
 
+    const hasMissingAnswer = answers.some(function(answer) {
+        return answer === null;
+    });
+
+    const warningMessage =
+        document.getElementById("warningMessage");
+
+    if (hasMissingAnswer) {
+        warningMessage.style.display = "block";
+        warningMessage.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+        return;
+    }
+
+    warningMessage.style.display = "none";
+
+    const score =
+        gender +
+        vision +
+        balance +
+        medicine +
+        fallHistory +
+        home;
+
+    let level = "";
+    let resultIcon = "";
+    let description = "";
+    let advice = "";
+
+    if (score <= 3) {
+        level = "ต่ำ";
+        resultIcon = "🟢";
+
+        description =
+            "ยังไม่พบความเสี่ยงตามเกณฑ์ Thai-FRAT " +
+            "ควรรักษาพฤติกรรมสุขภาพและประเมินซ้ำเป็นระยะ";
+
+        advice = `
+            <h3>คำแนะนำสำหรับความเสี่ยงต่ำ</h3>
+
+            <p>✅ ออกกำลังกายเพื่อเพิ่มความแข็งแรงและการทรงตัว</p>
+
+            <p>✅ สวมรองเท้าที่กระชับและมีพื้นกันลื่น</p>
+
+            <p>✅ ตรวจสอบทางเดินและห้องน้ำให้ปลอดภัย</p>
+
+            <p>✅ ตรวจสายตาและทบทวนการใช้ยาอย่างสม่ำเสมอ</p>
+        `;
+    } else {
+        level = "สูง";
+        resultIcon = "🔴";
+
+        description =
+            "มีความเสี่ยงต่อการพลัดตกหกล้ม " +
+            "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
+
+        advice = `
+            <h3>คำแนะนำสำหรับผู้มีความเสี่ยง</h3>
+
+            <p>✅ แจ้งพยาบาลหรือบุคลากรสุขภาพเพื่อประเมินเพิ่มเติม</p>
+
+            <p>✅ จัดบ้านให้สว่าง เก็บสิ่งกีดขวาง และป้องกันพื้นลื่น</p>
+
+            <p>✅ ติดราวจับในห้องน้ำและบริเวณที่ต้องขึ้นลง</p>
+
+            <p>✅ ฝึกกล้ามเนื้อขาและการทรงตัวโดยมีผู้ดูแล</p>
+
+            <p>✅ ทบทวนยาที่ใช้อยู่ร่วมกับแพทย์หรือเภสัชกร</p>
+        `;
+    }
+
+    document.getElementById("resultIcon").textContent =
+        resultIcon;
+
+    document.getElementById("resultLevel").textContent =
+        level === "ต่ำ"
+            ? "ความเสี่ยงต่ำ"
+            : "มีความเสี่ยงต่อการพลัดตกหกล้ม";
+
+    document.getElementById("scoreNumber").textContent =
+        score + " คะแนน";
+
+    document.getElementById("resultDescription").textContent =
+        description;
+
+    document.getElementById("adviceBox").innerHTML =
+        advice;
+
+    const resultCard =
+        document.getElementById("resultCard");
+
+    resultCard.style.display = "block";
+
+    /*
+      เก็บชื่อเดิม mfsScore ไว้ชั่วคราว
+      เพื่อให้ Dashboard เดิมของปูยังอ่านคะแนนได้
+    */
+    localStorage.setItem("mfsScore", score);
+    localStorage.setItem("thaiFratScore", score);
+    localStorage.setItem("riskLevel", level);
+    localStorage.setItem(
+        "assessmentType",
+        "Thai-FRAT"
+    );
+    localStorage.setItem(
+        "date",
+        new Date().toLocaleDateString("th-TH")
+    );
+
+    resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
 }
-
-
-document.getElementById("advice").innerHTML = advice;
-
-// บันทึกคะแนนไว้ในเครื่อง
-localStorage.setItem("mfsScore", score);
-
-let level = "";
-
-if(score < 25){
-    level = "ต่ำ";
-}
-else if(score < 45){
-    level = "ปานกลาง";
-}
-else{
-    level = "สูง";
-}
-
-localStorage.setItem("riskLevel", level);
-localStorage.setItem("date", new Date().toLocaleDateString("th-TH"));
-
-}
-
 </script>
-
 
 </body>
 </html>
