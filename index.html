@@ -65,31 +65,7 @@ cursor:pointer;
 </button>
 
 </div>
-    <a href="feedback.html" class="step-card step-pink">
-
-    <div class="step-number">5</div>
-
-    <div class="step-icon">
-        <i class="fa-solid fa-face-smile"></i>
-    </div>
-
-    <div class="step-content">
-
-        <span class="step-label">บอกความคิดเห็น</span>
-
-        <h3>
-            ประเมินความพึงพอใจ
-        </h3>
-
-        <p>
-            ให้คะแนนและช่วยพัฒนา FallGuard+
-        </p>
-
-    </div>
-
-    <div class="step-arrow">›</div>
-
-</a>
+    
 <section class="step-menu">
 
 <a href="assessment.html" class="step-card step-blue">
@@ -169,137 +145,51 @@ cursor:pointer;
 
 <a href="knowledge.html" class="step-card step-purple">
 
-<div class="step-number">4</div>
+    <div class="step-number">4</div>
 
-<div class="step-icon">
-<i class="fa-solid fa-house"></i>
-</div>
+    <div class="step-icon">
+        <i class="fa-solid fa-house"></i>
+    </div>
 
-<div class="step-content">
+    <div class="step-content">
 
-<span class="step-label">จัดบ้านให้ปลอดภัย</span>
+        <span class="step-label">จัดบ้านให้ปลอดภัย</span>
 
-<h3>
-การป้องกัน<br>
-การพลัดตกหกล้มที่บ้าน
-</h3>
+        <h3>
+            การป้องกัน<br>
+            การพลัดตกหกล้มที่บ้าน
+        </h3>
 
-<p>ดูคำแนะนำด้วยรูปภาพขนาดใหญ่</p>
-
-</div>
-
-<div class="step-arrow">›</div>
-
-</a>
-
-</section>
-
-<nav>
-
-<a href="#"><i class="fa-solid fa-house"></i></a>
-
-<a href="#"><i class="fa-solid fa-heart"></i></a>
-
-<a href="#"><i class="fa-solid fa-chart-column"></i></a>
-
-<a href="#"><i class="fa-solid fa-user"></i></a>
-<a href="elderly.html">
-<i class="fa-solid fa-user-group"></i>
-</a>
-</nav>
-    <div id="guidePopup" class="guide-popup">
-
-    <div class="guide-box">
-
-        <div class="guide-icon">👋</div>
-
-        <h2>ยินดีต้อนรับสู่ FallGuard+</h2>
-
-        <p class="guide-intro">
-            ทำตามขั้นตอนง่าย ๆ เพื่อประเมินและป้องกันการพลัดตกหกล้ม
-        </p>
-
-        <div class="guide-step">
-            <span>1</span>
-            <p>กดเมนู <b>ประเมินความเสี่ยงการพลัดตกหกล้ม</b></p>
-        </div>
-
-        <div class="guide-step">
-            <span>2</span>
-            <p>ตอบแบบประเมิน Thai-FRAT ให้ครบทั้ง 6 ข้อ</p>
-        </div>
-
-        <div class="guide-step">
-            <span>3</span>
-            <p>กดปุ่ม <b>ประเมินความเสี่ยง</b> เพื่อดูคะแนน</p>
-        </div>
-
-        <div class="guide-step">
-            <span>4</span>
-            <p>อ่านผลประเมินและคำแนะนำที่เหมาะสม</p>
-        </div>
-
-        <div class="guide-step">
-            <span>5</span>
-            <p>ศึกษากิจกรรมและวิธีป้องกันการพลัดตกหกล้มที่บ้าน</p>
-        </div>
-
-        
-
-        <button type="button" class="guide-button" onclick="closeGuide()">
-            เริ่มใช้งาน
-        </button>
+        <p>ดูคำแนะนำด้วยรูปภาพขนาดใหญ่</p>
 
     </div>
 
-</div>
-<script>
+    <div class="step-arrow">›</div>
 
-window.onload = function(){
+</a>
 
-    document.getElementById("guidePopup").style.display = "flex";
 
-    let score = localStorage.getItem("mfsScore");
-    let level = localStorage.getItem("riskLevel");
+<a href="feedback.html" class="step-card step-pink">
 
-    let status = document.getElementById("riskStatus");
-    let text = document.getElementById("riskText");
+    <div class="step-number">5</div>
 
-    if(score && level){
+    <div class="step-icon">
+        <i class="fa-solid fa-face-smile"></i>
+    </div>
 
-        if(level === "ต่ำ"){
-            status.innerHTML = "🟢 ความเสี่ยงต่ำ";
-            text.innerHTML = "ควรรักษาพฤติกรรมสุขภาพที่ดี";
-        }
+    <div class="step-content">
 
-        else if(level === "ปานกลาง"){
-            status.innerHTML = "🟡 ความเสี่ยงปานกลาง";
-            text.innerHTML =
-                "ควรเฝ้าระวังและปรับพฤติกรรมป้องกันการล้ม";
-        }
+        <span class="step-label">บอกความคิดเห็น</span>
 
-        else{
-            status.innerHTML =
-                "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
-            text.innerHTML =
-                "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
-        }
-    }
-}
-function closeGuide(){
+        <h3>ประเมินความพึงพอใจ</h3>
 
-    document.getElementById("guidePopup").style.display="none";
+        <p>ให้คะแนนและช่วยพัฒนา FallGuard+</p>
 
-}
+    </div>
 
-function openGuide(){
+    <div class="step-arrow">›</div>
 
-    document.getElementById("guidePopup").style.display="flex";
+</a>
+</section>
 
-}
-
-</script>
-<script src="script.js"></script>
-
-</body>
-</html>
+<nav>
