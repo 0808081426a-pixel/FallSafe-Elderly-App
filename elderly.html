@@ -1,194 +1,353 @@
 <!DOCTYPE html>
 <html lang="th">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Elderly | FallGuard+</title>
+<title>ข้อมูลผู้สูงอายุ | FallGuard+</title>
 
 <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 
+<style>
+body{
+    margin:0;
+    background:#f5fbff;
+    color:#263238;
+    font-family:"Prompt",sans-serif;
+    padding-bottom:40px;
+}
+
+.elderly-header{
+    background:linear-gradient(135deg,#63c7ff,#8be3c5);
+    color:white;
+    padding:30px 22px 55px;
+    border-radius:0 0 34px 34px;
+}
+
+.elderly-header h1{
+    margin:24px 0 8px;
+    font-size:29px;
+}
+
+.elderly-header p{
+    margin:0;
+    font-size:20px;
+}
+
+.elderly-container{
+    width:92%;
+    max-width:760px;
+    margin:-30px auto 0;
+}
+
+.form-card,
+.list-section{
+    background:white;
+    border-radius:24px;
+    padding:24px;
+    margin-bottom:22px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+
+.form-card h2,
+.list-section h2{
+    margin-top:0;
+    color:#146c94;
+    font-size:27px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    font-size:21px;
+    font-weight:600;
+    margin-bottom:9px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    min-height:58px;
+    border:2px solid #cfe9f5;
+    border-radius:16px;
+    padding:13px 15px;
+    font-family:"Prompt",sans-serif;
+    font-size:20px;
+    background:white;
+}
+
+.form-group textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.save-button,
+.home-button{
+    width:100%;
+    min-height:64px;
+    border:none;
+    border-radius:18px;
+    color:white;
+    font-family:"Prompt",sans-serif;
+    font-size:23px;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.save-button{
+    background:linear-gradient(135deg,#3da9fc,#39c99b);
+}
+
+.save-button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+}
+
+.home-button{
+    background:#258fc0;
+}
+
+.form-message{
+    display:none;
+    margin-top:16px;
+    padding:15px;
+    border-radius:14px;
+    font-size:19px;
+}
+
+.form-message.success{
+    background:#dcf7ed;
+    color:#08734f;
+}
+
+.form-message.error{
+    background:#ffe5e5;
+    color:#9f2020;
+}
+
+.elderly-card{
+    border:2px solid #e3f1f6;
+    border-radius:20px;
+    padding:20px;
+    margin-bottom:18px;
+    background:#fbfeff;
+}
+
+.elderly-card-header{
+    display:flex;
+    align-items:center;
+    gap:15px;
+}
+
+.avatar{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:58px;
+    height:58px;
+    border-radius:50%;
+    background:#daf3ff;
+    font-size:30px;
+}
+
+.elderly-card h3{
+    margin:0;
+    font-size:23px;
+    color:#146c94;
+}
+
+.elderly-card-header p{
+    margin:4px 0 0;
+    font-size:19px;
+}
+
+.elderly-details{
+    margin:16px 0;
+}
+
+.elderly-details p{
+    font-size:19px;
+    line-height:1.6;
+    margin:7px 0;
+}
+
+.risk-badge{
+    border-radius:14px;
+    padding:12px 14px;
+    font-size:19px;
+    font-weight:600;
+    margin-bottom:15px;
+}
+
+.risk-low{
+    background:#dcf7ed;
+    color:#08734f;
+}
+
+.risk-high{
+    background:#ffe2e2;
+    color:#a71919;
+}
+
+.risk-none{
+    background:#edf1f3;
+    color:#52656d;
+}
+
+.card-actions{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:10px;
+}
+
+.assess-button,
+.delete-button{
+    min-height:52px;
+    border:none;
+    border-radius:14px;
+    font-family:"Prompt",sans-serif;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+}
+
+.assess-button{
+    background:#3da9fc;
+    color:white;
+}
+
+.delete-button{
+    background:#ffe2e2;
+    color:#9f2020;
+    padding:0 20px;
+}
+
+.loading-message,
+.empty-card,
+.error-card{
+    padding:25px;
+    border-radius:18px;
+    text-align:center;
+    font-size:20px;
+    line-height:1.7;
+}
+
+.empty-card{
+    background:#eef9ff;
+}
+
+.error-card{
+    background:#ffe8e8;
+    color:#9f2020;
+}
+
+.home-link{
+    display:block;
+    margin-top:20px;
+}
+</style>
 </head>
-
 
 <body>
 
+<header class="elderly-header">
+    <div class="logo">🛡️ FallGuard+</div>
 
-<header>
+    <h1>ข้อมูลผู้สูงอายุ</h1>
 
-<div class="logo">
-🛡️ FallGuard+
-</div>
-
-<div class="welcome">
-
-<h2>รายชื่อผู้สูงอายุ 👥</h2>
-
-<p>จัดการข้อมูลผู้รับการประเมิน</p>
-
-</div>
-
+    <p>เพิ่มรายชื่อและเลือกผู้รับการประเมิน Thai-FRAT</p>
 </header>
 
-
-
-<section class="risk-card">
-
-<h2>เพิ่มผู้สูงอายุ</h2>
-
-
-<input id="name" placeholder="ชื่อ-นามสกุล">
-
-<br><br>
-
-<input id="age" type="number" placeholder="อายุ">
-
-<br><br>
-
-<input id="disease" placeholder="โรคประจำตัว">
-
-<br><br>
-
-
-<button onclick="addElderly()">
-เพิ่มข้อมูล
-</button>
-
-
-</section>
-
-
-
-<section class="menu">
-
-<div id="list"></div>
-
-</section>
-
-
-
-<div style="text-align:center;margin:30px">
-
-<a href="index.html">
-
-<button>
-กลับหน้าหลัก
-</button>
-
-</a>
-
-</div>
-
-
-
-<script>
-
-
-let elderly = JSON.parse(
-localStorage.getItem("elderly")
-) || [];
-
-
-
-function addElderly(){
-
-
-let person={
-
-name:
-document.getElementById("name").value,
-
-age:
-document.getElementById("age").value,
-
-disease:
-document.getElementById("disease").value
-
-};
-
-
-
-elderly.push(person);
-
-
-localStorage.setItem(
-"elderly",
-JSON.stringify(elderly)
-);
-
-
-showList();
-
-
-}
-
-
-
-function showList(){
-
-
-let html="";
-
-
-elderly.forEach((p,index)=>{
-
-
-html += `
-
-<div class="card">
-
-<h3>👤 ${p.name}</h3>
-
-<p>อายุ ${p.age} ปี</p>
-
-<p>โรคประจำตัว: ${p.disease}</p>
-
-
-<button onclick="selectElder(${index})">
-
-เลือกประเมิน
-
-</button>
-
-
-</div>
-
-`;
-
-});
-
-
-document.getElementById("list").innerHTML=html;
-
-
-}
-
-
-
-function selectElder(index){
-
-
-localStorage.setItem(
-"currentElder",
-JSON.stringify(elderly[index])
-);
-
-
-alert("เลือกผู้สูงอายุเรียบร้อย");
-
-
-}
-
-
-
-showList();
-
-
-</script>
-
+<main class="elderly-container">
+
+    <section class="form-card">
+        <h2>➕ เพิ่มผู้สูงอายุ</h2>
+
+        <form id="elderlyForm">
+
+            <div class="form-group">
+                <label for="name">ชื่อ–นามสกุล</label>
+                <input
+                    id="name"
+                    type="text"
+                    placeholder="กรอกชื่อ–นามสกุล"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="age">อายุ</label>
+                <input
+                    id="age"
+                    type="number"
+                    min="60"
+                    max="120"
+                    placeholder="กรอกอายุ"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="gender">เพศ</label>
+                <select id="gender" required>
+                    <option value="">กรุณาเลือก</option>
+                    <option value="หญิง">หญิง</option>
+                    <option value="ชาย">ชาย</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="disease">โรคประจำตัว</label>
+                <textarea
+                    id="disease"
+                    placeholder="เช่น ความดันโลหิตสูง เบาหวาน"
+                ></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="caregiver">ชื่อผู้ดูแล</label>
+                <input
+                    id="caregiver"
+                    type="text"
+                    placeholder="กรอกชื่อผู้ดูแล (ถ้ามี)"
+                >
+            </div>
+
+            <button
+                id="saveButton"
+                class="save-button"
+                type="submit"
+            >
+                บันทึกข้อมูล
+            </button>
+
+            <div id="formMessage" class="form-message"></div>
+
+        </form>
+    </section>
+
+    <section class="list-section">
+        <h2>👥 รายชื่อผู้สูงอายุ</h2>
+
+        <div id="elderlyList">
+            <div class="loading-message">กำลังโหลดข้อมูล...</div>
+        </div>
+    </section>
+
+    <a class="home-link" href="index.html">
+        <button class="home-button" type="button">
+            กลับหน้าหลัก
+        </button>
+    </a>
+
+</main>
+
+<script type="module" src="elderly.js"></script>
 
 </body>
-
 </html>
