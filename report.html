@@ -474,6 +474,19 @@ async function downloadPDF(){
 }
 
 loadReport();
+    .info-box,
+.result-card,
+.advice,
+.note,
+.report-footer{
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.pdf-button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+}
 </script>
 
 
