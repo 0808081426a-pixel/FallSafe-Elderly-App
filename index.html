@@ -11,73 +11,31 @@
 
     <script src="https://kit.fontawesome.com/6b6d7ce6e7.js" crossorigin="anonymous"></script>
 </head>
-<script>
-document.addEventListener("DOMContentLoaded", function(){
+<body>
 
-    const splash = document.getElementById("splashScreen");
-    const popup = document.getElementById("guidePopup");
+<div id="splashScreen" class="splash-screen">
 
-    setTimeout(function(){
+    <div class="splash-content">
 
-        if(splash){
-            splash.style.display = "none";
-        }
+        <div class="splash-logo">🛡️</div>
 
-        if(popup){
-            popup.style.display = "flex";
-        }
+        <h1>FallGuard+</h1>
 
-    }, 800);
+        <p>
+            ระบบประเมินและป้องกัน<br>
+            การพลัดตกหกล้มในผู้สูงอายุ
+        </p>
 
-    const score = localStorage.getItem("mfsScore");
-    const level = localStorage.getItem("riskLevel");
+        <div class="splash-loader"></div>
 
-    const status = document.getElementById("riskStatus");
-    const text = document.getElementById("riskText");
+        <span>กำลังเข้าสู่ระบบ...</span>
 
-    if(score && level && status && text){
+    </div>
 
-        if(level === "ต่ำ"){
-            status.innerHTML = "🟢 ความเสี่ยงต่ำ";
-            text.innerHTML = "ควรรักษาพฤติกรรมสุขภาพที่ดี";
-        }
+</div>
 
-        else if(level === "ปานกลาง"){
-            status.innerHTML = "🟡 ความเสี่ยงปานกลาง";
-            text.innerHTML =
-                "ควรเฝ้าระวังและปรับพฤติกรรมป้องกันการล้ม";
-        }
-
-        else{
-            status.innerHTML =
-                "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
-
-            text.innerHTML =
-                "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
-        }
-    }
-
-});
-
-function closeGuide(){
-
-    const popup = document.getElementById("guidePopup");
-
-    if(popup){
-        popup.style.display = "none";
-    }
-}
-
-function openGuide(){
-
-    const popup = document.getElementById("guidePopup");
-
-    if(popup){
-        popup.style.display = "flex";
-    }
-}
-</script>
-</nav>
+<!-- เนื้อหาเดิมทั้งหมดของหน้า Home อยู่ตรงนี้ -->
+<!-- header, risk-card, ปุ่มดูวิธีใช้งาน, step-menu, nav -->
 
 <div id="guidePopup" class="guide-popup">
 
@@ -131,21 +89,10 @@ function openGuide(){
 <script>
 document.addEventListener("DOMContentLoaded", function(){
 
-    const splash =
-        document.getElementById("splashScreen");
+    const splash = document.getElementById("splashScreen");
+    const popup = document.getElementById("guidePopup");
+    const closeButton = document.getElementById("closeGuideButton");
 
-    const popup =
-        document.getElementById("guidePopup");
-
-    const openButton =
-        document.querySelector(
-            'button[onclick="openGuide()"]'
-        );
-
-    const closeButton =
-        document.getElementById("closeGuideButton");
-
-    /* ปิด Splash แล้วแสดงคำแนะนำ */
     setTimeout(function(){
 
         if(splash){
@@ -158,80 +105,41 @@ document.addEventListener("DOMContentLoaded", function(){
 
     }, 800);
 
-
-    /* ปุ่มดูวิธีใช้งาน */
-    if(openButton && popup){
-
-        openButton.addEventListener("click", function(){
-
-            popup.style.display = "flex";
-
-        });
-    }
-
-
-    /* ปุ่มเริ่มใช้งาน */
     if(closeButton && popup){
-
         closeButton.addEventListener("click", function(){
-
             popup.style.display = "none";
-
         });
     }
 
+    const score = localStorage.getItem("mfsScore");
+    const level = localStorage.getItem("riskLevel");
 
-    /* แสดงผลประเมินล่าสุด */
-    const score =
-        localStorage.getItem("mfsScore");
-
-    const level =
-        localStorage.getItem("riskLevel");
-
-    const status =
-        document.getElementById("riskStatus");
-
-    const text =
-        document.getElementById("riskText");
+    const status = document.getElementById("riskStatus");
+    const text = document.getElementById("riskText");
 
     if(score && level && status && text){
 
         if(level === "ต่ำ"){
-
-            status.innerHTML =
-                "🟢 ความเสี่ยงต่ำ";
-
-            text.innerHTML =
-                "ควรรักษาพฤติกรรมสุขภาพที่ดี";
+            status.innerHTML = "🟢 ความเสี่ยงต่ำ";
+            text.innerHTML = "ควรรักษาพฤติกรรมสุขภาพที่ดี";
         }
 
         else if(level === "ปานกลาง"){
-
-            status.innerHTML =
-                "🟡 ความเสี่ยงปานกลาง";
-
-            text.innerHTML =
-                "ควรเฝ้าระวังและป้องกันการหกล้ม";
+            status.innerHTML = "🟡 ความเสี่ยงปานกลาง";
+            text.innerHTML = "ควรเฝ้าระวังและป้องกันการหกล้ม";
         }
 
         else{
-
-            status.innerHTML =
-                "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
-
-            text.innerHTML =
-                "ควรได้รับคำแนะนำและประเมินเพิ่มเติม";
+            status.innerHTML = "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
+            text.innerHTML = "ควรได้รับคำแนะนำและประเมินเพิ่มเติม";
         }
     }
 
 });
 
-
-/* สำรองสำหรับ onclick เดิม */
 function openGuide(){
 
-    const popup =
-        document.getElementById("guidePopup");
+    const popup = document.getElementById("guidePopup");
 
     if(popup){
         popup.style.display = "flex";
@@ -240,8 +148,7 @@ function openGuide(){
 
 function closeGuide(){
 
-    const popup =
-        document.getElementById("guidePopup");
+    const popup = document.getElementById("guidePopup");
 
     if(popup){
         popup.style.display = "none";
@@ -252,4 +159,5 @@ function closeGuide(){
 <script src="script.js"></script>
 
 </body>
+</html>
 </html>
