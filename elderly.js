@@ -171,6 +171,18 @@ async function loadElderly() {
                         ประเมิน Thai-FRAT
                     </button>
 
+                    ${person.latestScore !== null && (person.riskLevel === "ต่ำ" || person.riskLevel === "สูง") ? `
+                    <button
+                        type="button"
+                        class="report-button"
+                        data-id="${personId}"
+                        data-name="${escapeHTML(person.name)}"
+                        data-score="${person.latestScore}"
+                        data-level="${person.riskLevel}"
+                    >
+                        ดู/ดาวน์โหลดผล
+                    </button>` : ""}
+
                     <button
                         type="button"
                         class="delete-button"
@@ -203,12 +215,36 @@ function addCardEvents() {
         button.addEventListener("click", function () {
             localStorage.setItem("currentElderId", button.dataset.id);
             localStorage.setItem("currentElderName", button.dataset.name);
-            localStorage.removeItem("mfsScore");
-            localStorage.removeItem("thaiFratScore");
-            localStorage.removeItem("riskLevel");
-            localStorage.removeItem("date");
 
             window.location.href = "assessment.html";
+        });
+    });
+
+
+    document.querySelectorAll(".report-button").forEach(function (button) {
+        button.addEventListener("click", function () {
+            const elderId = button.dataset.id;
+            const elderName = button.dataset.name;
+            const score = Number(button.dataset.score);
+            const level = button.dataset.level;
+
+            localStorage.setItem("currentElderId", elderId);
+            localStorage.setItem("currentElderName", elderName);
+            localStorage.setItem("thaiFratScore", String(score));
+            localStorage.setItem("mfsScore", String(score));
+            localStorage.setItem("riskLevel", level);
+
+            const saved = localStorage.getItem("assessment:" + elderId);
+            if (!saved) {
+                localStorage.setItem("assessment:" + elderId, JSON.stringify({
+                    score: score,
+                    riskLevel: level,
+                    date: "ผลล่าสุดที่บันทึกไว้",
+                    name: elderName
+                }));
+            }
+
+            window.location.href = "report.html";
         });
     });
 

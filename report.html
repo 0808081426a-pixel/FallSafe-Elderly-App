@@ -302,7 +302,15 @@ body{
 <div class="actions">
 
     <button class="pdf-button" type="button" onclick="downloadPDF()">
-       📄 ดาวน์โหลดรายงาน PDF
+       📄 ดาวน์โหลด/แชร์รายงาน PDF
+    </button>
+
+    <button class="home-button" type="button" onclick="window.location.href='dashboard.html'">
+        📊 กลับหน้าผลประเมิน
+    </button>
+
+    <button class="home-button" type="button" onclick="window.location.href='elderly.html'">
+        👤 กลับหน้ารายชื่อผู้สูงอายุ
     </button>
 
     <button class="home-button" type="button" onclick="window.location.href='index.html'">
@@ -324,15 +332,30 @@ function getTodayThai(){
 
 function loadReport(){
 
+    const elderId = localStorage.getItem("currentElderId");
+    let cached = null;
+
+    if (elderId) {
+        try {
+            cached = JSON.parse(localStorage.getItem("assessment:" + elderId));
+        } catch (error) {
+            cached = null;
+        }
+    }
+
     const name =
+        (cached && cached.name) ||
         localStorage.getItem("currentElderName") ||
         "ไม่ระบุชื่อ";
 
     const savedScore =
-        localStorage.getItem("thaiFratScore") ??
-        localStorage.getItem("mfsScore");
+        cached && cached.score !== undefined
+            ? cached.score
+            : (localStorage.getItem("thaiFratScore") ??
+               localStorage.getItem("mfsScore"));
 
     const level =
+        (cached && cached.riskLevel) ||
         localStorage.getItem("riskLevel");
 
     const hasAssessment =
@@ -344,6 +367,7 @@ function loadReport(){
         hasAssessment ? Number(savedScore) : 0;
 
     const savedDate =
+        (cached && cached.date) ||
         localStorage.getItem("date");
 
     document.getElementById("elderName").textContent = name;
@@ -405,38 +429,43 @@ function loadReport(){
 
 async function downloadPDF(){
 
-    const reportElement =
-        document.querySelector(".report");
+    const reportElement = document.querySelector(".report");
+    const button = document.querySelector(".pdf-button");
+    const elderId = localStorage.getItem("currentElderId");
 
-    const button =
-        document.querySelector(".pdf-button");
+    let cached = null;
+    if (elderId) {
+        try {
+            cached = JSON.parse(localStorage.getItem("assessment:" + elderId));
+        } catch (error) {
+            cached = null;
+        }
+    }
 
     const level =
+        (cached && cached.riskLevel) ||
         localStorage.getItem("riskLevel");
 
     const score =
-        localStorage.getItem("thaiFratScore") ??
-        localStorage.getItem("mfsScore");
+        cached && cached.score !== undefined
+            ? cached.score
+            : (localStorage.getItem("thaiFratScore") ??
+               localStorage.getItem("mfsScore"));
 
-    if(
-        score === null ||
-        score === "" ||
-        (level !== "ต่ำ" && level !== "สูง")
-    ){
-        alert("กรุณาทำแบบประเมิน Thai-FRAT ให้เสร็จก่อนดาวน์โหลดรายงาน");
+    if(score === null || score === "" || (level !== "ต่ำ" && level !== "สูง")){
+        alert("ยังไม่พบผลประเมินของผู้สูงอายุรายนี้ กรุณาเลือกชื่อจากหน้าข้อมูลผู้สูงอายุ");
         window.location.href = "elderly.html";
         return;
     }
 
     const name =
+        (cached && cached.name) ||
         localStorage.getItem("currentElderName") ||
         "ผู้สูงอายุ";
 
-    const safeName =
-        name
-            .trim()
-            .replace(/[\\/:*?"<>|]/g, "")
-            .replace(/\s+/g, "_");
+    const safeName = name.trim()
+        .replace(/[\\/:*?"<>|]/g, "")
+        .replace(/\s+/g, "_");
 
     try{
         if(typeof html2pdf === "undefined"){
@@ -446,7 +475,7 @@ async function downloadPDF(){
         button.disabled = true;
         button.textContent = "กำลังสร้าง PDF...";
 
-        await html2pdf()
+        const worker = html2pdf()
             .set({
                 margin:[8,8,8,8],
                 filename:"FallGuard_Report_" + safeName + ".pdf",
@@ -457,25 +486,49 @@ async function downloadPDF(){
                     backgroundColor:"#ffffff",
                     scrollY:0
                 },
-                jsPDF:{
-                    unit:"mm",
-                    format:"a4",
-                    orientation:"portrait"
-                },
-                pagebreak:{
-                    mode:["avoid-all","css","legacy"]
-                }
+                jsPDF:{unit:"mm", format:"a4", orientation:"portrait"},
+                pagebreak:{mode:["css","legacy"]}
             })
             .from(reportElement)
-            .save();
+            .toPdf();
+
+        const pdfBlob = await worker.outputPdf("blob");
+        const fileName = "FallGuard_Report_" + safeName + ".pdf";
+        const pdfFile = new File([pdfBlob], fileName, {type:"application/pdf"});
+
+        if(navigator.canShare && navigator.canShare({files:[pdfFile]})){
+            await navigator.share({
+                title:"รายงานผล FallGuard+",
+                text:"รายงานผลการประเมิน Thai-FRAT ของ " + name,
+                files:[pdfFile]
+            });
+        }else{
+            const url = URL.createObjectURL(pdfBlob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = fileName;
+            link.style.display = "none";
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+
+            setTimeout(function(){
+                URL.revokeObjectURL(url);
+            }, 60000);
+        }
 
     }catch(error){
         console.error("สร้าง PDF ไม่สำเร็จ:", error);
-        alert("ไม่สามารถดาวน์โหลด PDF ได้ กรุณาเปิดด้วย Chrome หรือ Safari แล้วลองใหม่");
+
+        if(error && error.name === "AbortError"){
+            return;
+        }
+
+        alert("มือถือบางรุ่นไม่ดาวน์โหลดอัตโนมัติ กรุณาเปิดเมนูแชร์ของเบราว์เซอร์ หรือทดลองด้วย Chrome/Safari รุ่นล่าสุด");
 
     }finally{
         button.disabled = false;
-        button.textContent = "📄 ดาวน์โหลดรายงาน PDF";
+        button.textContent = "📄 ดาวน์โหลด/แชร์รายงาน PDF";
     }
 }
 

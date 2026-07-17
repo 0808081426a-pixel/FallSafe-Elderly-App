@@ -659,38 +659,36 @@ window.calculateThaiFRAT = async function() {
 
     resultCard.style.display = "block";
 
-    localStorage.setItem("mfsScore", score);
-    localStorage.setItem("thaiFratScore", score);
+    const elderId = localStorage.getItem("currentElderId");
+    const elderName = localStorage.getItem("currentElderName");
+    const assessedDate = new Date().toLocaleString("th-TH", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+    });
+
+    localStorage.setItem("mfsScore", String(score));
+    localStorage.setItem("thaiFratScore", String(score));
     localStorage.setItem("riskLevel", level);
-    localStorage.setItem(
-        "date",
-        new Date().toLocaleDateString("th-TH", {
-            day:"numeric",
-            month:"long",
-            year:"numeric"
-        })
-    );
-localStorage.setItem(
-    "date",
-    new Date().toLocaleDateString("th-TH")
-);
+    localStorage.setItem("date", assessedDate);
 
-if(elderName){
-    localStorage.setItem(
-        "currentElderName",
-        elderName
-    );
-}
-    const elderId =
-        localStorage.getItem("currentElderId");
-
-    const elderName =
-        localStorage.getItem("currentElderName");
+    if (elderId) {
+        localStorage.setItem(
+            "assessment:" + elderId,
+            JSON.stringify({
+                score: score,
+                riskLevel: level,
+                date: assessedDate,
+                name: elderName || "ผู้สูงอายุ"
+            })
+        );
+    }
 
     if (elderId) {
         try {
-            const elderRef =
-                doc(db, "elderly", elderId);
+            const elderRef = doc(db, "elderly", elderId);
 
             await updateDoc(elderRef, {
                 latestScore: score,
@@ -708,20 +706,15 @@ if(elderName){
                 }
             );
 
-            const savedNotice =
-                document.getElementById("savedNotice");
-
+            const savedNotice = document.getElementById("savedNotice");
             if (savedNotice) {
                 savedNotice.innerHTML =
-                    `✅ บันทึกผลของ ${elderName || "ผู้สูงอายุ"} เรียบร้อย`;
+                    `✅ บันทึกผลของ ${elderName || "ผู้สูงอายุ"} เรียบร้อย สามารถประเมินซ้ำในวันเดียวกันได้`;
                 savedNotice.style.display = "block";
             }
         } catch (error) {
             console.error("บันทึกผลไม่สำเร็จ:", error);
-
-            alert(
-                "คำนวณคะแนนได้ แต่บันทึกข้อมูลออนไลน์ไม่สำเร็จ"
-            );
+            alert("คำนวณคะแนนได้ แต่บันทึกข้อมูลออนไลน์ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต");
         }
     }
 
