@@ -232,6 +232,106 @@ body{
     cursor:not-allowed;
 }
 
+
+.advice ul{
+    list-style-position:outside;
+}
+
+.advice li{
+    padding-left:3px;
+    overflow-wrap:anywhere;
+    word-break:normal;
+}
+
+.note{
+    overflow-wrap:anywhere;
+    word-break:normal;
+}
+
+.references{
+    margin-top:20px;
+    padding:18px 20px;
+    border:2px solid #d7eaf4;
+    border-radius:18px;
+    background:#fbfdff;
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.references h2{
+    margin:0 0 12px;
+    color:#146c94;
+    font-size:21px;
+}
+
+.references ol{
+    margin:0;
+    padding-left:24px;
+}
+
+.references li{
+    margin-bottom:9px;
+    font-size:14px;
+    line-height:1.65;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+/* ใช้ตอนสร้าง PDF เพื่อไม่ให้ยึดความกว้างหน้าจอมือถือ */
+.pdf-render{
+    width:794px !important;
+    max-width:794px !important;
+    margin:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+    overflow:visible !important;
+    background:#ffffff !important;
+}
+
+.pdf-render .report-header{
+    padding:26px 30px !important;
+}
+
+.pdf-render .report-body{
+    padding:24px 28px !important;
+}
+
+.pdf-render .advice{
+    padding:18px 20px !important;
+}
+
+.pdf-render .advice h2{
+    font-size:22px !important;
+    margin-bottom:10px !important;
+}
+
+.pdf-render .advice li{
+    font-size:16px !important;
+    line-height:1.55 !important;
+    margin-bottom:8px !important;
+}
+
+.pdf-render .note{
+    font-size:14px !important;
+    line-height:1.55 !important;
+    padding:13px 15px !important;
+}
+
+.pdf-render .references h2{
+    font-size:18px !important;
+}
+
+.pdf-render .references li{
+    font-size:12px !important;
+    line-height:1.5 !important;
+}
+
+.pdf-render .report-footer{
+    font-size:12px !important;
+    line-height:1.5 !important;
+    padding:14px 28px 20px !important;
+}
+
 </style>
 </head>
 
@@ -290,6 +390,25 @@ body{
             หากมีอาการผิดปกติหรือเคยหกล้ม ควรปรึกษาบุคลากรสุขภาพ
         </div>
 
+
+        <section class="references">
+            <h2>เอกสารอ้างอิงสำหรับคำแนะนำในการป้องกันการหกล้ม</h2>
+            <ol>
+                <li>
+                    กรมอนามัย กระทรวงสาธารณสุข. (ม.ป.ป.).
+                    <em>คู่มือป้องกันการหกล้มในผู้สูงอายุ</em>.
+                </li>
+                <li>
+                    Centers for Disease Control and Prevention. (n.d.).
+                    <em>STEADI: Older adult fall prevention</em>.
+                </li>
+                <li>
+                    World Health Organization. (2021).
+                    <em>Step safely: Strategies for preventing and managing falls across the life-course</em>.
+                </li>
+            </ol>
+        </section>
+
     </main>
 
     <footer class="report-footer">
@@ -302,15 +421,7 @@ body{
 <div class="actions">
 
     <button class="pdf-button" type="button" onclick="downloadPDF()">
-       📄 ดาวน์โหลด/แชร์รายงาน PDF
-    </button>
-
-    <button class="home-button" type="button" onclick="window.location.href='dashboard.html'">
-        📊 กลับหน้าผลประเมิน
-    </button>
-
-    <button class="home-button" type="button" onclick="window.location.href='elderly.html'">
-        👤 กลับหน้ารายชื่อผู้สูงอายุ
+       📄 ดาวน์โหลดรายงาน PDF
     </button>
 
     <button class="home-button" type="button" onclick="window.location.href='index.html'">
@@ -332,30 +443,15 @@ function getTodayThai(){
 
 function loadReport(){
 
-    const elderId = localStorage.getItem("currentElderId");
-    let cached = null;
-
-    if (elderId) {
-        try {
-            cached = JSON.parse(localStorage.getItem("assessment:" + elderId));
-        } catch (error) {
-            cached = null;
-        }
-    }
-
     const name =
-        (cached && cached.name) ||
         localStorage.getItem("currentElderName") ||
         "ไม่ระบุชื่อ";
 
     const savedScore =
-        cached && cached.score !== undefined
-            ? cached.score
-            : (localStorage.getItem("thaiFratScore") ??
-               localStorage.getItem("mfsScore"));
+        localStorage.getItem("thaiFratScore") ??
+        localStorage.getItem("mfsScore");
 
     const level =
-        (cached && cached.riskLevel) ||
         localStorage.getItem("riskLevel");
 
     const hasAssessment =
@@ -367,7 +463,6 @@ function loadReport(){
         hasAssessment ? Number(savedScore) : 0;
 
     const savedDate =
-        (cached && cached.date) ||
         localStorage.getItem("date");
 
     document.getElementById("elderName").textContent = name;
@@ -429,43 +524,38 @@ function loadReport(){
 
 async function downloadPDF(){
 
-    const reportElement = document.querySelector(".report");
-    const button = document.querySelector(".pdf-button");
-    const elderId = localStorage.getItem("currentElderId");
+    const reportElement =
+        document.querySelector(".report");
 
-    let cached = null;
-    if (elderId) {
-        try {
-            cached = JSON.parse(localStorage.getItem("assessment:" + elderId));
-        } catch (error) {
-            cached = null;
-        }
-    }
+    const button =
+        document.querySelector(".pdf-button");
 
     const level =
-        (cached && cached.riskLevel) ||
         localStorage.getItem("riskLevel");
 
     const score =
-        cached && cached.score !== undefined
-            ? cached.score
-            : (localStorage.getItem("thaiFratScore") ??
-               localStorage.getItem("mfsScore"));
+        localStorage.getItem("thaiFratScore") ??
+        localStorage.getItem("mfsScore");
 
-    if(score === null || score === "" || (level !== "ต่ำ" && level !== "สูง")){
-        alert("ยังไม่พบผลประเมินของผู้สูงอายุรายนี้ กรุณาเลือกชื่อจากหน้าข้อมูลผู้สูงอายุ");
+    if(
+        score === null ||
+        score === "" ||
+        (level !== "ต่ำ" && level !== "สูง")
+    ){
+        alert("กรุณาทำแบบประเมิน Thai-FRAT ให้เสร็จก่อนดาวน์โหลดรายงาน");
         window.location.href = "elderly.html";
         return;
     }
 
     const name =
-        (cached && cached.name) ||
         localStorage.getItem("currentElderName") ||
         "ผู้สูงอายุ";
 
-    const safeName = name.trim()
-        .replace(/[\\/:*?"<>|]/g, "")
-        .replace(/\s+/g, "_");
+    const safeName =
+        name
+            .trim()
+            .replace(/[\\/:*?"<>|]/g, "")
+            .replace(/\s+/g, "_");
 
     try{
         if(typeof html2pdf === "undefined"){
@@ -475,60 +565,58 @@ async function downloadPDF(){
         button.disabled = true;
         button.textContent = "กำลังสร้าง PDF...";
 
-        const worker = html2pdf()
-            .set({
-                margin:[8,8,8,8],
-                filename:"FallGuard_Report_" + safeName + ".pdf",
-                image:{type:"jpeg", quality:0.98},
-                html2canvas:{
-                    scale:2,
-                    useCORS:true,
-                    backgroundColor:"#ffffff",
-                    scrollY:0
-                },
-                jsPDF:{unit:"mm", format:"a4", orientation:"portrait"},
-                pagebreak:{mode:["css","legacy"]}
-            })
-            .from(reportElement)
-            .toPdf();
+        const pdfCopy = reportElement.cloneNode(true);
+        pdfCopy.classList.add("pdf-render");
 
-        const pdfBlob = await worker.outputPdf("blob");
-        const fileName = "FallGuard_Report_" + safeName + ".pdf";
-        const pdfFile = new File([pdfBlob], fileName, {type:"application/pdf"});
+        const stagingArea = document.createElement("div");
+        stagingArea.style.position = "fixed";
+        stagingArea.style.left = "-10000px";
+        stagingArea.style.top = "0";
+        stagingArea.style.width = "794px";
+        stagingArea.style.background = "#ffffff";
+        stagingArea.style.zIndex = "-1";
+        stagingArea.appendChild(pdfCopy);
+        document.body.appendChild(stagingArea);
 
-        if(navigator.canShare && navigator.canShare({files:[pdfFile]})){
-            await navigator.share({
-                title:"รายงานผล FallGuard+",
-                text:"รายงานผลการประเมิน Thai-FRAT ของ " + name,
-                files:[pdfFile]
-            });
-        }else{
-            const url = URL.createObjectURL(pdfBlob);
-            const link = document.createElement("a");
-            link.href = url;
-            link.download = fileName;
-            link.style.display = "none";
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
+        try{
+            await document.fonts.ready;
 
-            setTimeout(function(){
-                URL.revokeObjectURL(url);
-            }, 60000);
+            await html2pdf()
+                .set({
+                    margin:[7,7,7,7],
+                    filename:"FallGuard_Report_" + safeName + ".pdf",
+                    image:{type:"jpeg", quality:0.98},
+                    html2canvas:{
+                        scale:2,
+                        useCORS:true,
+                        backgroundColor:"#ffffff",
+                        scrollX:0,
+                        scrollY:0,
+                        windowWidth:794
+                    },
+                    jsPDF:{
+                        unit:"mm",
+                        format:"a4",
+                        orientation:"portrait"
+                    },
+                    pagebreak:{
+                        mode:["css","legacy"]
+                    }
+                })
+                .from(pdfCopy)
+                .save();
+
+        }finally{
+            stagingArea.remove();
         }
 
     }catch(error){
         console.error("สร้าง PDF ไม่สำเร็จ:", error);
-
-        if(error && error.name === "AbortError"){
-            return;
-        }
-
-        alert("มือถือบางรุ่นไม่ดาวน์โหลดอัตโนมัติ กรุณาเปิดเมนูแชร์ของเบราว์เซอร์ หรือทดลองด้วย Chrome/Safari รุ่นล่าสุด");
+        alert("ไม่สามารถดาวน์โหลด PDF ได้ กรุณาเปิดด้วย Chrome หรือ Safari แล้วลองใหม่");
 
     }finally{
         button.disabled = false;
-        button.textContent = "📄 ดาวน์โหลด/แชร์รายงาน PDF";
+        button.textContent = "📄 ดาวน์โหลดรายงาน PDF";
     }
 }
 
