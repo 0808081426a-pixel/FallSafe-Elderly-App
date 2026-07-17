@@ -48,15 +48,20 @@ disease.push(otherDisease);
         saveButton.textContent = "กำลังบันทึก...";
 
         await addDoc(elderlyCollection, {
-            name: name,
-            age: age,
-            gender: gender,
-            disease: disease || "ไม่มีข้อมูล",
-            caregiver: caregiver || "ไม่มีข้อมูล",
-            latestScore: null,
-            riskLevel: "ยังไม่ได้ประเมิน",
-            createdAt: serverTimestamp()
-        });
+    name: name,
+    age: age,
+    gender: gender,
+
+    disease:
+        disease.length > 0
+            ? disease.join(", ")
+            : "ไม่มีข้อมูล",
+
+    caregiver: caregiver || "ไม่มีข้อมูล",
+    latestScore: null,
+    riskLevel: "ยังไม่ได้ประเมิน",
+    createdAt: serverTimestamp()
+});
 
         elderlyForm.reset();
         showMessage("บันทึกข้อมูลผู้สูงอายุเรียบร้อย ✅", "success");
