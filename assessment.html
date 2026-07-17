@@ -283,6 +283,12 @@ body {
         </p>
     </section>
 
+
+    <section class="intro-card" id="selectedElderCard">
+        <h2>👤 ผู้รับการประเมิน</h2>
+        <p id="selectedElderName">กำลังตรวจสอบข้อมูล...</p>
+    </section>
+
     <section class="intro-card">
         <div class="progress-text" id="progressText">
             ตอบแล้ว 0 จาก 6 ข้อ
@@ -351,7 +357,6 @@ body {
         </span>
     </span>
 </label>
-            </label>
         </section>
 
         <section class="question-card">
@@ -502,6 +507,23 @@ import {
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
+
+const currentElderId =
+    localStorage.getItem("currentElderId");
+
+const currentElderName =
+    localStorage.getItem("currentElderName");
+
+const selectedElderNameElement =
+    document.getElementById("selectedElderName");
+
+if(!currentElderId || !currentElderName){
+    alert("กรุณาเพิ่มหรือเลือกรายชื่อผู้สูงอายุก่อนทำแบบประเมิน");
+    window.location.replace("elderly.html");
+}else if(selectedElderNameElement){
+    selectedElderNameElement.textContent = currentElderName;
+}
+
 const assessmentForm = document.getElementById("thaiFratForm");
 
 assessmentForm.addEventListener("change", updateProgress);
@@ -640,6 +662,14 @@ window.calculateThaiFRAT = async function() {
     localStorage.setItem("mfsScore", score);
     localStorage.setItem("thaiFratScore", score);
     localStorage.setItem("riskLevel", level);
+    localStorage.setItem(
+        "date",
+        new Date().toLocaleDateString("th-TH", {
+            day:"numeric",
+            month:"long",
+            year:"numeric"
+        })
+    );
 localStorage.setItem(
     "date",
     new Date().toLocaleDateString("th-TH")

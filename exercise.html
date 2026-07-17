@@ -93,6 +93,8 @@ body{
 
 .video-card:hover{
     transform:translateY(-4px);
+}
+
 .thumbnail{
     position:relative;
     height:200px;
@@ -181,7 +183,7 @@ body{
 /* Popup วิดีโอ */
 
 .video-popup{
-    display:none;
+    display:none !important;
     position:fixed;
     inset:0;
     z-index:99999;
@@ -364,8 +366,13 @@ alt="การออกกำลังกายป้องกันการห
             type="button"
             onclick="openVideo('balance')"
         >
-            <img
-src="https://img.youtube.com/vi/hJylZ-7L_3A/hqdefault.jpg">
+            <div class="thumbnail">
+                <img
+                    src="https://img.youtube.com/vi/hJylZ-7L_3A/hqdefault.jpg"
+                    alt="ท่าฝึกการทรงตัวในผู้สูงอายุ"
+                >
+                <div class="play-icon">▶</div>
+            </div>
 
             <div class="card-content">
                 <h2>ฝึกการทรงตัว</h2>
@@ -384,8 +391,13 @@ src="https://img.youtube.com/vi/hJylZ-7L_3A/hqdefault.jpg">
             type="button"
             onclick="openVideo('e75')"
         >
-            <img
-src="https://img.youtube.com/vi/KxrE6CQuR9E/hqdefault.jpg">
+            <div class="thumbnail">
+                <img
+                    src="https://img.youtube.com/vi/KxrE6CQuR9E/hqdefault.jpg"
+                    alt="โปรแกรมออกกำลังกาย E75"
+                >
+                <div class="play-icon">▶</div>
+            </div>
 
             <div class="card-content">
                 <h2>เสริมความแข็งแรงของร่างกาย</h2>
@@ -404,8 +416,13 @@ src="https://img.youtube.com/vi/KxrE6CQuR9E/hqdefault.jpg">
             type="button"
             onclick="openVideo('easyExercise')"
         >
-            <img
-src="https://img.youtube.com/vi/xy9PKX4r3jc/hqdefault.jpg">
+            <div class="thumbnail">
+                <img
+                    src="https://img.youtube.com/vi/xy9PKX4r3jc/hqdefault.jpg"
+                    alt="ท่าบริหารง่าย ๆ ป้องกันการหกล้ม"
+                >
+                <div class="play-icon">▶</div>
+            </div>
 
             <div class="card-content">
                 <h2>ท่าบริหารง่าย ๆ ป้องกันการหกล้ม</h2>
@@ -586,16 +603,14 @@ function openVideo(type){
         data.videoId +
         "?rel=0";
 
-    document.getElementById("videoPopup").style.display =
-        "flex";
+    document.getElementById("videoPopup").style.setProperty("display", "flex", "important");
 }
 
 function closeVideo(){
 
     document.getElementById("videoFrame").src = "";
 
-    document.getElementById("videoPopup").style.display =
-        "none";
+    document.getElementById("videoPopup").style.setProperty("display", "none", "important");
 }
 
 document

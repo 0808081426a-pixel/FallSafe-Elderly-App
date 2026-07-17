@@ -217,6 +217,21 @@ body{
         padding-bottom:0;
     }
 }
+
+.info-box,
+.result-card,
+.advice,
+.note,
+.report-footer{
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.pdf-button:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+}
+
 </style>
 </head>
 
@@ -310,30 +325,30 @@ function getTodayThai(){
 function loadReport(){
 
     const name =
-    localStorage.getItem("currentElderName") ||
-    localStorage.getItem("elderName") ||
-    localStorage.getItem("name") ||
-    "ไม่ระบุชื่อ";
+        localStorage.getItem("currentElderName") ||
+        "ไม่ระบุชื่อ";
 
     const savedScore =
         localStorage.getItem("thaiFratScore") ??
         localStorage.getItem("mfsScore");
 
-    const score =
-        savedScore !== null && savedScore !== ""
-            ? Number(savedScore)
-            : 0;
-
     const level =
-        localStorage.getItem("riskLevel") ||
-        "ยังไม่ได้ประเมิน";
+        localStorage.getItem("riskLevel");
+
+    const hasAssessment =
+        savedScore !== null &&
+        savedScore !== "" &&
+        (level === "ต่ำ" || level === "สูง");
+
+    const score =
+        hasAssessment ? Number(savedScore) : 0;
 
     const savedDate =
         localStorage.getItem("date");
 
     document.getElementById("elderName").textContent = name;
     document.getElementById("assessmentDate").textContent =
-        savedDate || getTodayThai();
+        savedDate || (hasAssessment ? getTodayThai() : "-");
 
     const card = document.getElementById("resultCard");
     const icon = document.getElementById("resultIcon");
@@ -341,15 +356,13 @@ function loadReport(){
     const scoreText = document.getElementById("scoreText");
     const adviceList = document.getElementById("adviceList");
 
-    scoreText.textContent = score + " คะแนน";
-
     let advice = [];
 
-    if(level === "ต่ำ"){
-
+    if(level === "ต่ำ" && hasAssessment){
         card.className = "result-card low";
         icon.textContent = "🟢";
         title.textContent = "ความเสี่ยงต่ำ";
+        scoreText.textContent = score + " คะแนน";
 
         advice = [
             "ออกกำลังกายเพื่อเสริมกำลังกล้ามเนื้อและฝึกการทรงตัวอย่างสม่ำเสมอ",
@@ -358,11 +371,11 @@ function loadReport(){
             "ประเมินความเสี่ยงซ้ำเมื่อสุขภาพหรือความสามารถในการเดินเปลี่ยนแปลง"
         ];
 
-    }else if(level === "สูง"){
-
+    }else if(level === "สูง" && hasAssessment){
         card.className = "result-card high";
         icon.textContent = "🔴";
         title.textContent = "มีความเสี่ยงต่อการพลัดตกหกล้ม";
+        scoreText.textContent = score + " คะแนน";
 
         advice = [
             "ควรมีผู้ดูแลอยู่ใกล้เมื่อเดินหรือทำกิจกรรมที่เสี่ยง",
@@ -373,14 +386,14 @@ function loadReport(){
         ];
 
     }else{
-
         card.className = "result-card none";
         icon.textContent = "⚪";
         title.textContent = "ยังไม่มีผลการประเมิน";
+        scoreText.textContent = "0 คะแนน";
 
         advice = [
-            "กรุณาทำแบบประเมิน Thai-FRAT ก่อนสร้างรายงาน",
-            "กลับหน้าหลักและเลือกขั้นตอนที่ 1 ประเมินความเสี่ยง"
+            "กรุณากลับไปหน้าข้อมูลผู้สูงอายุ",
+            "เพิ่มข้อมูลหรือเลือกรายชื่อ แล้วทำแบบประเมิน Thai-FRAT"
         ];
     }
 
@@ -392,15 +405,31 @@ function loadReport(){
 
 async function downloadPDF(){
 
-    const report =
+    const reportElement =
         document.querySelector(".report");
 
     const button =
         document.querySelector(".pdf-button");
 
+    const level =
+        localStorage.getItem("riskLevel");
+
+    const score =
+        localStorage.getItem("thaiFratScore") ??
+        localStorage.getItem("mfsScore");
+
+    if(
+        score === null ||
+        score === "" ||
+        (level !== "ต่ำ" && level !== "สูง")
+    ){
+        alert("กรุณาทำแบบประเมิน Thai-FRAT ให้เสร็จก่อนดาวน์โหลดรายงาน");
+        window.location.href = "elderly.html";
+        return;
+    }
+
     const name =
         localStorage.getItem("currentElderName") ||
-        localStorage.getItem("elderName") ||
         "ผู้สูงอายุ";
 
     const safeName =
@@ -409,87 +438,49 @@ async function downloadPDF(){
             .replace(/[\\/:*?"<>|]/g, "")
             .replace(/\s+/g, "_");
 
-    const fileName =
-        "FallGuard_Report_" +
-        safeName +
-        ".pdf";
-
-    const options = {
-
-        margin: [8, 8, 8, 8],
-
-        filename: fileName,
-
-        image: {
-            type: "jpeg",
-            quality: 0.98
-        },
-
-        html2canvas: {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: "#ffffff",
-            scrollY: 0
-        },
-
-        jsPDF: {
-            unit: "mm",
-            format: "a4",
-            orientation: "portrait"
-        },
-
-        pagebreak: {
-            mode: ["avoid-all", "css", "legacy"]
-        }
-    };
-
     try{
+        if(typeof html2pdf === "undefined"){
+            throw new Error("ไม่พบไลบรารี html2pdf");
+        }
 
         button.disabled = true;
         button.textContent = "กำลังสร้าง PDF...";
 
         await html2pdf()
-            .set(options)
-            .from(report)
+            .set({
+                margin:[8,8,8,8],
+                filename:"FallGuard_Report_" + safeName + ".pdf",
+                image:{type:"jpeg", quality:0.98},
+                html2canvas:{
+                    scale:2,
+                    useCORS:true,
+                    backgroundColor:"#ffffff",
+                    scrollY:0
+                },
+                jsPDF:{
+                    unit:"mm",
+                    format:"a4",
+                    orientation:"portrait"
+                },
+                pagebreak:{
+                    mode:["avoid-all","css","legacy"]
+                }
+            })
+            .from(reportElement)
             .save();
 
     }catch(error){
+        console.error("สร้าง PDF ไม่สำเร็จ:", error);
+        alert("ไม่สามารถดาวน์โหลด PDF ได้ กรุณาเปิดด้วย Chrome หรือ Safari แล้วลองใหม่");
 
-        console.error(
-            "สร้าง PDF ไม่สำเร็จ:",
-            error
-        );
-
-        alert(
-            "ไม่สามารถสร้าง PDF ได้ กรุณาลองใหม่อีกครั้ง"
-        );
-
-  }finally{
-
-    button.disabled = false;
-
-    button.textContent =
-        "📄 ดาวน์โหลดรายงาน PDF";
-}
-
+    }finally{
+        button.disabled = false;
+        button.textContent = "📄 ดาวน์โหลดรายงาน PDF";
+    }
 }
 
 loadReport();
-    .info-box,
-.result-card,
-.advice,
-.note,
-.report-footer{
-    break-inside:avoid;
-    page-break-inside:avoid;
-}
-
-.pdf-button:disabled{
-    opacity:.65;
-    cursor:not-allowed;
-}
 </script>
-
 
 </body>
 </html>

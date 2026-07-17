@@ -24,19 +24,28 @@ elderlyForm.addEventListener("submit", async function (event) {
     const name = document.getElementById("name").value.trim();
     const age = Number(document.getElementById("age").value);
     const gender = document.getElementById("gender").value;
-    const disease = Array.from(
-document.querySelectorAll(
-'input[name="disease"]:checked'
-))
-.map(item => item.value);
-
-const otherDisease =
-document.getElementById("otherDiseaseText").value.trim();
-
-if(otherDisease){
-disease.push(otherDisease);
-}
     const caregiver = document.getElementById("caregiver").value.trim();
+
+    const diseases = Array.from(
+        document.querySelectorAll('input[name="disease"]:checked')
+    ).map(function(item){
+        return item.value;
+    });
+
+    const otherDiseaseChecked =
+        document.getElementById("otherDisease").checked;
+
+    const otherDiseaseText =
+        document.getElementById("otherDiseaseText").value.trim();
+
+    if(otherDiseaseChecked && otherDiseaseText){
+        diseases.push(otherDiseaseText);
+    }
+
+    const disease =
+        diseases.length > 0
+            ? diseases.join(", ")
+            : "ไม่มีข้อมูล";
 
     if (!name || !age || !gender) {
         showMessage("กรุณากรอกชื่อ อายุ และเพศให้ครบ", "error");
@@ -47,26 +56,33 @@ disease.push(otherDisease);
         saveButton.disabled = true;
         saveButton.textContent = "กำลังบันทึก...";
 
-        await addDoc(elderlyCollection, {
-    name: name,
-    age: age,
-    gender: gender,
+        const newElderRef = await addDoc(elderlyCollection, {
+            name: name,
+            age: age,
+            gender: gender,
+            disease: disease,
+            caregiver: caregiver || "ไม่มีข้อมูล",
+            latestScore: null,
+            riskLevel: "ยังไม่ได้ประเมิน",
+            createdAt: serverTimestamp()
+        });
 
-    disease:
-        disease.length > 0
-            ? disease.join(", ")
-            : "ไม่มีข้อมูล",
+        localStorage.setItem("currentElderId", newElderRef.id);
+        localStorage.setItem("currentElderName", name);
+        localStorage.removeItem("mfsScore");
+        localStorage.removeItem("thaiFratScore");
+        localStorage.removeItem("riskLevel");
+        localStorage.removeItem("date");
 
-    caregiver: caregiver || "ไม่มีข้อมูล",
-    latestScore: null,
-    riskLevel: "ยังไม่ได้ประเมิน",
-    createdAt: serverTimestamp()
-});
+        showMessage(
+            "บันทึกข้อมูลเรียบร้อย กำลังไปหน้าแบบประเมิน ✅",
+            "success"
+        );
 
-        elderlyForm.reset();
-        showMessage("บันทึกข้อมูลผู้สูงอายุเรียบร้อย ✅", "success");
+        setTimeout(function(){
+            window.location.href = "assessment.html";
+        }, 700);
 
-        await loadElderly();
     } catch (error) {
         console.error("บันทึกข้อมูลไม่สำเร็จ:", error);
         showMessage(
@@ -187,6 +203,10 @@ function addCardEvents() {
         button.addEventListener("click", function () {
             localStorage.setItem("currentElderId", button.dataset.id);
             localStorage.setItem("currentElderName", button.dataset.name);
+            localStorage.removeItem("mfsScore");
+            localStorage.removeItem("thaiFratScore");
+            localStorage.removeItem("riskLevel");
+            localStorage.removeItem("date");
 
             window.location.href = "assessment.html";
         });
@@ -256,6 +276,60 @@ function escapeHTML(value) {
         .replaceAll(">", "&gt;")
         .replaceAll('"', "&quot;")
         .replaceAll("'", "&#039;");
+}
+
+
+const noDiseaseCheckbox = document.getElementById("noDisease");
+const otherDiseaseCheckbox = document.getElementById("otherDisease");
+const otherDiseaseTextInput = document.getElementById("otherDiseaseText");
+
+if(otherDiseaseCheckbox && otherDiseaseTextInput){
+    otherDiseaseCheckbox.addEventListener("change", function(){
+        otherDiseaseTextInput.disabled = !this.checked;
+
+        if(this.checked){
+            otherDiseaseTextInput.focus();
+        }else{
+            otherDiseaseTextInput.value = "";
+        }
+    });
+}
+
+if(noDiseaseCheckbox){
+    noDiseaseCheckbox.addEventListener("change", function(){
+        if(!this.checked){
+            return;
+        }
+
+        document
+            .querySelectorAll('input[name="disease"]')
+            .forEach(function(item){
+                if(item !== noDiseaseCheckbox){
+                    item.checked = false;
+                }
+            });
+
+        if(otherDiseaseCheckbox){
+            otherDiseaseCheckbox.checked = false;
+        }
+
+        if(otherDiseaseTextInput){
+            otherDiseaseTextInput.value = "";
+            otherDiseaseTextInput.disabled = true;
+        }
+    });
+
+    document
+        .querySelectorAll('input[name="disease"]')
+        .forEach(function(item){
+            if(item !== noDiseaseCheckbox){
+                item.addEventListener("change", function(){
+                    if(this.checked){
+                        noDiseaseCheckbox.checked = false;
+                    }
+                });
+            }
+        });
 }
 
 loadElderly();
