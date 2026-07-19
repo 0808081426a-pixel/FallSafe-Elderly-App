@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ประวัติการประเมิน | FallGuard+</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f5fbff;color:#29434e;font-family:"Prompt",sans-serif;padding-bottom:40px}
+.header{background:linear-gradient(135deg,#63c7ff,#8be3c5);color:white;padding:28px 22px 48px;border-radius:0 0 32px 32px}
+.header a{color:white;text-decoration:none;font-weight:600;font-size:17px}
+.header h1{margin:22px 0 4px;font-size:29px}
+.header p{margin:0;font-size:20px}
+.container{width:92%;max-width:760px;margin:-24px auto 0}
+.summary,.history-card,.message{background:white;border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
+.summary{font-size:21px;color:#146c94}
+.history-card{border-left:8px solid #3fb985}
+.history-card.high{border-left-color:#ee6c6c}
+.date{font-size:16px;color:#607d8b}
+.score{font-size:29px;font-weight:700;margin:5px 0}
+.level{font-size:19px;font-weight:600;margin-bottom:13px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+button{min-height:50px;border:0;border-radius:13px;font-family:inherit;font-size:17px;font-weight:700;cursor:pointer}
+.view{background:#3da9fc;color:white}
+.delete{background:#ffe5e5;color:#9f2020}
+.message{text-align:center;font-size:19px;line-height:1.7}
+@media(max-width:520px){.actions{grid-template-columns:1fr}.header h1{font-size:25px}}
+</style>
+</head>
+<body>
+<header class="header">
+<a href="elderly.html">← กลับหน้าข้อมูล</a>
+<h1>📋 ประวัติการประเมิน</h1>
+<p id="elderName">กำลังโหลด...</p>
+</header>
+<main class="container">
+<section class="summary" id="summary">กำลังตรวจสอบข้อมูล...</section>
+<div id="historyList"></div>
+</main>
+
+<script type="module">
+import { db, getAnonymousUser } from "./firebase.js";
+import {
+  collection,
+  getDocs,
+  query,
+  orderBy,
+  deleteDoc,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+const elderId = localStorage.getItem("currentElderId");
+const elderName = localStorage.getItem("currentElderName") || "ผู้สูงอายุ";
+const historyList = document.getElementById("historyList");
+document.getElementById("elderName").textContent = elderName;
+
+if (!elderId) {
+  alert("กรุณาเลือกผู้สูงอายุก่อน");
+  window.location.replace("elderly.html");
+}
+
+initialize();
+
+async function initialize() {
+  try {
+    await getAnonymousUser();
+    await loadHistory();
+  } catch (error) {
+    console.error(error);
+    historyList.innerHTML = '<div class="message">⚠️ เปิดประวัติไม่ได้ กรุณาตรวจสอบ Firebase</div>';
+  }
+}
+
+async function getHistorySnapshot() {
+  return getDocs(
+    query(
+      collection(db, "elderly", elderId, "assessments"),
+      orderBy("assessedAt", "desc")
+    )
+  );
+}
+
+async function loadHistory() {
+  historyList.innerHTML = '<div class="message">กำลังโหลดประวัติ...</div>';
+
+  try {
+    const snapshot = await getHistorySnapshot();
+    document.getElementById("summary").textContent =
+      "ประเมินทั้งหมด " + snapshot.size + " ครั้ง";
+
+    if (snapshot.empty) {
+      historyList.innerHTML =
+        '<div class="message">ยังไม่มีประวัติการประเมิน</div>';
+      return;
+    }
+
+    historyList.innerHTML = "";
+
+    snapshot.forEach(function(documentSnapshot) {
+      const result = documentSnapshot.data();
+      const resultId = documentSnapshot.id;
+      const dateText =
+        result.assessedAtText ||
+        (result.assessedAt?.toDate
+          ? result.assessedAt.toDate().toLocaleString("th-TH")
+          : "ไม่ระบุวันที่");
+
+      const card = document.createElement("article");
+      card.className =
+        "history-card" + (result.riskLevel === "สูง" ? " high" : "");
+
+      card.innerHTML = `
+        <div class="date">${escapeHTML(dateText)}</div>
+        <div class="score">${Number(result.score || 0)} คะแนน</div>
+        <div class="level">
+          ${result.riskLevel === "สูง"
+            ? "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม"
+            : "🟢 ความเสี่ยงต่ำ"}
+        </div>
+        <div class="actions">
+          <button class="view" type="button">ดูรายละเอียด</button>
+          <button class="delete" type="button">ลบผลครั้งนี้</button>
+        </div>
+      `;
+
+      card.querySelector(".view").addEventListener("click", function() {
+        localStorage.setItem("currentAssessmentId", resultId);
+        localStorage.setItem("thaiFratScore", String(result.score));
+        localStorage.setItem("mfsScore", String(result.score));
+        localStorage.setItem("riskLevel", result.riskLevel);
+        localStorage.setItem("date", dateText);
+        window.location.href = "report.html";
+      });
+
+      card.querySelector(".delete").addEventListener("click", async function() {
+        if (!confirm("ต้องการลบผลการประเมินครั้งนี้ใช่หรือไม่")) return;
+
+        await deleteDoc(
+          doc(db, "elderly", elderId, "assessments", resultId)
+        );
+
+        await refreshLatest();
+      });
+
+      historyList.appendChild(card);
+    });
+  } catch (error) {
+    console.error("โหลดประวัติไม่สำเร็จ:", error);
+    historyList.innerHTML =
+      '<div class="message">⚠️ โหลดประวัติไม่ได้ กรุณาตรวจสอบ Firestore Rules</div>';
+  }
+}
+
+async function refreshLatest() {
+  const snapshot = await getHistorySnapshot();
+  const elderRef = doc(db, "elderly", elderId);
+
+  if (snapshot.empty) {
+    await updateDoc(elderRef, {
+      assessmentCount: 0,
+      latestScore: null,
+      riskLevel: "ยังไม่ได้ประเมิน",
+      latestAssessmentId: null,
+      latestAssessmentText: null
+    });
+  } else {
+    const latestDocument = snapshot.docs[0];
+    const latest = latestDocument.data();
+
+    await updateDoc(elderRef, {
+      assessmentCount: snapshot.size,
+      latestScore: latest.score,
+      riskLevel: latest.riskLevel,
+      latestAssessmentId: latestDocument.id,
+      latestAssessmentText: latest.assessedAtText || "ผลล่าสุด"
+    });
+  }
+
+  await loadHistory();
+}
+
+function escapeHTML(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+</script>
+</body>
+</html>

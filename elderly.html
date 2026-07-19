@@ -201,17 +201,20 @@ body{
 
 .card-actions{
     display:grid;
-    grid-template-columns:1fr 1fr auto;
+    grid-template-columns:repeat(2,minmax(0,1fr));
     gap:10px;
 }
 
 .assess-button,
 .report-button,
-.report-button{
+.history-button{
     background:#49b99b;
     color:white;
 }
 
+.assess-button,
+.report-button,
+.history-button,
 .delete-button{
     min-height:52px;
     border:none;
@@ -293,6 +296,29 @@ body{
 #otherDiseaseText:disabled{
     background:#edf2f4;
     color:#87969d;
+}
+
+
+.history-button{
+    background:#7b74d6;
+    color:white;
+}
+
+.assessment-summary{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    margin:0 0 15px;
+    padding:12px 14px;
+    border-radius:14px;
+    background:#eef8ff;
+    color:#285667;
+    font-size:17px;
+}
+
+.assessment-summary span{
+    font-size:15px;
+    color:#607d8b;
 }
 
 </style>

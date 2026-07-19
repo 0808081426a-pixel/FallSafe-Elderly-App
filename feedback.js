@@ -1,10 +1,13 @@
-import { db } from "./firebase.js";
+import { db, getAnonymousUser } from "./firebase.js";
 
 import {
     collection,
     addDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+let currentUser = null;
+getAnonymousUser().then(function(user){ currentUser = user; });
 
 const feedbackForm =
     document.getElementById("feedbackForm");

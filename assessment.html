@@ -497,16 +497,20 @@ body {
 </main>
 
 <script type="module">
-import { db } from "./firebase.js";
+import { db, getAnonymousUser } from "./firebase.js";
 
 import {
     doc,
     updateDoc,
     collection,
     addDoc,
-    serverTimestamp
+    serverTimestamp,
+    increment
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
+
+let currentUser = null;
+getAnonymousUser().then(function(user){ currentUser = user; }).catch(function(error){ console.error(error); });
 
 const currentElderId =
     localStorage.getItem("currentElderId");
@@ -688,23 +692,44 @@ window.calculateThaiFRAT = async function() {
 
     if (elderId) {
         try {
+            if (!currentUser) {
+                currentUser = await getAnonymousUser();
+            }
+
             const elderRef = doc(db, "elderly", elderId);
+
+            const assessmentRef = await addDoc(
+                collection(db, "elderly", elderId, "assessments"),
+                {
+                    ownerId: currentUser.uid,
+                    elderId: elderId,
+                    elderName: elderName || "ผู้สูงอายุ",
+                    score: score,
+                    riskLevel: level,
+                    assessmentType: "Thai-FRAT",
+                    answers: {
+                        gender: gender,
+                        vision: vision,
+                        balance: balance,
+                        medicine: medicine,
+                        fallHistory: fallHistory,
+                        home: home
+                    },
+                    assessedAt: serverTimestamp(),
+                    assessedAtText: assessedDate
+                }
+            );
 
             await updateDoc(elderRef, {
                 latestScore: score,
                 riskLevel: level,
+                assessmentCount: increment(1),
+                latestAssessmentId: assessmentRef.id,
+                latestAssessmentText: assessedDate,
                 lastAssessment: serverTimestamp()
             });
 
-            await addDoc(
-                collection(db, "elderly", elderId, "assessments"),
-                {
-                    score: score,
-                    riskLevel: level,
-                    assessmentType: "Thai-FRAT",
-                    assessedAt: serverTimestamp()
-                }
-            );
+            localStorage.setItem("currentAssessmentId", assessmentRef.id);
 
             const savedNotice = document.getElementById("savedNotice");
             if (savedNotice) {
