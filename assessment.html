@@ -283,12 +283,6 @@ body {
         </p>
     </section>
 
-
-    <section class="intro-card" id="selectedElderCard">
-        <h2>👤 ผู้รับการประเมิน</h2>
-        <p id="selectedElderName">กำลังตรวจสอบข้อมูล...</p>
-    </section>
-
     <section class="intro-card">
         <div class="progress-text" id="progressText">
             ตอบแล้ว 0 จาก 6 ข้อ
@@ -357,6 +351,7 @@ body {
         </span>
     </span>
 </label>
+            </label>
         </section>
 
         <section class="question-card">
@@ -504,29 +499,11 @@ import {
     updateDoc,
     collection,
     addDoc,
-    serverTimestamp,
-    increment
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-
 let currentUser = null;
-getAnonymousUser().then(function(user){ currentUser = user; }).catch(function(error){ console.error(error); });
-
-const currentElderId =
-    localStorage.getItem("currentElderId");
-
-const currentElderName =
-    localStorage.getItem("currentElderName");
-
-const selectedElderNameElement =
-    document.getElementById("selectedElderName");
-
-if(!currentElderId || !currentElderName){
-    alert("กรุณาเพิ่มหรือเลือกรายชื่อผู้สูงอายุก่อนทำแบบประเมิน");
-    window.location.replace("elderly.html");
-}else if(selectedElderNameElement){
-    selectedElderNameElement.textContent = currentElderName;
-}
+getAnonymousUser().then(user => currentUser = user).catch(console.error);
 
 const assessmentForm = document.getElementById("thaiFratForm");
 
@@ -663,83 +640,62 @@ window.calculateThaiFRAT = async function() {
 
     resultCard.style.display = "block";
 
-    const elderId = localStorage.getItem("currentElderId");
-    const elderName = localStorage.getItem("currentElderName");
-    const assessedDate = new Date().toLocaleString("th-TH", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit"
-    });
-
-    localStorage.setItem("mfsScore", String(score));
-    localStorage.setItem("thaiFratScore", String(score));
+    localStorage.setItem("mfsScore", score);
+    localStorage.setItem("thaiFratScore", score);
     localStorage.setItem("riskLevel", level);
-    localStorage.setItem("date", assessedDate);
+localStorage.setItem(
+    "date",
+    new Date().toLocaleDateString("th-TH")
+);
 
-    if (elderId) {
-        localStorage.setItem(
-            "assessment:" + elderId,
-            JSON.stringify({
-                score: score,
-                riskLevel: level,
-                date: assessedDate,
-                name: elderName || "ผู้สูงอายุ"
-            })
-        );
-    }
+if(elderName){
+    localStorage.setItem(
+        "currentElderName",
+        elderName
+    );
+}
+    const elderId =
+        localStorage.getItem("currentElderId");
+
+    const elderName =
+        localStorage.getItem("currentElderName");
 
     if (elderId) {
         try {
-            if (!currentUser) {
-                currentUser = await getAnonymousUser();
-            }
-
-            const elderRef = doc(db, "elderly", elderId);
-
-            const assessmentRef = await addDoc(
-                collection(db, "elderly", elderId, "assessments"),
-                {
-                    ownerId: currentUser.uid,
-                    elderId: elderId,
-                    elderName: elderName || "ผู้สูงอายุ",
-                    score: score,
-                    riskLevel: level,
-                    assessmentType: "Thai-FRAT",
-                    answers: {
-                        gender: gender,
-                        vision: vision,
-                        balance: balance,
-                        medicine: medicine,
-                        fallHistory: fallHistory,
-                        home: home
-                    },
-                    assessedAt: serverTimestamp(),
-                    assessedAtText: assessedDate
-                }
-            );
+            if (!currentUser) currentUser = await getAnonymousUser();
+            const elderRef =
+                doc(db, "elderly", elderId);
 
             await updateDoc(elderRef, {
                 latestScore: score,
                 riskLevel: level,
-                assessmentCount: increment(1),
-                latestAssessmentId: assessmentRef.id,
-                latestAssessmentText: assessedDate,
                 lastAssessment: serverTimestamp()
             });
 
-            localStorage.setItem("currentAssessmentId", assessmentRef.id);
+            await addDoc(
+                collection(db, "elderly", elderId, "assessments"),
+                {
+                    score: score,
+                    riskLevel: level,
+                    assessmentType: "Thai-FRAT",
+                    assessedAt: serverTimestamp()
+                }
+            );
 
-            const savedNotice = document.getElementById("savedNotice");
+            const savedNotice =
+                document.getElementById("savedNotice");
+
             if (savedNotice) {
                 savedNotice.innerHTML =
-                    `✅ บันทึกผลของ ${elderName || "ผู้สูงอายุ"} เรียบร้อย สามารถประเมินซ้ำในวันเดียวกันได้`;
+                    `✅ บันทึกผลของ ${elderName || "ผู้สูงอายุ"} เรียบร้อย`;
                 savedNotice.style.display = "block";
             }
         } catch (error) {
             console.error("บันทึกผลไม่สำเร็จ:", error);
-            alert("คำนวณคะแนนได้ แต่บันทึกข้อมูลออนไลน์ไม่สำเร็จ กรุณาตรวจสอบอินเทอร์เน็ต");
+
+            alert(
+                "คำนวณคะแนนได้ แต่บันทึกข้อมูลออนไลน์ไม่สำเร็จ"
+            );
         }
     }
 

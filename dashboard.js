@@ -1,10 +1,8 @@
-import { db, getAnonymousUser } from "./firebase.js";
+import { db } from "./firebase.js";
 
 import {
     collection,
-    getDocs,
-    query,
-    where
+    getDocs
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
 const totalElderlyElement =
@@ -43,14 +41,8 @@ async function loadDashboard() {
         dashboardMessage.textContent =
             "กำลังโหลดข้อมูลจาก Firebase...";
 
-        const currentUser = await getAnonymousUser();
-
-        const elderlySnapshot = await getDocs(
-            query(
-                collection(db, "elderly"),
-                where("ownerId", "==", currentUser.uid)
-            )
-        );
+        const elderlySnapshot =
+            await getDocs(collection(db, "elderly"));
 
         let totalElderly = 0;
         let lowRisk = 0;
@@ -94,12 +86,8 @@ async function loadDashboard() {
 );
         
 
-        const feedbackSnapshot = await getDocs(
-            query(
-                collection(db, "feedback"),
-                where("ownerId", "==", currentUser.uid)
-            )
-        );
+        const feedbackSnapshot =
+            await getDocs(collection(db, "feedback"));
 
         let feedbackCount = 0;
         let satisfactionTotal = 0;

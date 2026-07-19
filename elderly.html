@@ -201,20 +201,11 @@ body{
 
 .card-actions{
     display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
+    grid-template-columns:1fr auto;
     gap:10px;
 }
 
 .assess-button,
-.report-button,
-.history-button{
-    background:#49b99b;
-    color:white;
-}
-
-.assess-button,
-.report-button,
-.history-button,
 .delete-button{
     min-height:52px;
     border:none;
@@ -227,11 +218,6 @@ body{
 
 .assess-button{
     background:#3da9fc;
-    color:white;
-}
-
-.report-button{
-    background:#49b99b;
     color:white;
 }
 
@@ -264,63 +250,6 @@ body{
     display:block;
     margin-top:20px;
 }
-
-.disease-list{
-    display:grid;
-    gap:10px;
-}
-
-.disease-option{
-    display:flex !important;
-    align-items:flex-start;
-    gap:12px;
-    margin:0 !important;
-    padding:14px;
-    border:2px solid #d8edf7;
-    border-radius:15px;
-    background:#f8fcff;
-    font-size:19px !important;
-    font-weight:500 !important;
-    cursor:pointer;
-}
-
-.disease-option input{
-    width:24px !important;
-    height:24px !important;
-    min-height:auto !important;
-    margin:2px 0 0 !important;
-    padding:0 !important;
-    accent-color:#249fd0;
-}
-
-#otherDiseaseText:disabled{
-    background:#edf2f4;
-    color:#87969d;
-}
-
-
-.history-button{
-    background:#7b74d6;
-    color:white;
-}
-
-.assessment-summary{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-    margin:0 0 15px;
-    padding:12px 14px;
-    border-radius:14px;
-    background:#eef8ff;
-    color:#285667;
-    font-size:17px;
-}
-
-.assessment-summary span{
-    font-size:15px;
-    color:#607d8b;
-}
-
 </style>
 </head>
 
@@ -372,69 +301,41 @@ body{
                 </select>
             </div>
 
-            <div class="form-group">
-                <label>โรคประจำตัว (เลือกได้หลายข้อ)</label>
+           <div class="form-group">
 
-                <div class="disease-list">
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="ไม่มีโรคประจำตัว" id="noDisease">
-                        ไม่มีโรคประจำตัว
-                    </label>
+<label>โรคประจำตัว (เลือกได้หลายข้อ)</label>
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="ความดันโลหิตสูง">
-                        ความดันโลหิตสูง
-                    </label>
+<div class="disease-list">
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="เบาหวาน">
-                        เบาหวาน
-                    </label>
+<label><input type="checkbox" name="disease" value="ไม่มีโรคประจำตัว"> ไม่มีโรคประจำตัว</label><br>
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="โรคหัวใจ">
-                        โรคหัวใจ
-                    </label>
+<label><input type="checkbox" name="disease" value="ความดันโลหิตสูง"> ความดันโลหิตสูง</label><br>
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="โรคหลอดเลือดสมอง">
-                        โรคหลอดเลือดสมอง (Stroke)
-                    </label>
+<label><input type="checkbox" name="disease" value="เบาหวาน"> เบาหวาน</label><br>
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="ข้อเข่าเสื่อม">
-                        ข้อเข่าเสื่อม
-                    </label>
+<label><input type="checkbox" name="disease" value="โรคหัวใจ"> โรคหัวใจ</label><br>
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="พาร์กินสัน">
-                        พาร์กินสัน
-                    </label>
+<label><input type="checkbox" name="disease" value="โรคหลอดเลือดสมอง"> โรคหลอดเลือดสมอง (Stroke)</label><br>
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="กระดูกพรุน">
-                        กระดูกพรุน
-                    </label>
+<label><input type="checkbox" name="disease" value="ข้อเข่าเสื่อม"> ข้อเข่าเสื่อม</label><br>
 
-                    <label class="disease-option">
-                        <input type="checkbox" name="disease" value="สายตาพร่ามัว / ต้อกระจก">
-                        สายตาพร่ามัว / ต้อกระจก
-                    </label>
+<label><input type="checkbox" name="disease" value="พาร์กินสัน"> พาร์กินสัน</label><br>
 
-                    <label class="disease-option">
-                        <input type="checkbox" id="otherDisease">
-                        อื่น ๆ
-                    </label>
+<label><input type="checkbox" name="disease" value="กระดูกพรุน"> กระดูกพรุน</label><br>
 
-                    <input
-                        id="otherDiseaseText"
-                        type="text"
-                        placeholder="ระบุโรคอื่น ๆ"
-                        disabled
-                    >
-                </div>
-            </div>
+<label><input type="checkbox" name="disease" value="สายตาพร่ามัว / ต้อกระจก"> สายตาพร่ามัว / ต้อกระจก</label><br>
 
+<label><input type="checkbox" id="otherDisease"> อื่น ๆ</label>
+
+<input
+type="text"
+id="otherDiseaseText"
+placeholder="ระบุโรค"
+style="margin-top:10px;">
+
+</div>
+
+</div>
 
             <div class="form-group">
                 <label for="caregiver">ชื่อผู้ดูแล</label>

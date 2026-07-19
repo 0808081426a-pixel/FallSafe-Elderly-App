@@ -93,8 +93,6 @@ body{
 
 .video-card:hover{
     transform:translateY(-4px);
-}
-
 .thumbnail{
     position:relative;
     height:200px;
@@ -183,7 +181,7 @@ body{
 /* Popup วิดีโอ */
 
 .video-popup{
-    display:none !important;
+    display:none;
     position:fixed;
     inset:0;
     z-index:99999;
@@ -366,13 +364,8 @@ alt="การออกกำลังกายป้องกันการห
             type="button"
             onclick="openVideo('balance')"
         >
-            <div class="thumbnail">
-                <img
-                    src="https://img.youtube.com/vi/hJylZ-7L_3A/hqdefault.jpg"
-                    alt="ท่าฝึกการทรงตัวในผู้สูงอายุ"
-                >
-                <div class="play-icon">▶</div>
-            </div>
+            <img
+src="https://img.youtube.com/vi/hJylZ-7L_3A/hqdefault.jpg">
 
             <div class="card-content">
                 <h2>ฝึกการทรงตัว</h2>
@@ -391,13 +384,8 @@ alt="การออกกำลังกายป้องกันการห
             type="button"
             onclick="openVideo('e75')"
         >
-            <div class="thumbnail">
-                <img
-                    src="https://img.youtube.com/vi/KxrE6CQuR9E/hqdefault.jpg"
-                    alt="โปรแกรมออกกำลังกาย E75"
-                >
-                <div class="play-icon">▶</div>
-            </div>
+            <img
+src="https://img.youtube.com/vi/KxrE6CQuR9E/hqdefault.jpg">
 
             <div class="card-content">
                 <h2>เสริมความแข็งแรงของร่างกาย</h2>
@@ -416,13 +404,8 @@ alt="การออกกำลังกายป้องกันการห
             type="button"
             onclick="openVideo('easyExercise')"
         >
-            <div class="thumbnail">
-                <img
-                    src="https://img.youtube.com/vi/xy9PKX4r3jc/hqdefault.jpg"
-                    alt="ท่าบริหารง่าย ๆ ป้องกันการหกล้ม"
-                >
-                <div class="play-icon">▶</div>
-            </div>
+            <img
+src="https://img.youtube.com/vi/xy9PKX4r3jc/hqdefault.jpg">
 
             <div class="card-content">
                 <h2>ท่าบริหารง่าย ๆ ป้องกันการหกล้ม</h2>
@@ -603,14 +586,16 @@ function openVideo(type){
         data.videoId +
         "?rel=0";
 
-    document.getElementById("videoPopup").style.setProperty("display", "flex", "important");
+    document.getElementById("videoPopup").style.display =
+        "flex";
 }
 
 function closeVideo(){
 
     document.getElementById("videoFrame").src = "";
 
-    document.getElementById("videoPopup").style.setProperty("display", "none", "important");
+    document.getElementById("videoPopup").style.display =
+        "none";
 }
 
 document
