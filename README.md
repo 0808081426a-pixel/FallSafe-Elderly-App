@@ -1,1 +1,0 @@
-# FallSafe-Elderly-App
