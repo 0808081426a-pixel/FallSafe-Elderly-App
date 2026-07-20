@@ -13,7 +13,7 @@
 .hero h1{font-size:clamp(42px,7vw,64px);margin:0 0 8px}.hero h2{margin:0 0 14px;font-size:clamp(22px,3vw,30px);color:#0d4478}.hero p{margin:0;font-size:clamp(17px,2.4vw,21px);line-height:1.75}
 .elders{min-height:260px;display:flex;align-items:center;justify-content:center}.elder-circle{width:260px;height:260px;border-radius:50%;background:linear-gradient(#e6f8ff,#c6f4df);display:grid;place-items:center;font-size:110px;box-shadow:inset 0 0 0 16px #ffffff55}
 .container{width:min(94%,1040px);margin:-60px auto 0;position:relative;z-index:2}.start-card{background:#fff;border-radius:30px;padding:28px;box-shadow:0 18px 50px #215d8c29;display:grid;grid-template-columns:1.05fr .95fr;gap:22px;align-items:center}
-.start-row{display:grid;grid-template-columns:70px 1fr;gap:16px}.start-icon{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#399dfc,#5dc8ff);color:white;font-size:36px}.start-card h3{margin:0 0 8px;font-size:30px;color:#153f74}.start-card p{margin:0;font-size:18px;line-height:1.7}
+.start-row{display:grid;grid-template-columns:70px 1fr;gap:16px}.start-icon{width:70px;height:70px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#399dfc,#5dc8ff);color:white;font-size:36px}.start-card h3{margin:0 0 8px;font-size:30px;color:#153f74}.start-card p{margin:0;font-size:18px;line-height:1.7}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:20px}.step{background:#f4faff;border:1px solid #d9efff;border-radius:18px;padding:13px 10px;text-align:center}.step-num{width:34px;height:34px;margin:0 auto 7px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#268df8,#42d49b);color:white;font-weight:700}.step b{display:block;font-size:15px;color:#174f7c}.step small{display:block;margin-top:4px;color:#61758a;line-height:1.45}
 .start-btn{display:inline-flex;margin-top:20px;min-height:62px;min-width:250px;border-radius:999px;align-items:center;justify-content:center;gap:12px;color:#fff;font-size:23px;font-weight:700;background:linear-gradient(90deg,#268df8,#38c9ca,#42d49b);box-shadow:0 10px 24px #2ca5ca47}
 .clip{min-height:210px;border-radius:25px;background:linear-gradient(145deg,#eff9ff,#e7fff6);display:grid;place-items:center;font-size:110px}
 .section-title{display:flex;gap:14px;align-items:center;margin:34px 4px 18px}.section-title b{font-size:34px;color:#248df0}.section-title h2{margin:0;font-size:30px;color:#153f74}.section-title p{margin:2px 0 0;color:#61758a}
@@ -23,7 +23,7 @@
 .card h3{font-size:22px;margin:0 0 7px;color:#14385e}.card p{font-size:16px;line-height:1.6;margin:0;color:#536b80}.arrow{position:absolute;right:14px;bottom:14px;width:38px;height:38px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:29px;box-shadow:0 6px 14px #3c556e1f}
 .note{margin:28px 0 8px;padding:18px;background:#fff;border-radius:999px;text-align:center;font-weight:600;color:#1c70c4;box-shadow:0 10px 26px #1f517d1a}
 .nav{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:min(94%,720px);background:#fffffff2;border-radius:22px;padding:10px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 14px 40px #173d5d2e;z-index:10}.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#738397;font-size:14px}.nav a:first-child{color:#188cf0;font-weight:700}.nav span{font-size:24px}
-@media(max-width:760px){.hero-content{grid-template-columns:1fr}.elders{display:none}.start-card{grid-template-columns:1fr}.clip{min-height:155px;font-size:85px}.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.hero-content{grid-template-columns:1fr}.elders{display:none}.start-card{grid-template-columns:1fr}.clip{min-height:155px;font-size:85px}.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:430px){.hero{padding-bottom:82px}.brand{font-size:28px}.hero h1{font-size:43px}.hero h2{font-size:22px}.hero p{font-size:17px}.container{margin-top:-48px}.start-card{padding:21px}.start-row{grid-template-columns:56px 1fr;gap:12px}.start-icon{width:56px;height:56px;font-size:29px}.start-card h3{font-size:24px}.start-card p{font-size:16px}.start-btn{min-width:100%;font-size:21px}.grid{grid-template-columns:1fr 1fr;gap:12px}.card{min-height:205px;padding:19px 12px}.card h3{font-size:18px}.card p{font-size:14px}.icon{width:62px;height:62px;font-size:30px}}
 </style>
 </head>
@@ -46,6 +46,12 @@
       <div class="start-row">
         <div class="start-icon">👤</div>
         <div><h3>เริ่มต้นใช้งานง่าย ๆ</h3><p>ครั้งแรกกรุณาเพิ่มข้อมูลผู้สูงอายุ จากนั้นเลือกทำแบบประเมินหรือดูประวัติย้อนหลัง</p></div>
+      </div>
+      <div class="steps" aria-label="ขั้นตอนการใช้งาน">
+        <div class="step"><div class="step-num">1</div><b>เพิ่มข้อมูล</b><small>บันทึกข้อมูลผู้สูงอายุ</small></div>
+        <div class="step"><div class="step-num">2</div><b>เลือกผู้สูงอายุ</b><small>เลือกรายชื่อก่อนประเมิน</small></div>
+        <div class="step"><div class="step-num">3</div><b>ทำแบบประเมิน</b><small>ตอบคำถามให้ครบทุกข้อ</small></div>
+        <div class="step"><div class="step-num">4</div><b>ดูผลและคำแนะนำ</b><small>ดูคะแนนและแนวทางป้องกัน</small></div>
       </div>
       <a class="start-btn" href="elderly.html">เริ่มใช้งาน <span>›</span></a>
     </div>

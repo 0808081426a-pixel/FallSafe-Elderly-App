@@ -1,10 +1,3 @@
-วางทับเฉพาะ exercise.html ในโปรเจกต์เดิม
-
-ผลลัพธ์:
-- กดรูปหรือพื้นที่ใดของการ์ดก็เปิดวิดีโอทันที
-- วิดีโอเปิดเป็นป๊อปอัปตรงกลางจอ
-- ปิดวิดีโอแล้วหยุดเล่นทันที
-- ใช้งานได้ทั้งคอมและมือถือ
-
-GitHub Desktop Summary:
-Play exercise videos in popup
+วางทับเฉพาะ index.html ในโปรเจกต์เดิม
+Commit: Add usage steps to home
+จากนั้น Push origin และกด Ctrl+F5
