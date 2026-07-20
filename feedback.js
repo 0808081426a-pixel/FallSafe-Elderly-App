@@ -1,135 +1,98 @@
-import { db } from "./firebase.js";
+import { db, getAnonymousUser } from "./firebase.js";
 
 import {
-    collection,
-    addDoc,
-    serverTimestamp
+  collection,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
-const feedbackForm =
-    document.getElementById("feedbackForm");
+const feedbackForm = document.getElementById("feedbackForm");
+const submitButton = document.getElementById("submitButton");
+const warning = document.getElementById("warning");
 
-const submitButton =
-    document.getElementById("submitButton");
-
-const warning =
-    document.getElementById("warning");
-
-function getRating(name){
-
-    const selected = document.querySelector(
-        'input[name="' + name + '"]:checked'
-    );
-
-    return selected ? Number(selected.value) : null;
+function getRating(name) {
+  const selected = document.querySelector(
+    'input[name="' + name + '"]:checked'
+  );
+  return selected ? Number(selected.value) : null;
 }
 
-feedbackForm.addEventListener(
-    "submit",
-    async function(event){
+feedbackForm.addEventListener("submit", async function(event) {
+  event.preventDefault();
 
-        event.preventDefault();
+  const easyToUse = getRating("easyToUse");
+  const visibility = getRating("visibility");
+  const mediaHelpful = getRating("mediaHelpful");
+  const overall = getRating("overall");
 
-        const easyToUse =
-            getRating("easyToUse");
+  if (
+    easyToUse === null ||
+    visibility === null ||
+    mediaHelpful === null ||
+    overall === null
+  ) {
+    warning.style.display = "block";
+    warning.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+    return;
+  }
 
-        const visibility =
-            getRating("visibility");
+  warning.style.display = "none";
 
-        const mediaHelpful =
-            getRating("mediaHelpful");
+  const likedFeatures = Array.from(
+    document.querySelectorAll(
+      'input[name="likedFeatures"]:checked'
+    )
+  ).map(function(item) {
+    return item.value;
+  });
 
-        const overall =
-            getRating("overall");
+  const comment = document
+    .getElementById("comment")
+    .value
+    .trim();
 
-        if(
-            easyToUse === null ||
-            visibility === null ||
-            mediaHelpful === null ||
-            overall === null
-        ){
-            warning.style.display = "block";
+  const averageScore =
+    (easyToUse + visibility + mediaHelpful + overall) / 4;
 
-            warning.scrollIntoView({
-                behavior:"smooth",
-                block:"center"
-            });
+  try {
+    submitButton.disabled = true;
+    submitButton.textContent = "กำลังส่งแบบประเมิน...";
 
-            return;
-        }
+    const user = await getAnonymousUser();
 
-        warning.style.display = "none";
+    await addDoc(
+      collection(db, "feedback"),
+      {
+        ownerId: user.uid,
+        easyToUse,
+        visibility,
+        mediaHelpful,
+        overall,
+        averageScore,
+        likedFeatures,
+        comment,
+        createdAt: serverTimestamp()
+      }
+    );
 
-        const likedFeatures = Array
-            .from(
-                document.querySelectorAll(
-                    'input[name="likedFeatures"]:checked'
-                )
-            )
-            .map(function(item){
-                return item.value;
-            });
+    feedbackForm.style.display = "none";
+    document.getElementById("thankYou").style.display = "block";
 
-        const comment =
-            document
-                .getElementById("comment")
-                .value
-                .trim();
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  } catch (error) {
+    console.error("บันทึกความพึงพอใจไม่สำเร็จ:", error);
 
-        const averageScore =
-            (
-                easyToUse +
-                visibility +
-                mediaHelpful +
-                overall
-            ) / 4;
+    alert(
+      "ไม่สามารถส่งแบบประเมินได้ กรุณาตรวจสอบอินเทอร์เน็ตแล้วลองใหม่"
+    );
 
-        try{
-            submitButton.disabled = true;
-            submitButton.textContent =
-                "กำลังส่งแบบประเมิน...";
-
-            await addDoc(
-                collection(db, "feedback"),
-                {
-                    easyToUse:easyToUse,
-                    visibility:visibility,
-                    mediaHelpful:mediaHelpful,
-                    overall:overall,
-                    averageScore:averageScore,
-                    likedFeatures:likedFeatures,
-                    comment:comment,
-                    createdAt:serverTimestamp()
-                }
-            );
-
-            feedbackForm.style.display = "none";
-
-            document
-                .getElementById("thankYou")
-                .style
-                .display = "block";
-
-            window.scrollTo({
-                top:0,
-                behavior:"smooth"
-            });
-
-        }
-        catch(error){
-
-            console.error(
-                "บันทึกความพึงพอใจไม่สำเร็จ:",
-                error
-            );
-
-            alert(
-                "ไม่สามารถส่งแบบประเมินได้ กรุณาลองใหม่"
-            );
-
-            submitButton.disabled = false;
-            submitButton.textContent =
-                "💙 ส่งแบบประเมิน";
-        }
-    }
-);
+    submitButton.disabled = false;
+    submitButton.textContent = "ส่งแบบประเมิน";
+  }
+});
