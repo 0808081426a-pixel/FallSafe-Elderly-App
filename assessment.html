@@ -640,47 +640,41 @@ window.calculateThaiFRAT = async function() {
 
     resultCard.style.display = "block";
 
-    localStorage.setItem("mfsScore", score);
-    localStorage.setItem("thaiFratScore", score);
+    const elderId = localStorage.getItem("currentElderId");
+    const elderName = localStorage.getItem("currentElderName") || "ผู้สูงอายุ";
+    const assessedAtText = new Date().toLocaleString("th-TH");
+
+    localStorage.setItem("mfsScore", String(score));
+    localStorage.setItem("thaiFratScore", String(score));
     localStorage.setItem("riskLevel", level);
-localStorage.setItem(
-    "date",
-    new Date().toLocaleDateString("th-TH")
-);
-
-if(elderName){
-    localStorage.setItem(
-        "currentElderName",
-        elderName
-    );
-}
-    const elderId =
-        localStorage.getItem("currentElderId");
-
-    const elderName =
-        localStorage.getItem("currentElderName");
+    localStorage.setItem("date", assessedAtText);
 
     if (elderId) {
         try {
             if (!currentUser) currentUser = await getAnonymousUser();
-            const elderRef =
-                doc(db, "elderly", elderId);
+            const elderRef = doc(db, "elderly", elderId);
+
+            const assessmentRef = await addDoc(
+                collection(db, "elderly", elderId, "assessments"),
+                {
+                    ownerId: currentUser.uid,
+                    score: score,
+                    riskLevel: level,
+                    assessmentType: "Thai-FRAT",
+                    assessedAt: serverTimestamp(),
+                    assessedAtText: assessedAtText
+                }
+            );
+
+            localStorage.setItem("currentAssessmentId", assessmentRef.id);
 
             await updateDoc(elderRef, {
                 latestScore: score,
                 riskLevel: level,
+                latestAssessmentId: assessmentRef.id,
+                latestAssessmentText: assessedAtText,
                 lastAssessment: serverTimestamp()
             });
-
-            await addDoc(
-                collection(db, "elderly", elderId, "assessments"),
-                {
-                    score: score,
-                    riskLevel: level,
-                    assessmentType: "Thai-FRAT",
-                    assessedAt: serverTimestamp()
-                }
-            );
 
             const savedNotice =
                 document.getElementById("savedNotice");

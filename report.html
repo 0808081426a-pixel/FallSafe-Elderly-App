@@ -1,1 +1,54 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>รายงานผล | FallGuard+</title><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box}body{margin:0;background:#f4fbff;font-family:Prompt,sans-serif;color:#29434e}.head{background:linear-gradient(135deg,#63c7ff,#8be3c5);color:#fff;padding:26px 20px 48px;border-radius:0 0 30px 30px}.head a{color:#fff;text-decoration:none;font-weight:600}.wrap{width:92%;max-width:720px;margin:-25px auto 40px}.card{background:#fff;border-radius:22px;padding:24px;box-shadow:0 8px 26px #0001;margin-bottom:16px}.score{text-align:center;font-size:56px;font-weight:700}.level{text-align:center;font-size:23px;font-weight:700}.high{color:#c63f3f}.low{color:#16885f}li{margin:10px 0;line-height:1.6}.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;text-decoration:none;font-weight:700;background:#3da9fc;color:#fff}.secondary{background:#e8f5ef;color:#18785a}@media(max-width:520px){.btns{grid-template-columns:1fr}}</style></head><body><header class="head"><a href="history.html">← กลับประวัติ</a><h1>รายงานผลการประเมิน</h1><p id="name">กำลังโหลด...</p></header><main class="wrap"><section class="card"><div id="date"></div><div class="score" id="score">-</div><div class="level" id="level">-</div></section><section class="card"><h2>คำแนะนำ</h2><ul id="advice"></ul></section><div class="btns"><a class="btn" href="assessment.html">ประเมินอีกครั้ง</a><a class="btn secondary" href="elderly.html">หน้าข้อมูลผู้สูงอายุ</a></div></main><script type="module">import{db,getAnonymousUser}from'./firebase.js';import{doc,getDoc}from'https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js';const elderId=localStorage.getItem('currentElderId'),assessmentId=localStorage.getItem('currentAssessmentId');document.getElementById('name').textContent=localStorage.getItem('currentElderName')||'ผู้สูงอายุ';init();async function init(){try{await getAnonymousUser();let d=null;if(elderId&&assessmentId){const s=await getDoc(doc(db,'elderly',elderId,'assessments',assessmentId));if(s.exists())d=s.data();}if(!d)d={score:Number(localStorage.getItem('thaiFratScore')||0),riskLevel:localStorage.getItem('riskLevel')||'ยังไม่มีผล',assessedAtText:localStorage.getItem('date')||'-'};render(d)}catch(e){console.error(e);alert('เปิดรายงานไม่ได้ กรุณากลับไปเลือกประวัติอีกครั้ง')}}function render(d){document.getElementById('date').textContent='วันที่ประเมิน: '+(d.assessedAtText||'-');document.getElementById('score').textContent=Number(d.score||0)+' คะแนน';const high=d.riskLevel==='สูง',lv=document.getElementById('level');lv.className='level '+(high?'high':'low');lv.textContent=high?'🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม':'🟢 ความเสี่ยงต่ำ';const a=high?['ควรมีผู้ดูแลอยู่ใกล้เมื่อเดิน','ปรับพื้นและทางเดินไม่ให้ลื่นหรือมีสิ่งกีดขวาง','ติดราวจับในห้องน้ำและจุดเสี่ยง','ปรึกษาพยาบาล แพทย์ หรือนักกายภาพบำบัด']:['ออกกำลังกายและฝึกการทรงตัวสม่ำเสมอ','ตรวจสอบบ้านให้ปลอดภัย','ประเมินซ้ำเป็นระยะ'];document.getElementById('advice').innerHTML=a.map(x=>'<li>'+x+'</li>').join('')}}</script></body></html>
+<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>รายงานผล | FallGuard+</title><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box}body{margin:0;background:#f4fbff;font-family:Prompt,sans-serif;color:#29434e}.head{background:linear-gradient(135deg,#63c7ff,#8be3c5);color:#fff;padding:26px 20px 48px;border-radius:0 0 30px 30px}.head a{color:#fff;text-decoration:none;font-weight:600}.wrap{width:92%;max-width:720px;margin:-25px auto 40px}.card{background:#fff;border-radius:22px;padding:24px;box-shadow:0 8px 26px #0001;margin-bottom:16px}.score{text-align:center;font-size:56px;font-weight:700}.level{text-align:center;font-size:23px;font-weight:700}.high{color:#c63f3f}.low{color:#16885f}li{margin:10px 0;line-height:1.6}.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;text-decoration:none;font-weight:700;background:#3da9fc;color:#fff}.secondary{background:#e8f5ef;color:#18785a}@media(max-width:520px){.btns{grid-template-columns:1fr}}</style></head><body><header class="head"><a href="history.html">← กลับประวัติ</a><h1>รายงานผลการประเมิน</h1><p id="name">กำลังโหลด...</p></header><main class="wrap"><section class="card"><div id="date"></div><div class="score" id="score">-</div><div class="level" id="level">-</div></section><section class="card"><h2>คำแนะนำ</h2><ul id="advice"></ul></section><div class="btns"><a class="btn" href="assessment.html">ประเมินอีกครั้ง</a><a class="btn secondary" href="elderly.html">หน้าข้อมูลผู้สูงอายุ</a></div></main><script type="module">
+import { db, getAnonymousUser } from "./firebase.js";
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
+
+const elderId = localStorage.getItem("currentElderId");
+const assessmentId = localStorage.getItem("currentAssessmentId");
+document.getElementById("name").textContent = localStorage.getItem("currentElderName") || "ผู้สูงอายุ";
+
+function localResult() {
+  const rawScore = localStorage.getItem("thaiFratScore") ?? localStorage.getItem("mfsScore");
+  if (rawScore === null) return null;
+  return {
+    score: Number(rawScore),
+    riskLevel: localStorage.getItem("riskLevel") || "ต่ำ",
+    assessedAtText: localStorage.getItem("date") || new Date().toLocaleString("th-TH")
+  };
+}
+
+async function init() {
+  let data = localResult();
+  try {
+    await getAnonymousUser();
+    if (elderId && assessmentId) {
+      const snapshot = await getDoc(doc(db, "elderly", elderId, "assessments", assessmentId));
+      if (snapshot.exists()) data = snapshot.data();
+    }
+  } catch (error) {
+    console.warn("ใช้ผลที่บันทึกในเครื่องแทน Firebase:", error);
+  }
+
+  if (!data) {
+    document.getElementById("date").textContent = "ไม่พบผลการประเมิน";
+    document.getElementById("score").textContent = "-";
+    document.getElementById("level").textContent = "กรุณาประเมินใหม่";
+    return;
+  }
+  render(data);
+}
+
+function render(data) {
+  document.getElementById("date").textContent = "วันที่ประเมิน: " + (data.assessedAtText || "-");
+  document.getElementById("score").textContent = Number(data.score || 0) + " คะแนน";
+  const high = data.riskLevel === "สูง";
+  const level = document.getElementById("level");
+  level.className = "level " + (high ? "high" : "low");
+  level.textContent = high ? "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม" : "🟢 ความเสี่ยงต่ำ";
+  const advice = high
+    ? ["ควรมีผู้ดูแลอยู่ใกล้เมื่อเดิน", "ปรับพื้นและทางเดินไม่ให้ลื่นหรือมีสิ่งกีดขวาง", "ติดราวจับในห้องน้ำและจุดเสี่ยง", "ปรึกษาพยาบาล แพทย์ หรือนักกายภาพบำบัด"]
+    : ["ออกกำลังกายและฝึกการทรงตัวสม่ำเสมอ", "ตรวจสอบบ้านให้ปลอดภัย", "ประเมินซ้ำเป็นระยะ"];
+  document.getElementById("advice").innerHTML = advice.map((item) => "<li>" + item + "</li>").join("");
+}
+
+init();
+</script></body></html>
