@@ -1,4 +1,49 @@
-<!doctype html><html lang="th"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>รายงานผล | FallGuard+</title><link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet"><style>*{box-sizing:border-box}body{margin:0;background:#f4fbff;font-family:Prompt,sans-serif;color:#29434e}.head{background:linear-gradient(135deg,#63c7ff,#8be3c5);color:#fff;padding:26px 20px 48px;border-radius:0 0 30px 30px}.head a{color:#fff;text-decoration:none;font-weight:600}.wrap{width:92%;max-width:720px;margin:-25px auto 40px}.card{background:#fff;border-radius:22px;padding:24px;box-shadow:0 8px 26px #0001;margin-bottom:16px}.score{text-align:center;font-size:56px;font-weight:700}.level{text-align:center;font-size:23px;font-weight:700}.high{color:#c63f3f}.medium{color:#a87500}.low{color:#16885f}li{margin:10px 0;line-height:1.6}.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:52px;border-radius:14px;text-decoration:none;font-weight:700;background:#3da9fc;color:#fff}.secondary{background:#e8f5ef;color:#18785a}@media(max-width:520px){.btns{grid-template-columns:1fr}}</style></head><body><header class="head"><a href="history.html">← กลับประวัติ</a><h1>รายงานผลการประเมิน</h1><p id="name">กำลังโหลด...</p></header><main class="wrap"><section class="card"><div id="date"></div><div class="score" id="score">-</div><div class="level" id="level">-</div></section><section class="card"><h2>คำแนะนำ</h2><ul id="advice"></ul></section><div class="btns"><a class="btn" href="assessment.html">ประเมินอีกครั้ง</a><a class="btn secondary" href="elderly.html">หน้าข้อมูลผู้สูงอายุ</a></div></main><script type="module">
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>รายงานผล | FallGuard+</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;background:#f4fbff;font-family:Prompt,sans-serif;color:#29434e}.head{background:linear-gradient(135deg,#63c7ff,#8be3c5);color:#fff;padding:26px 20px 48px;border-radius:0 0 30px 30px}.head a{color:#fff;text-decoration:none;font-weight:600}.wrap{width:92%;max-width:760px;margin:-25px auto 40px}.card{background:#fff;border-radius:22px;padding:24px;box-shadow:0 8px 26px #0001;margin-bottom:16px}.score{text-align:center;font-size:56px;font-weight:700}.level{text-align:center;font-size:23px;font-weight:700}.high{color:#c63f3f}.low{color:#16885f}li{margin:10px 0;line-height:1.6}.follow{background:linear-gradient(145deg,#f1f9ff,#ecfff7);border:2px solid #c8ebdf}.follow-main{font-size:24px;font-weight:700;color:#146b64;margin:8px 0}.follow-date{font-size:19px;font-weight:600;color:#1f638f}.notice{padding:13px 15px;border-radius:15px;background:#fff8dd;color:#6c5000;line-height:1.6}.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{display:flex;align-items:center;justify-content:center;min-height:54px;border-radius:14px;text-decoration:none;font-weight:700;background:#3da9fc;color:#fff;text-align:center;padding:10px}.secondary{background:#e8f5ef;color:#18785a}.exercise{background:linear-gradient(90deg,#35a8f2,#3bc69b)}@media(max-width:520px){.btns{grid-template-columns:1fr}.score{font-size:46px}}
+</style>
+</head>
+<body>
+<header class="head">
+<a href="history.html">← กลับประวัติ</a>
+<h1>รายงานผลการประเมิน</h1>
+<p id="name">กำลังโหลด...</p>
+</header>
+
+<main class="wrap">
+<section class="card">
+  <div id="date"></div>
+  <div class="score" id="score">-</div>
+  <div class="level" id="level">-</div>
+</section>
+
+<section class="card">
+  <h2>คำแนะนำตามระดับความเสี่ยง</h2>
+  <ul id="advice"></ul>
+</section>
+
+<section class="card follow">
+  <h2>📅 แผนติดตามและประเมินซ้ำ</h2>
+  <div class="follow-main" id="followText">หลังฝึกต่อเนื่อง 12 สัปดาห์</div>
+  <div class="follow-date" id="followDate"></div>
+  <p class="notice">ควรประเมินใหม่ก่อนกำหนดทันที หากมีการหกล้ม เดินไม่มั่นคง เวียนศีรษะ อ่อนแรง หรือสุขภาพและยาที่ใช้เปลี่ยนแปลง</p>
+</section>
+
+<div class="btns">
+  <a class="btn exercise" href="exercise.html">▶ ดูกิจกรรมที่เหมาะสม</a>
+  <a class="btn" href="assessment.html">ประเมินอีกครั้ง</a>
+  <a class="btn secondary" href="elderly.html">หน้าข้อมูลผู้สูงอายุ</a>
+  <a class="btn secondary" href="history.html">ดูประวัติย้อนหลัง</a>
+</div>
+</main>
+
+<script type="module">
 import { db, getAnonymousUser } from "./firebase.js";
 import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore.js";
 
@@ -6,90 +51,82 @@ const elderId = localStorage.getItem("currentElderId");
 const assessmentId = localStorage.getItem("currentAssessmentId");
 document.getElementById("name").textContent = localStorage.getItem("currentElderName") || "ผู้สูงอายุ";
 
-function localResult() {
+function localResult(){
   const rawScore = localStorage.getItem("thaiFratScore") ?? localStorage.getItem("mfsScore");
-  if (rawScore === null) return null;
+  if(rawScore === null) return null;
   return {
-    score: Number(rawScore),
-    riskLevel: localStorage.getItem("riskLevel") || "ต่ำ",
-    assessedAtText: localStorage.getItem("date") || new Date().toLocaleString("th-TH")
+    score:Number(rawScore),
+    riskLevel:localStorage.getItem("riskLevel") || "ต่ำ",
+    assessedAtText:localStorage.getItem("date") || new Date().toLocaleString("th-TH")
   };
 }
 
-async function init() {
+async function init(){
   let data = localResult();
-  try {
+  try{
     await getAnonymousUser();
-    if (elderId && assessmentId) {
-      const snapshot = await getDoc(doc(db, "elderly", elderId, "assessments", assessmentId));
-      if (snapshot.exists()) data = snapshot.data();
+    if(elderId && assessmentId){
+      const snapshot = await getDoc(doc(db,"elderly",elderId,"assessments",assessmentId));
+      if(snapshot.exists()) data = snapshot.data();
     }
-  } catch (error) {
-    console.warn("ใช้ผลที่บันทึกในเครื่องแทน Firebase:", error);
+  }catch(error){
+    console.warn("ใช้ผลที่บันทึกในเครื่องแทน Firebase:",error);
   }
-
-  if (!data) {
-    document.getElementById("date").textContent = "ไม่พบผลการประเมิน";
-    document.getElementById("score").textContent = "-";
-    document.getElementById("level").textContent = "กรุณาประเมินใหม่";
+  if(!data){
+    document.getElementById("date").textContent="ไม่พบผลการประเมิน";
+    document.getElementById("score").textContent="-";
+    document.getElementById("level").textContent="กรุณาประเมินใหม่";
+    document.getElementById("followDate").textContent="";
     return;
   }
   render(data);
 }
 
-function render(data) {
-  document.getElementById("date").textContent =
-    "วันที่ประเมิน: " + (data.assessedAtText || "-");
-
-  const score = Number(data.score || 0);
-  let riskLevel = data.riskLevel;
-
-  // รองรับข้อมูลเดิมที่อาจยังไม่มีระดับ 3 กลุ่ม
-  if (!["ต่ำ", "ปานกลาง", "สูง"].includes(riskLevel)) {
-    riskLevel = score <= 3 ? "ต่ำ" : score <= 5 ? "ปานกลาง" : "สูง";
-  }
-
-  document.getElementById("score").textContent = score + " คะแนน";
-
-  const level = document.getElementById("level");
-  const config = {
-    "ต่ำ": {
-      className: "low",
-      title: "🟢 ความเสี่ยงต่ำ",
-      advice: [
-        "ออกกำลังกายและฝึกการทรงตัวอย่างสม่ำเสมอ",
-        "จัดบ้านให้ปลอดภัยและมีแสงสว่างเพียงพอ",
-        "ประเมินซ้ำทุก 6–12 เดือน หรือเมื่อสุขภาพเปลี่ยนแปลง"
-      ]
-    },
-    "ปานกลาง": {
-      className: "medium",
-      title: "🟡 ความเสี่ยงปานกลาง",
-      advice: [
-        "ระมัดระวังขณะเดิน ลุกยืน และเปลี่ยนท่า",
-        "สวมรองเท้าพื้นกันลื่นและหลีกเลี่ยงพื้นเปียก",
-        "เก็บสิ่งกีดขวางและจัดแสงสว่างภายในบ้านให้เพียงพอ",
-        "หากเวียนศีรษะหรือเสียการทรงตัว ควรปรึกษาบุคลากรสุขภาพ"
-      ]
-    },
-    "สูง": {
-      className: "high",
-      title: "🔴 ความเสี่ยงสูง",
-      advice: [
-        "ควรมีญาติหรือผู้ดูแลช่วยเหลือขณะเดิน",
-        "ใช้อุปกรณ์ช่วยเดินตามคำแนะนำของบุคลากรสุขภาพ",
-        "หลีกเลี่ยงการเดินลำพังในบริเวณที่เสี่ยงต่อการหกล้ม",
-        "เข้ารับการประเมินจากแพทย์ พยาบาล หรือนักกายภาพบำบัด"
-      ]
-    }
-  };
-
-  const selected = config[riskLevel] || config["ต่ำ"];
-  level.className = "level " + selected.className;
-  level.textContent = selected.title;
-  document.getElementById("advice").innerHTML =
-    selected.advice.map(item => "<li>" + item + "</li>").join("");
+function parseAssessmentDate(data){
+  if(data.assessedAt && typeof data.assessedAt.toDate === "function") return data.assessedAt.toDate();
+  const raw = data.assessedAtText || localStorage.getItem("date");
+  const parsed = raw ? new Date(raw) : new Date();
+  return isNaN(parsed.getTime()) ? new Date() : parsed;
 }
 
+function thaiDate(date){
+  return date.toLocaleDateString("th-TH",{day:"numeric",month:"long",year:"numeric"});
+}
+
+function render(data){
+  document.getElementById("date").textContent="วันที่ประเมิน: "+(data.assessedAtText || "-");
+  document.getElementById("score").textContent=Number(data.score||0)+" คะแนน";
+
+  const high=data.riskLevel==="สูง";
+  localStorage.setItem("riskLevel", high ? "สูง" : "ต่ำ");
+
+  const level=document.getElementById("level");
+  level.className="level "+(high?"high":"low");
+  level.textContent=high?"🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม":"🟢 ความเสี่ยงต่ำ";
+
+  const advice=high
+    ?[
+      "เลือกกิจกรรมพื้นฐานที่ทำอย่างช้า ๆ และมีผู้ดูแลอยู่ใกล้",
+      "ฝึกใกล้ราวจับหรือเก้าอี้ที่มั่นคง หลีกเลี่ยงการฝึกยืนลำพัง",
+      "ยังไม่ควรเริ่มท่าที่ยากหรือยางยืดแรงต้านสูงโดยไม่มีผู้แนะนำ",
+      "ปรึกษาพยาบาล แพทย์ หรือนักกายภาพบำบัดเพื่อวางแผนเฉพาะบุคคล"
+    ]
+    :[
+      "ฝึกการทรงตัวและเพิ่มความแข็งแรงอย่างน้อย 3 วันต่อสัปดาห์ตามความสามารถ",
+      "สามารถเลือกฝึกคลิปพื้นฐาน โปรแกรม E75 และยางยืด โดยเริ่มจากระดับเบา",
+      "ตรวจพื้นที่ รองเท้า และอุปกรณ์ให้ปลอดภัยก่อนออกกำลังกาย",
+      "เพิ่มระยะเวลาและแรงต้านทีละน้อย ไม่ฝืนเมื่อปวดหรือเหนื่อยผิดปกติ"
+    ];
+  document.getElementById("advice").innerHTML=advice.map(item=>"<li>"+item+"</li>").join("");
+
+  const base=parseAssessmentDate(data);
+  const next=new Date(base);
+  next.setDate(next.getDate()+84); // 12 weeks
+  document.getElementById("followText").textContent="แนะนำประเมินซ้ำหลังฝึกต่อเนื่อง 12 สัปดาห์";
+  document.getElementById("followDate").textContent="กำหนดโดยประมาณ: "+thaiDate(next);
+  localStorage.setItem("nextReassessmentDate",next.toISOString());
+}
 init();
-</script></body></html>
+</script>
+</body>
+</html>

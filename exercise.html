@@ -13,9 +13,19 @@ body{margin:0;background:#f4f9ff;color:#213547;font-family:"Prompt",sans-serif;p
 .container{width:92%;max-width:1000px;margin:-30px auto 0}
 .intro,.warning,.references{background:#fff;border-radius:24px;padding:22px;box-shadow:0 9px 28px rgba(27,86,128,.11);margin-bottom:20px}
 .intro h2,.references h2{margin:0 0 8px;color:#176b9a;font-size:26px}.intro p,.warning,.references{font-size:17px;line-height:1.75}
+.risk-plan{background:#fff;border-radius:24px;padding:22px;box-shadow:0 9px 28px rgba(27,86,128,.11);margin-bottom:20px;border-left:7px solid #36b98a}
+.risk-plan.high{border-left-color:#ef6a6a;background:#fffafa}
+.risk-plan h2{margin:0 0 8px;color:#176b9a;font-size:25px}
+.risk-badge{display:inline-flex;padding:7px 13px;border-radius:999px;font-weight:700;margin-bottom:9px;background:#e4f8ef;color:#147a59}
+.risk-plan.high .risk-badge{background:#ffe6e6;color:#ad3535}
+.risk-plan p{margin:5px 0;line-height:1.65;font-size:16px}
 .video-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 .video-card{overflow:hidden;background:#fff;border-radius:26px;box-shadow:0 10px 28px rgba(27,78,118,.13);cursor:pointer;transition:.2s;border:0;padding:0;text-align:left;font-family:inherit;color:inherit}
 .video-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(27,78,118,.17)}
+.video-card.recommended{outline:4px solid #43c995;box-shadow:0 14px 34px rgba(39,177,126,.24)}
+.video-card.caution{outline:4px solid #f2b84b}
+.rec-label{display:none;margin-bottom:10px;padding:5px 10px;border-radius:999px;background:#daf6e9;color:#137855;font-size:14px;font-weight:700}
+.video-card.recommended .rec-label{display:inline-flex}
 .video-card:active{transform:scale(.985)}
 .thumb{position:relative;aspect-ratio:16/9;background:#0d1720;overflow:hidden}
 .thumb img{width:100%;height:100%;object-fit:cover;display:block}
@@ -51,15 +61,24 @@ body{margin:0;background:#f4f9ff;color:#213547;font-family:"Prompt",sans-serif;p
     <p>ควรฝึกในบริเวณที่ปลอดภัย ใกล้ราวจับหรือเก้าอี้ที่มั่นคง และควรมีผู้ดูแลอยู่ใกล้สำหรับผู้ที่มีความเสี่ยงสูง</p>
   </section>
 
+  <section class="risk-plan" id="riskPlan">
+    <div class="risk-badge" id="riskBadge">คำแนะนำตามระดับความเสี่ยง</div>
+    <h2 id="riskTitle">กิจกรรมที่เหมาะสม</h2>
+    <p id="riskText">ระบบจะแนะนำกิจกรรมจากผลการประเมินล่าสุด หากยังไม่ได้ประเมิน กรุณาเริ่มจากท่าง่ายและมีผู้ดูแลอยู่ใกล้</p>
+    <p><strong>📅 ประเมินซ้ำหลังฝึกต่อเนื่อง 12 สัปดาห์</strong> หรือประเมินทันทีหากมีการหกล้ม เดินไม่มั่นคง หรือสุขภาพเปลี่ยนแปลง</p>
+  </section>
+
   <section class="video-grid">
     <button class="video-card" type="button"
       data-video="C8L7C49HZCo"
+      data-level="all"
       data-title="การออกกำลังกายป้องกันการหกล้ม">
       <div class="thumb">
         <img src="https://img.youtube.com/vi/C8L7C49HZCo/hqdefault.jpg" alt="การออกกำลังกายป้องกันการหกล้ม">
         <div class="play"><span>▶</span></div>
       </div>
       <div class="card-body">
+        <span class="rec-label">✓ แนะนำสำหรับคุณ</span>
         <h3>การออกกำลังกายป้องกันการหกล้ม</h3>
         <p>ฝึกท่าที่ช่วยเพิ่มความแข็งแรงและลดโอกาสพลัดตกหกล้ม</p>
         <span class="watch">▶ กดเพื่อเล่นวิดีโอ</span>
@@ -68,12 +87,14 @@ body{margin:0;background:#f4f9ff;color:#213547;font-family:"Prompt",sans-serif;p
 
     <button class="video-card" type="button"
       data-video="hJylZ-7L_3A"
+      data-level="low"
       data-title="ฝึกการทรงตัวในผู้สูงอายุ">
       <div class="thumb">
         <img src="https://img.youtube.com/vi/hJylZ-7L_3A/hqdefault.jpg" alt="ฝึกการทรงตัวในผู้สูงอายุ">
         <div class="play"><span>▶</span></div>
       </div>
       <div class="card-body">
+        <span class="rec-label">✓ แนะนำสำหรับคุณ</span>
         <h3>ฝึกการทรงตัว</h3>
         <p>เพิ่มความมั่นคงขณะยืน เดิน และเปลี่ยนท่าทาง</p>
         <span class="watch">▶ กดเพื่อเล่นวิดีโอ</span>
@@ -82,12 +103,14 @@ body{margin:0;background:#f4f9ff;color:#213547;font-family:"Prompt",sans-serif;p
 
     <button class="video-card" type="button"
       data-video="KxrE6CQuR9E"
+      data-level="low"
       data-title="โปรแกรมออกกำลังกาย E75">
       <div class="thumb">
         <img src="https://img.youtube.com/vi/KxrE6CQuR9E/hqdefault.jpg" alt="โปรแกรมออกกำลังกาย E75">
         <div class="play"><span>▶</span></div>
       </div>
       <div class="card-body">
+        <span class="rec-label">✓ แนะนำสำหรับคุณ</span>
         <h3>เสริมความแข็งแรงของร่างกาย</h3>
         <p>โปรแกรม E75 สำหรับผู้สูงอายุวัยแข็งแรงและกระฉับกระเฉง</p>
         <span class="watch">▶ กดเพื่อเล่นวิดีโอ</span>
@@ -96,14 +119,32 @@ body{margin:0;background:#f4f9ff;color:#213547;font-family:"Prompt",sans-serif;p
 
     <button class="video-card" type="button"
       data-video="xy9PKX4r3jc"
+      data-level="all"
       data-title="ท่าบริหารง่าย ๆ ป้องกันการหกล้ม">
       <div class="thumb">
         <img src="https://img.youtube.com/vi/xy9PKX4r3jc/hqdefault.jpg" alt="ท่าบริหารง่าย ๆ ป้องกันการหกล้ม">
         <div class="play"><span>▶</span></div>
       </div>
       <div class="card-body">
+        <span class="rec-label">✓ แนะนำสำหรับคุณ</span>
         <h3>ท่าบริหารง่าย ๆ ป้องกันการหกล้ม</h3>
         <p>กิจกรรมที่สามารถฝึกได้ที่บ้านสำหรับผู้สูงอายุ</p>
+        <span class="watch">▶ กดเพื่อเล่นวิดีโอ</span>
+      </div>
+    </button>
+
+    <button class="video-card" type="button"
+      data-video="P0FPxYzY_Go"
+      data-level="low"
+      data-title="12 ท่าออกกำลังกายด้วย ยาง...ยืดชีวิตพิชิตโรค">
+      <div class="thumb">
+        <img src="https://img.youtube.com/vi/P0FPxYzY_Go/hqdefault.jpg" alt="12 ท่าออกกำลังกายด้วยยางยืด">
+        <div class="play"><span>▶</span></div>
+      </div>
+      <div class="card-body">
+        <span class="rec-label">✓ แนะนำสำหรับคุณ</span>
+        <h3>12 ท่าออกกำลังกายด้วย “ยาง...ยืดชีวิตพิชิตโรค”</h3>
+        <p>ฝึกความแข็งแรงของกล้ามเนื้อ ความยืดหยุ่น และการทรงตัวด้วยยางยืด</p>
         <span class="watch">▶ กดเพื่อเล่นวิดีโอ</span>
       </div>
     </button>
@@ -119,6 +160,7 @@ body{margin:0;background:#f4f9ff;color:#213547;font-family:"Prompt",sans-serif;p
     <p>Thai PBS. ท่าฝึกการทรงตัวในผู้สูงอายุ.</p>
     <p>กองกิจกรรมทางกายเพื่อสุขภาพ. E75_2 การออกกำลังกายเพื่อผู้สูงวัยแข็งแรงและกระฉับกระเฉง.</p>
     <p>Thai PBS. เก๋าไม่ล้ม บริหารง่าย ๆ ป้องกันการหกล้ม.</p>
+    <p>12 ท่าออกกำลังกายด้วย “ยาง...ยืดชีวิตพิชิตโรค”. YouTube.</p>
   </section>
 
   <a class="home" href="index.html">กลับหน้าหลัก</a>
@@ -141,6 +183,30 @@ body{margin:0;background:#f4f9ff;color:#213547;font-family:"Prompt",sans-serif;p
 </div>
 
 <script>
+const latestRisk = localStorage.getItem("riskLevel") || "";
+const riskPlan = document.getElementById("riskPlan");
+const riskBadge = document.getElementById("riskBadge");
+const riskTitle = document.getElementById("riskTitle");
+const riskText = document.getElementById("riskText");
+
+if(latestRisk === "สูง"){
+  riskPlan.classList.add("high");
+  riskBadge.textContent = "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
+  riskTitle.textContent = "เริ่มจากกิจกรรมเบาและมีผู้ดูแล";
+  riskText.textContent = "แนะนำคลิปพื้นฐานที่ทำช้า ๆ ใกล้ราวจับหรือเก้าอี้ที่มั่นคง ควรมีผู้ดูแลอยู่ใกล้ และปรึกษาบุคลากรสุขภาพก่อนฝึกท่าที่ยากหรือใช้อุปกรณ์ต้านแรง";
+  document.querySelectorAll('.video-card[data-level="all"]').forEach(card => card.classList.add("recommended"));
+  document.querySelectorAll('.video-card[data-level="low"]').forEach(card => card.classList.add("caution"));
+}else if(latestRisk === "ต่ำ"){
+  riskBadge.textContent = "🟢 ความเสี่ยงต่ำ";
+  riskTitle.textContent = "สามารถเลือกฝึกกิจกรรมได้ครบทุกคลิป";
+  riskText.textContent = "เน้นการทรงตัว ความแข็งแรง และการเคลื่อนไหวอย่างสม่ำเสมอ เริ่มจากระดับที่ทำได้และเพิ่มทีละน้อย";
+  document.querySelectorAll(".video-card").forEach(card => card.classList.add("recommended"));
+}else{
+  riskBadge.textContent = "⚪ ยังไม่พบผลการประเมินล่าสุด";
+  riskTitle.textContent = "กรุณาประเมินก่อนเลือกกิจกรรม";
+  riskText.textContent = "หากต้องการคำแนะนำเฉพาะระดับความเสี่ยง ให้ทำแบบประเมินก่อน หรือเริ่มจากท่าง่ายโดยมีผู้ดูแลอยู่ใกล้";
+}
+
 const modal = document.getElementById("videoModal");
 const frame = document.getElementById("videoFrame");
 const modalTitle = document.getElementById("modalTitle");
