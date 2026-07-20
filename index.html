@@ -23,6 +23,38 @@
 .card h3{font-size:22px;margin:0 0 7px;color:#14385e}.card p{font-size:16px;line-height:1.6;margin:0;color:#536b80}.arrow{position:absolute;right:14px;bottom:14px;width:38px;height:38px;border-radius:50%;background:#fff;display:grid;place-items:center;font-size:29px;box-shadow:0 6px 14px #3c556e1f}
 .note{margin:28px 0 8px;padding:18px;background:#fff;border-radius:999px;text-align:center;font-weight:600;color:#1c70c4;box-shadow:0 10px 26px #1f517d1a}
 .nav{position:fixed;left:50%;bottom:12px;transform:translateX(-50%);width:min(94%,720px);background:#fffffff2;border-radius:22px;padding:10px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 14px 40px #173d5d2e;z-index:10}.nav a{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#738397;font-size:14px}.nav a:first-child{color:#188cf0;font-weight:700}.nav span{font-size:24px}
+
+.guide-btn{display:inline-flex;margin:12px 0 0;background:none;border:0;color:#187fc8;font:600 16px "Prompt",sans-serif;cursor:pointer;padding:5px 0}
+.guide-btn:hover{text-decoration:underline}
+.guide-modal{position:fixed;inset:0;z-index:1000;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(8,26,43,.68);backdrop-filter:blur(7px)}
+.guide-modal.open{display:flex}
+.guide-box{width:min(100%,720px);max-height:92vh;overflow:auto;background:#fff;border-radius:30px;box-shadow:0 26px 80px rgba(0,0,0,.3);animation:guideIn .24s ease}
+@keyframes guideIn{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+.guide-head{position:relative;padding:28px 26px 22px;text-align:center;color:#fff;background:linear-gradient(135deg,#278ff1,#43c8d5,#4fd3a4);border-radius:30px 30px 0 0}
+.guide-head .guide-emoji{font-size:62px;line-height:1}
+.guide-head h2{margin:8px 45px 4px;font-size:31px}
+.guide-head p{margin:0;font-size:17px;opacity:.96}
+.guide-close{position:absolute;right:17px;top:17px;width:44px;height:44px;border:0;border-radius:50%;background:rgba(255,255,255,.94);color:#31556e;font-size:27px;cursor:pointer}
+.guide-content{padding:22px 24px 25px}
+.guide-steps{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.guide-step{display:grid;grid-template-columns:48px 1fr;gap:12px;align-items:center;padding:15px;border:1px solid #dfeef8;border-radius:20px;background:linear-gradient(145deg,#f9fcff,#eff9ff)}
+.guide-number{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:20px;font-weight:700;background:linear-gradient(135deg,#278ff1,#45d09f);box-shadow:0 7px 17px rgba(41,154,197,.25)}
+.guide-step h3{margin:0 0 3px;color:#174b76;font-size:18px}
+.guide-step p{margin:0;color:#61758a;font-size:14px;line-height:1.45}
+.guide-actions{margin-top:20px}
+.guide-start{width:100%;min-height:58px;border:0;border-radius:999px;background:linear-gradient(90deg,#268df8,#38c9ca,#42d49b);color:#fff;font:700 21px "Prompt",sans-serif;cursor:pointer;box-shadow:0 10px 23px rgba(44,165,202,.27)}
+.guide-check{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:14px;color:#5c7082;font-size:15px;cursor:pointer}
+.guide-check input{width:19px;height:19px;accent-color:#218ee8}
+@media(max-width:570px){
+  .guide-box{border-radius:24px}
+  .guide-head{padding:24px 18px 19px;border-radius:24px 24px 0 0}
+  .guide-head h2{font-size:25px;margin-left:35px;margin-right:35px}
+  .guide-head .guide-emoji{font-size:52px}
+  .guide-content{padding:18px}
+  .guide-steps{grid-template-columns:1fr}
+  .guide-step{padding:13px}
+}
+
 @media(max-width:760px){.hero-content{grid-template-columns:1fr}.elders{display:none}.start-card{grid-template-columns:1fr}.clip{min-height:155px;font-size:85px}.grid{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}}
 @media(max-width:430px){.hero{padding-bottom:82px}.brand{font-size:28px}.hero h1{font-size:43px}.hero h2{font-size:22px}.hero p{font-size:17px}.container{margin-top:-48px}.start-card{padding:21px}.start-row{grid-template-columns:56px 1fr;gap:12px}.start-icon{width:56px;height:56px;font-size:29px}.start-card h3{font-size:24px}.start-card p{font-size:16px}.start-btn{min-width:100%;font-size:21px}.grid{grid-template-columns:1fr 1fr;gap:12px}.card{min-height:205px;padding:19px 12px}.card h3{font-size:18px}.card p{font-size:14px}.icon{width:62px;height:62px;font-size:30px}}
 </style>
@@ -45,13 +77,9 @@
     <div>
       <div class="start-row">
         <div class="start-icon">👤</div>
-        <div><h3>เริ่มต้นใช้งานง่าย ๆ</h3><p>ครั้งแรกกรุณาเพิ่มข้อมูลผู้สูงอายุ จากนั้นเลือกทำแบบประเมินหรือดูประวัติย้อนหลัง</p></div>
-      </div>
-      <div class="steps" aria-label="ขั้นตอนการใช้งาน">
-        <div class="step"><div class="step-num">1</div><b>เพิ่มข้อมูล</b><small>บันทึกข้อมูลผู้สูงอายุ</small></div>
-        <div class="step"><div class="step-num">2</div><b>เลือกผู้สูงอายุ</b><small>เลือกรายชื่อก่อนประเมิน</small></div>
-        <div class="step"><div class="step-num">3</div><b>ทำแบบประเมิน</b><small>ตอบคำถามให้ครบทุกข้อ</small></div>
-        <div class="step"><div class="step-num">4</div><b>ดูผลและคำแนะนำ</b><small>ดูคะแนนและแนวทางป้องกัน</small></div>
+        <div><h3>เริ่มต้นใช้งานง่าย ๆ</h3><p>ครั้งแรกกรุณาเพิ่มข้อมูลผู้สูงอายุ จากนั้นเลือกทำแบบประเมินหรือดูประวัติย้อนหลัง</p>
+          <button class="guide-btn" id="openGuide" type="button">ดูขั้นตอนการใช้งานอีกครั้ง ›</button>
+        </div>
       </div>
       <a class="start-btn" href="elderly.html">เริ่มใช้งาน <span>›</span></a>
     </div>
@@ -78,5 +106,87 @@
   <a href="assessment.html"><span>📋</span>ประเมิน</a>
   <a href="feedback.html"><span>•••</span>เพิ่มเติม</a>
 </nav>
+
+<div class="guide-modal" id="guideModal" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+  <div class="guide-box">
+    <div class="guide-head">
+      <button class="guide-close" id="closeGuide" type="button" aria-label="ปิด">×</button>
+      <div class="guide-emoji">👴🏻👵🏻🛡️</div>
+      <h2 id="guideTitle">ยินดีต้อนรับสู่ FallGuard+</h2>
+      <p>ใช้งานง่าย เพียงทำตาม 4 ขั้นตอน</p>
+    </div>
+
+    <div class="guide-content">
+      <div class="guide-steps">
+        <div class="guide-step">
+          <div class="guide-number">1</div>
+          <div><h3>เพิ่มข้อมูลผู้สูงอายุ</h3><p>บันทึกข้อมูลผู้รับการประเมิน</p></div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-number">2</div>
+          <div><h3>เลือกผู้สูงอายุ</h3><p>เลือกรายชื่อก่อนเริ่มทำแบบประเมิน</p></div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-number">3</div>
+          <div><h3>ประเมินความเสี่ยง</h3><p>ตอบคำถามให้ครบเพื่อคำนวณคะแนน</p></div>
+        </div>
+        <div class="guide-step">
+          <div class="guide-number">4</div>
+          <div><h3>ดูผลและคำแนะนำ</h3><p>ดูระดับความเสี่ยงและแนวทางป้องกัน</p></div>
+        </div>
+      </div>
+
+      <div class="guide-actions">
+        <button class="guide-start" id="guideStart" type="button">เริ่มใช้งาน 🚀</button>
+        <label class="guide-check">
+          <input type="checkbox" id="hideGuide">
+          ไม่ต้องแสดงอัตโนมัติในครั้งถัดไป
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const guideModal = document.getElementById("guideModal");
+const openGuide = document.getElementById("openGuide");
+const closeGuide = document.getElementById("closeGuide");
+const guideStart = document.getElementById("guideStart");
+const hideGuide = document.getElementById("hideGuide");
+
+function showGuide(){
+  guideModal.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+function hideGuideModal(){
+  if(hideGuide.checked){
+    localStorage.setItem("fallguardGuideHidden", "yes");
+  }
+  guideModal.classList.remove("open");
+  document.body.style.overflow = "";
+}
+openGuide.addEventListener("click", showGuide);
+closeGuide.addEventListener("click", hideGuideModal);
+guideStart.addEventListener("click", function(){
+  if(hideGuide.checked){
+    localStorage.setItem("fallguardGuideHidden", "yes");
+  }
+  window.location.href = "elderly.html";
+});
+guideModal.addEventListener("click", function(event){
+  if(event.target === guideModal) hideGuideModal();
+});
+document.addEventListener("keydown", function(event){
+  if(event.key === "Escape" && guideModal.classList.contains("open")){
+    hideGuideModal();
+  }
+});
+window.addEventListener("DOMContentLoaded", function(){
+  if(localStorage.getItem("fallguardGuideHidden") !== "yes"){
+    setTimeout(showGuide, 250);
+  }
+});
+</script>
+
 </body>
 </html>
