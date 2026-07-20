@@ -16,7 +16,7 @@ body{margin:0;background:#f5fbff;color:#29434e;font-family:"Prompt",sans-serif;p
 .summary,.history-card,.message{background:white;border-radius:22px;padding:20px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,.08)}
 .summary{font-size:21px;color:#146c94}
 .history-card{border-left:8px solid #3fb985}
-.history-card.high{border-left-color:#ee6c6c}
+.history-card.medium{border-left-color:#f0bd42}.history-card.high{border-left-color:#ee6c6c}
 .date{font-size:16px;color:#607d8b}
 .score{font-size:29px;font-weight:700;margin:5px 0}
 .level{font-size:19px;font-weight:600;margin-bottom:13px}
@@ -92,7 +92,7 @@ async function loadHistory() {
 
     if (snapshot.empty) {
       historyList.innerHTML =
-        '<div class="message">ยังไม่มีประวัติการประเมิน</div>';
+        '<div class="message">ยังไม่มีประวัติการประเมิน<br><a href="assessment.html">กดที่นี่เพื่อประเมินครั้งแรก</a></div>';
       return;
     }
 
@@ -109,14 +109,18 @@ async function loadHistory() {
 
       const card = document.createElement("article");
       card.className =
-        "history-card" + (result.riskLevel === "สูง" ? " high" : "");
+        "history-card" +
+        (result.riskLevel === "สูง" ? " high" :
+         result.riskLevel === "ปานกลาง" ? " medium" : "");
 
       card.innerHTML = `
         <div class="date">${escapeHTML(dateText)}</div>
         <div class="score">${Number(result.score || 0)} คะแนน</div>
         <div class="level">
           ${result.riskLevel === "สูง"
-            ? "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม"
+            ? "🔴 ความเสี่ยงสูง"
+            : result.riskLevel === "ปานกลาง"
+            ? "🟡 ความเสี่ยงปานกลาง"
             : "🟢 ความเสี่ยงต่ำ"}
         </div>
         <div class="actions">

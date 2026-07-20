@@ -189,6 +189,11 @@ body{
     color:#08734f;
 }
 
+.risk-medium{
+    background:#fff3cd;
+    color:#8a6200;
+}
+
 .risk-high{
     background:#ffe2e2;
     color:#a71919;
@@ -201,8 +206,29 @@ body{
 
 .card-actions{
     display:grid;
-    grid-template-columns:1fr auto;
+    grid-template-columns:1fr 1fr auto;
     gap:10px;
+}
+
+.history-button{
+    min-height:52px;
+    border:none;
+    border-radius:14px;
+    font-family:"Prompt",sans-serif;
+    font-size:18px;
+    font-weight:600;
+    cursor:pointer;
+    background:#39c99b;
+    color:white;
+}
+
+.add-toggle{
+    margin-bottom:20px;
+}
+
+@media(max-width:600px){
+    .card-actions{grid-template-columns:1fr 1fr}
+    .delete-button{grid-column:1/-1}
 }
 
 .assess-button,
@@ -258,14 +284,23 @@ body{
 <header class="elderly-header">
     <div class="logo">🛡️ FallGuard+</div>
 
-    <h1>ข้อมูลผู้สูงอายุ</h1>
+    <h1>📋 เลือกรายชื่อเพื่อดูประวัติการประเมิน</h1>
 
-    <p>เพิ่มรายชื่อและเลือกผู้รับการประเมิน Thai-FRAT</p>
+    <p>ครั้งแรกกรุณาเพิ่มข้อมูลผู้สูงอายุก่อน จากนั้นเลือกประเมินหรือดูประวัติ</p>
 </header>
 
 <main class="elderly-container">
+<section class="list-section">
+        <h2>📋 เลือกรายชื่อผู้สูงอายุ</h2>
 
-    <section class="form-card">
+        <div id="elderlyList">
+            <div class="loading-message">กำลังโหลดข้อมูล...</div>
+        </div>
+    </section>
+
+
+    <button id="toggleFormButton" class="save-button add-toggle" type="button">➕ เพิ่มข้อมูลผู้สูงอายุ</button>
+<section class="form-card" id="addElderlySection" style="display:none;">
         <h2>➕ เพิ่มผู้สูงอายุ</h2>
 
         <form id="elderlyForm">
@@ -359,14 +394,6 @@ style="margin-top:10px;">
         </form>
     </section>
 
-    <section class="list-section">
-        <h2>👥 รายชื่อผู้สูงอายุ</h2>
-
-        <div id="elderlyList">
-            <div class="loading-message">กำลังโหลดข้อมูล...</div>
-        </div>
-    </section>
-
     <a class="home-link" href="index.html">
         <button class="home-button" type="button">
             กลับหน้าหลัก
@@ -375,6 +402,15 @@ style="margin-top:10px;">
 
 </main>
 
+<script>
+document.getElementById("toggleFormButton").addEventListener("click", function(){
+    const section = document.getElementById("addElderlySection");
+    const isHidden = section.style.display === "none";
+    section.style.display = isHidden ? "block" : "none";
+    this.textContent = isHidden ? "✕ ปิดแบบฟอร์ม" : "➕ เพิ่มข้อมูลผู้สูงอายุ";
+    if (isHidden) section.scrollIntoView({behavior:"smooth", block:"start"});
+});
+</script>
 <script type="module" src="elderly.js"></script>
 
 </body>

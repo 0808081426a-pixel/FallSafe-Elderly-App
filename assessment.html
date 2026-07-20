@@ -351,7 +351,6 @@ body {
         </span>
     </span>
 </label>
-            </label>
         </section>
 
         <section class="question-card">
@@ -452,21 +451,21 @@ body {
 
         <div class="advice-box" id="adviceBox"></div>
 
-<a href="elderly.html">
+<a href="history.html">
     <button class="home-button" type="button">
-        กลับไปข้อมูลผู้สูงอายุ
-    </button>
-</a>
-
-<a href="dashboard.html">
-    <button class="home-button" type="button">
-        📊 ดูผลการประเมิน
+        📊 ดูประวัติการประเมิน
     </button>
 </a>
 
 <a href="report.html">
     <button class="home-button" type="button">
-        📄 ดาวน์โหลดรายงานผลการประเมิน
+        📄 ดูรายงานผลการประเมิน
+    </button>
+</a>
+
+<a href="elderly.html">
+    <button class="home-button" type="button">
+        👤 กลับไปรายชื่อผู้สูงอายุ
     </button>
 </a>
     </section>
@@ -589,51 +588,60 @@ window.calculateThaiFRAT = async function() {
         fallHistory +
         home;
 
-    const level = score <= 3 ? "ต่ำ" : "สูง";
+    let level;
+    if (score <= 3) {
+        level = "ต่ำ";
+    } else if (score <= 5) {
+        level = "ปานกลาง";
+    } else {
+        level = "สูง";
+    }
 
     const resultIcon =
-        level === "ต่ำ" ? "🟢" : "🔴";
+        level === "ต่ำ" ? "🟢" :
+        level === "ปานกลาง" ? "🟡" : "🔴";
 
     const resultTitle =
-        level === "ต่ำ"
-            ? "ความเสี่ยงต่ำ"
-            : "มีความเสี่ยงต่อการพลัดตกหกล้ม";
+        level === "ต่ำ" ? "ความเสี่ยงต่ำ" :
+        level === "ปานกลาง" ? "ความเสี่ยงปานกลาง" :
+        "ความเสี่ยงสูง";
 
     const description =
         level === "ต่ำ"
-            ? "ยังไม่พบความเสี่ยงตามเกณฑ์ Thai-FRAT"
-            : "ควรได้รับคำแนะนำและประเมินปัจจัยเสี่ยงเพิ่มเติม";
+            ? "ยังไม่พบความเสี่ยงในระดับที่น่ากังวล ควรดูแลสุขภาพและป้องกันอย่างต่อเนื่อง"
+            : level === "ปานกลาง"
+            ? "เริ่มมีปัจจัยเสี่ยง ควรเพิ่มความระมัดระวังและปรับสิ่งแวดล้อม"
+            : "มีความเสี่ยงสูง ควรได้รับการดูแลและประเมินเพิ่มเติมจากบุคลากรสุขภาพ";
 
     const advice =
         level === "ต่ำ"
             ? `
                 <h3>คำแนะนำ</h3>
-                <p>✅ ออกกำลังกายและฝึกการทรงตัวสม่ำเสมอ</p>
-                <p>✅ ตรวจสอบบ้านให้ปลอดภัย</p>
-                <p>✅ ประเมินซ้ำเป็นระยะ</p>
+                <p>✅ ออกกำลังกายและฝึกการทรงตัวอย่างสม่ำเสมอ</p>
+                <p>✅ จัดบ้านให้ปลอดภัยและมีแสงสว่างเพียงพอ</p>
+                <p>✅ ประเมินซ้ำทุก 6–12 เดือน หรือเมื่อสุขภาพเปลี่ยนแปลง</p>
+              `
+            : level === "ปานกลาง"
+            ? `
+                <h3>คำแนะนำ</h3>
+                <p>✅ ระมัดระวังขณะเดิน ลุกยืน และเปลี่ยนท่า</p>
+                <p>✅ สวมรองเท้าพื้นกันลื่นและหลีกเลี่ยงพื้นเปียก</p>
+                <p>✅ เก็บสิ่งกีดขวางและจัดแสงสว่างภายในบ้านให้เพียงพอ</p>
+                <p>✅ หากเวียนศีรษะหรือเสียการทรงตัว ควรปรึกษาบุคลากรสุขภาพ</p>
               `
             : `
-                <h3>คำแนะนำสำหรับผู้มีความเสี่ยง</h3>
-                <p>✅ ปรับบ้านและป้องกันพื้นลื่น</p>
-                <p>✅ ติดราวจับในจุดเสี่ยง</p>
-                <p>✅ ฝึกกล้ามเนื้อโดยมีผู้ดูแล</p>
-                <p>✅ พบพยาบาลหรือบุคลากรสุขภาพ</p>
+                <h3>คำแนะนำ</h3>
+                <p>✅ ควรมีญาติหรือผู้ดูแลช่วยเหลือขณะเดิน</p>
+                <p>✅ ใช้อุปกรณ์ช่วยเดินตามคำแนะนำของบุคลากรสุขภาพ</p>
+                <p>✅ หลีกเลี่ยงการเดินลำพังในบริเวณที่เสี่ยงต่อการหกล้ม</p>
+                <p>✅ เข้ารับการประเมินจากแพทย์ พยาบาล หรือนักกายภาพบำบัด</p>
               `;
 
-    document.getElementById("resultIcon").textContent =
-        resultIcon;
-
-    document.getElementById("resultLevel").textContent =
-        resultTitle;
-
-    document.getElementById("scoreNumber").textContent =
-        score + " คะแนน";
-
-    document.getElementById("resultDescription").textContent =
-        description;
-
-    document.getElementById("adviceBox").innerHTML =
-        advice;
+    document.getElementById("resultIcon").textContent = resultIcon;
+    document.getElementById("resultLevel").textContent = resultTitle;
+    document.getElementById("scoreNumber").textContent = score + " คะแนน";
+    document.getElementById("resultDescription").textContent = description;
+    document.getElementById("adviceBox").innerHTML = advice;
 
     const resultCard =
         document.getElementById("resultCard");
