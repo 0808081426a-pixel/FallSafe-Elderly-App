@@ -6,8 +6,36 @@
 <title>FallGuard+</title>
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-<script src="https://kit.fontawesome.com/6b6d7ce6e7.js" crossorigin="anonymous"></script>
+<style>
+/* ทำให้การ์ดทุกใบกดได้ทั้งใบ และเน้นขั้นตอนแรก */
+.step-card{
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.step-card:active{
+  transform:scale(.985);
+}
+.step-first{
+  border:4px solid #2f9e72;
+  background:#effcf6;
+}
+.step-first .step-number{
+  background:#2f9e72;
+  color:#fff;
+}
+.step-first .step-label{
+  background:#2f9e72;
+  color:#fff;
+}
+.first-note{
+  display:block;
+  margin-top:8px;
+  font-weight:600;
+  color:#24795f;
+}
+</style>
 </head>
+
 <body>
 
 <div id="splashScreen" class="splash-screen">
@@ -29,96 +57,110 @@
 </header>
 
 <section class="risk-card">
-  <h3>ระดับความเสี่ยงวันนี้</h3>
-  <h1 id="riskStatus">🟢 ต่ำ</h1>
-  <p id="riskText">ยังไม่มีปัจจัยเสี่ยงรุนแรง</p>
+  <h3>ระดับความเสี่ยงล่าสุด</h3>
+  <h1 id="riskStatus">ยังไม่ได้ประเมิน</h1>
+  <p id="riskText">กรุณาเพิ่มข้อมูลผู้สูงอายุและเลือกผู้รับการประเมินก่อน</p>
 </section>
 
 <div style="width:90%;margin:0 auto 20px;text-align:center;">
-  <button type="button" onclick="openGuide()" style="background:#3da9fc;color:white;border:none;padding:14px 22px;border-radius:15px;font-size:20px;font-family:Prompt;cursor:pointer;">
-    📖 ดูวิธีใช้งาน
+  <button type="button" onclick="openGuide()"
+    style="background:#3da9fc;color:white;border:none;padding:14px 22px;border-radius:15px;font-size:20px;font-family:Prompt;cursor:pointer;">
+    ดูวิธีใช้งาน
   </button>
 </div>
 
 <section class="step-menu">
 
-<a href="assessment.html" class="step-card step-blue">
-  <div class="step-number">1</div>
-  <div class="step-icon"><i class="fa-solid fa-clipboard-check"></i></div>
-  <div class="step-content">
-    <span class="step-label">เริ่มที่นี่</span>
-    <h3>ประเมินความเสี่ยง<br>การพลัดตกหกล้ม</h3>
-    <p>ตอบแบบประเมิน Thai-FRAT</p>
-  </div>
-  <div class="step-arrow">›</div>
-</a>
+  <!-- ขั้นตอนแรก: ต้องกรอก/เลือกรายชื่อก่อน -->
+  <a href="elderly.html" class="step-card step-green step-first" aria-label="ข้อมูลผู้สูงอายุและประวัติการประเมิน">
+    <div class="step-number">1</div>
+    <div class="step-icon">👤</div>
+    <div class="step-content">
+      <span class="step-label">เริ่มที่นี่</span>
+      <h3>ข้อมูลผู้สูงอายุ<br>และประวัติการประเมิน</h3>
+      <p>ครั้งแรกกรุณาเพิ่มข้อมูลก่อน แล้วเลือกประเมินหรือดูประวัติ</p>
+      <span class="first-note">แตะที่การ์ดนี้ได้ทั้งใบ</span>
+    </div>
+    <div class="step-arrow">›</div>
+  </a>
 
-<a href="dashboard.html" class="step-card step-green">
-  <div class="step-number">2</div>
-  <div class="step-icon"><i class="fa-solid fa-chart-column"></i></div>
-  <div class="step-content">
-    <span class="step-label">ดูผล</span>
-    <h3>ผลการประเมิน</h3>
-    <p>ดูคะแนน ระดับความเสี่ยง และคำแนะนำ</p>
-  </div>
-  <div class="step-arrow">›</div>
-</a>
+  <a href="assessment.html" class="step-card step-blue" aria-label="ประเมินความเสี่ยงการพลัดตกหกล้ม">
+    <div class="step-number">2</div>
+    <div class="step-icon">📋</div>
+    <div class="step-content">
+      <span class="step-label">ทำแบบประเมิน</span>
+      <h3>ประเมินความเสี่ยง<br>การพลัดตกหกล้ม</h3>
+      <p>ตอบแบบประเมิน Thai-FRAT</p>
+    </div>
+    <div class="step-arrow">›</div>
+  </a>
 
-<a href="exercise.html" class="step-card step-orange">
-  <div class="step-number">3</div>
-  <div class="step-icon"><i class="fa-solid fa-shield-heart"></i></div>
-  <div class="step-content">
-    <span class="step-label">ฝึกตามวิดีโอ</span>
-    <h3>กิจกรรมป้องกัน<br>การพลัดตกหกล้ม</h3>
-    <p>เพิ่มความแข็งแรงและการทรงตัว</p>
-  </div>
-  <div class="step-arrow">›</div>
-</a>
+  <a href="dashboard.html" class="step-card step-green" aria-label="ดูผลการประเมิน">
+    <div class="step-number">3</div>
+    <div class="step-icon">📊</div>
+    <div class="step-content">
+      <span class="step-label">ดูผล</span>
+      <h3>ผลการประเมิน</h3>
+      <p>ดูคะแนน ระดับความเสี่ยง และคำแนะนำ</p>
+    </div>
+    <div class="step-arrow">›</div>
+  </a>
 
-<a href="knowledge.html" class="step-card step-purple">
-  <div class="step-number">4</div>
-  <div class="step-icon"><i class="fa-solid fa-house"></i></div>
-  <div class="step-content">
-    <span class="step-label">จัดบ้านให้ปลอดภัย</span>
-    <h3>การป้องกัน<br>การพลัดตกหกล้มที่บ้าน</h3>
-    <p>ดูคำแนะนำด้วยรูปภาพขนาดใหญ่</p>
-  </div>
-  <div class="step-arrow">›</div>
-</a>
+  <!-- กดตรงไหนของการ์ดนี้ก็เข้าสู่หน้าวิดีโอ -->
+  <a href="exercise.html" class="step-card step-orange" aria-label="เปิดหน้าวิดีโอกิจกรรมป้องกันการพลัดตกหกล้ม">
+    <div class="step-number">4</div>
+    <div class="step-icon">▶️</div>
+    <div class="step-content">
+      <span class="step-label">ฝึกตามวิดีโอ</span>
+      <h3>กิจกรรมป้องกัน<br>การพลัดตกหกล้ม</h3>
+      <p>แตะการ์ดนี้เพื่อเลือกและเปิดวิดีโอ</p>
+    </div>
+    <div class="step-arrow">›</div>
+  </a>
 
-<a href="feedback.html" class="step-card step-pink">
-  <div class="step-number">5</div>
-  <div class="step-icon"><i class="fa-solid fa-face-smile"></i></div>
-  <div class="step-content">
-    <span class="step-label">บอกความคิดเห็น</span>
-    <h3>ประเมินความพึงพอใจ</h3>
-    <p>ให้คะแนนและช่วยพัฒนา FallGuard+</p>
-  </div>
-  <div class="step-arrow">›</div>
-</a>
+  <a href="knowledge.html" class="step-card step-purple" aria-label="การป้องกันการพลัดตกหกล้มที่บ้าน">
+    <div class="step-number">5</div>
+    <div class="step-icon">🏠</div>
+    <div class="step-content">
+      <span class="step-label">จัดบ้านให้ปลอดภัย</span>
+      <h3>การป้องกัน<br>การพลัดตกหกล้มที่บ้าน</h3>
+      <p>ดูคำแนะนำด้วยรูปภาพขนาดใหญ่</p>
+    </div>
+    <div class="step-arrow">›</div>
+  </a>
+
+  <a href="feedback.html" class="step-card step-pink" aria-label="ประเมินความพึงพอใจ">
+    <div class="step-number">6</div>
+    <div class="step-icon">💬</div>
+    <div class="step-content">
+      <span class="step-label">บอกความคิดเห็น</span>
+      <h3>ประเมินความพึงพอใจ</h3>
+      <p>ให้คะแนนและช่วยพัฒนา FallGuard+</p>
+    </div>
+    <div class="step-arrow">›</div>
+  </a>
 
 </section>
 
 <nav>
-  <a href="index.html"><i class="fa-solid fa-house"></i></a>
-  <a href="exercise.html"><i class="fa-solid fa-heart"></i></a>
-  <a href="dashboard.html"><i class="fa-solid fa-chart-column"></i></a>
-  <a href="feedback.html"><i class="fa-solid fa-user"></i></a>
-  <a href="elderly.html"><i class="fa-solid fa-user-group"></i></a>
+  <a href="index.html" aria-label="หน้าหลัก">🏠</a>
+  <a href="exercise.html" aria-label="วิดีโอ">❤️</a>
+  <a href="dashboard.html" aria-label="ผลการประเมิน">📊</a>
+  <a href="feedback.html" aria-label="ความคิดเห็น">💬</a>
+  <a href="elderly.html" aria-label="ข้อมูลผู้สูงอายุ">👥</a>
 </nav>
 
 <div id="guidePopup" class="guide-popup">
   <div class="guide-box">
-    <div class="guide-icon">👋</div>
+    <div class="guide-icon">📱</div>
     <h2>ยินดีต้อนรับสู่ FallGuard+</h2>
-    <p class="guide-intro">ทำตามขั้นตอนง่าย ๆ ตามลำดับ 1–5</p>
-
-    <div class="guide-step"><span>1</span><p>ประเมินความเสี่ยงการพลัดตกหกล้ม</p></div>
-    <div class="guide-step"><span>2</span><p>ดูคะแนนและผลการประเมิน</p></div>
-    <div class="guide-step"><span>3</span><p>ฝึกกิจกรรมป้องกันผ่านวิดีโอ</p></div>
-    <div class="guide-step"><span>4</span><p>ศึกษาวิธีป้องกันการหกล้มที่บ้าน</p></div>
-    <div class="guide-step"><span>5</span><p>ประเมินความพึงพอใจในการใช้งาน</p></div>
-
+    <p class="guide-intro">ทำตามขั้นตอนง่าย ๆ ตามลำดับ 1–6</p>
+    <div class="guide-step"><span>1</span><p>เพิ่มหรือเลือกรายชื่อผู้สูงอายุก่อน</p></div>
+    <div class="guide-step"><span>2</span><p>ประเมินความเสี่ยงการพลัดตกหกล้ม</p></div>
+    <div class="guide-step"><span>3</span><p>ดูคะแนนและผลการประเมิน</p></div>
+    <div class="guide-step"><span>4</span><p>แตะการ์ดวิดีโอเพื่อฝึกกิจกรรมป้องกัน</p></div>
+    <div class="guide-step"><span>5</span><p>ศึกษาวิธีป้องกันการหกล้มที่บ้าน</p></div>
+    <div class="guide-step"><span>6</span><p>ประเมินความพึงพอใจในการใช้งาน</p></div>
     <button id="closeGuideButton" type="button" class="guide-button">เริ่มใช้งาน</button>
   </div>
 </div>
@@ -131,12 +173,15 @@ document.addEventListener("DOMContentLoaded", function(){
 
   setTimeout(function(){
     if(splash) splash.style.display = "none";
-    if(popup) popup.style.display = "flex";
+    if(popup && !sessionStorage.getItem("fallguardGuideSeen")){
+      popup.style.display = "flex";
+    }
   }, 800);
 
   if(closeButton && popup){
     closeButton.addEventListener("click", function(){
       popup.style.display = "none";
+      sessionStorage.setItem("fallguardGuideSeen", "1");
     });
   }
 
@@ -147,14 +192,14 @@ document.addEventListener("DOMContentLoaded", function(){
 
   if(score && level && status && text){
     if(level === "ต่ำ"){
-      status.innerHTML = "🟢 ความเสี่ยงต่ำ";
-      text.innerHTML = "ควรรักษาพฤติกรรมสุขภาพที่ดี";
-    } else if(level === "ปานกลาง"){
-      status.innerHTML = "🟡 ความเสี่ยงปานกลาง";
-      text.innerHTML = "ควรเฝ้าระวังและป้องกันการหกล้ม";
-    } else {
-      status.innerHTML = "🔴 มีความเสี่ยงต่อการพลัดตกหกล้ม";
-      text.innerHTML = "ควรได้รับคำแนะนำและประเมินเพิ่มเติม";
+      status.textContent = "🟢 ความเสี่ยงต่ำ";
+      text.textContent = "ควรรักษาพฤติกรรมสุขภาพที่ดี";
+    }else if(level === "ปานกลาง"){
+      status.textContent = "🟡 ความเสี่ยงปานกลาง";
+      text.textContent = "ควรเฝ้าระวังและป้องกันการหกล้ม";
+    }else{
+      status.textContent = "🔴 ความเสี่ยงสูง";
+      text.textContent = "ควรได้รับคำแนะนำและประเมินเพิ่มเติม";
     }
   }
 });
@@ -163,15 +208,7 @@ function openGuide(){
   const popup = document.getElementById("guidePopup");
   if(popup) popup.style.display = "flex";
 }
-
-function closeGuide(){
-  const popup = document.getElementById("guidePopup");
-  if(popup) popup.style.display = "none";
-}
 </script>
-
 <script src="script.js"></script>
 </body>
 </html>
-
-<section style="width:92%;max-width:900px;margin:20px auto"><a href="elderly.html" style="display:block;text-decoration:none;background:#fff;border-radius:20px;padding:20px;text-align:center;box-shadow:0 6px 20px rgba(0,0,0,.08);font-size:20px;font-weight:700;color:#24795f">📋 เลือกรายชื่อเพื่อดูประวัติการประเมิน</a></section>
