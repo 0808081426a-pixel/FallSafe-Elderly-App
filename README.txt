@@ -1,3 +1,10 @@
-วางทับเฉพาะ index.html ในโปรเจกต์เดิม
-Commit: Modern FallGuard home design
-จากนั้น Push origin และกด Ctrl+F5
+วางทับเฉพาะ exercise.html ในโปรเจกต์เดิม
+
+ผลลัพธ์:
+- กดรูปหรือพื้นที่ใดของการ์ดก็เปิดวิดีโอทันที
+- วิดีโอเปิดเป็นป๊อปอัปตรงกลางจอ
+- ปิดวิดีโอแล้วหยุดเล่นทันที
+- ใช้งานได้ทั้งคอมและมือถือ
+
+GitHub Desktop Summary:
+Play exercise videos in popup
