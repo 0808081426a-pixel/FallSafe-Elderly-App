@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ประเมินสภาพแวดล้อมภายในบ้าน | FallGuard+</title>
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --blue:#2298df; --blue2:#63c8ff; --green:#45c992; --ink:#20313c;
+      --muted:#6c8490; --bg:#f4fbff; --card:#fff; --line:#dcebf2;
+      --yellow:#fff8e8; --red:#ff5f6d; --shadow:0 12px 30px rgba(32,91,120,.10);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:"Prompt",sans-serif;background:linear-gradient(180deg,#edfaff 0,#f8fdff 100%);color:var(--ink)}
+    .top{
+      background:
+        radial-gradient(circle at 85% 20%,rgba(255,255,255,.35) 0 80px,transparent 82px),
+        linear-gradient(135deg,var(--blue2),#78ddbd);
+      color:#fff;padding:20px 18px 56px;border-radius:0 0 34px 34px;position:relative;overflow:hidden
+    }
+    .top:after{content:"🏡";position:absolute;right:18px;bottom:10px;font-size:76px;opacity:.22}
+    .top-inner{max-width:820px;margin:auto}
+    .brand{font-weight:700;font-size:19px;letter-spacing:.2px}
+    .top h1{font-size:30px;line-height:1.3;margin:18px 0 8px}
+    .top p{font-size:16px;line-height:1.7;margin:0;max-width:650px}
+    .container{width:min(94%,820px);margin:-34px auto 34px}
+    .panel{background:#fff;border-radius:24px;box-shadow:var(--shadow);border:1px solid rgba(210,230,240,.8)}
+    .intro{padding:20px 20px 18px;margin-bottom:16px}
+    .intro h2{margin:0 0 8px;color:#176b95;font-size:21px}
+    .intro p{margin:0;color:var(--muted);line-height:1.65}
+    .legend{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+    .chip{padding:8px 12px;border-radius:999px;font-size:13px;font-weight:600}
+    .chip.blue{background:#eaf7ff;color:#1675a6}.chip.green{background:#ebfbf5;color:#19845d}.chip.yellow{background:#fff7df;color:#9c6b00}
+    .question{margin:14px 0;overflow:hidden;background:#fff;border:1px solid var(--line);border-radius:22px;box-shadow:0 7px 18px rgba(26,88,116,.07);transition:.2s}
+    .question.selected{border-color:#9fddc2;box-shadow:0 8px 22px rgba(50,156,113,.13)}
+    .q-main{display:grid;grid-template-columns:auto 1fr auto;gap:13px;align-items:start;padding:17px}
+    .num{width:38px;height:38px;border-radius:13px;display:grid;place-items:center;color:#fff;font-weight:700;background:linear-gradient(135deg,var(--blue),var(--green))}
+    .q-title{font-size:17px;font-weight:600;line-height:1.55}
+    .hint{font-size:13px;color:#77909c;line-height:1.55;margin-top:4px}
+    .toggle{width:27px;height:27px;accent-color:var(--green);margin-top:4px}
+    .mini-visual{display:flex;gap:8px;padding:0 17px 15px 68px;flex-wrap:wrap}
+    .visual-card{background:#f7fbfd;border:1px solid #e3eff4;border-radius:14px;padding:10px 12px;font-size:13px;color:#45636f;display:flex;align-items:center;gap:7px}
+    .advice{display:none;background:linear-gradient(180deg,#fffaf0,#fffdf8);border-top:1px solid #f0e2bf;padding:16px 18px 18px}
+    .question.selected .advice{display:block}
+    .advice-title{font-weight:700;color:#9b6500;margin-bottom:8px}
+    .advice ul{margin:0;padding-left:20px;line-height:1.72}
+    .more-btn{margin-top:12px;border:0;background:#eef8fd;color:#176d95;padding:10px 13px;border-radius:12px;font:600 14px "Prompt";cursor:pointer}
+    .actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}
+    button,.back{border:0;border-radius:16px;padding:15px;font:600 17px "Prompt";cursor:pointer;text-align:center;text-decoration:none}
+    .primary{background:linear-gradient(135deg,var(--blue),var(--green));color:#fff;box-shadow:0 8px 18px rgba(29,146,176,.22)}
+    .secondary{background:#eaf4f8;color:#345662}
+    .result{display:none;padding:22px;text-align:center;margin-top:18px}
+    .result.show{display:block}
+    .score{font-size:48px;font-weight:700;margin:4px 0}
+    .level{font-size:22px;font-weight:700}
+    .result p{color:#58727e;line-height:1.7}
+    .picked{margin-top:16px;text-align:left;background:#f7fbfd;border-radius:17px;padding:15px}
+    .picked h3{margin:0 0 8px;font-size:17px}
+    .picked ol{margin:0;padding-left:22px;line-height:1.7}
+    .source{padding:18px;margin-top:18px;color:#627984;font-size:13px;line-height:1.65}
+    .back{display:block;margin:16px 0 0}
+    .modal{position:fixed;inset:0;background:rgba(19,42,55,.52);display:none;align-items:center;justify-content:center;padding:18px;z-index:99}
+    .modal.show{display:flex}
+    .modal-card{width:min(100%,500px);background:#fff;border-radius:24px;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.25)}
+    .modal-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
+    .modal h3{margin:0;font-size:20px;color:#176b95}
+    .close{border:0;background:#edf4f7;width:36px;height:36px;border-radius:50%;font-size:19px;cursor:pointer}
+    .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+    .ba-card{border-radius:17px;padding:16px;text-align:center;min-height:160px;display:flex;flex-direction:column;justify-content:center}
+    .bad{background:#fff0f1}.good{background:#edfbf5}
+    .ba-icon{font-size:48px}.ba-title{font-weight:700;margin-top:6px}.ba-text{font-size:13px;color:#617680;line-height:1.55;margin-top:4px}
+    @media(max-width:560px){
+      .top h1{font-size:25px}.q-main{grid-template-columns:auto 1fr auto}.mini-visual{padding-left:17px}
+      .actions{grid-template-columns:1fr}.before-after{grid-template-columns:1fr}.top:after{font-size:60px}
+    }
+  </style>
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div class="brand">🛡️ FallGuard+</div>
+    <h1>แบบประเมินสภาพแวดล้อมภายในบ้าน</h1>
+    <p>เลือกข้อที่พบว่าเป็นความเสี่ยง ระบบจะแสดงคำแนะนำเฉพาะจุด พร้อมตัวอย่างก่อน–หลังเพื่อช่วยปรับบ้านให้ปลอดภัยสำหรับผู้สูงอายุ</p>
+  </div>
+</header>
+
+<main class="container">
+  <section class="panel intro">
+    <h2>🏠 10 ข้อประเมินบ้านเสี่ยงล้ม</h2>
+    <p>ทำเครื่องหมายเฉพาะข้อที่พบในบ้านจริง จากนั้นกด “ดูผลการประเมิน” เพื่อสรุปจุดที่ควรปรับปรุง</p>
+    <div class="legend">
+      <span class="chip blue">แตะเพื่อเลือก</span>
+      <span class="chip green">แสดงคำแนะนำทันที</span>
+      <span class="chip yellow">มีตัวอย่างก่อน–หลัง</span>
+    </div>
+  </section>
+
+  <form id="homeForm"></form>
+
+  <div class="actions">
+    <button type="button" class="primary" id="evaluateBtn">ดูผลการประเมิน</button>
+    <button type="button" class="secondary" id="resetBtn">ล้างคำตอบ</button>
+  </div>
+
+  <section class="panel result" id="resultBox" aria-live="polite">
+    <div id="resultIcon" style="font-size:44px"></div>
+    <div class="score"><span id="riskCount">0</span>/10</div>
+    <div class="level" id="riskLevel"></div>
+    <p id="riskText"></p>
+    <div class="picked">
+      <h3>รายการที่ควรปรับปรุง</h3>
+      <ol id="pickedList"></ol>
+    </div>
+  </section>
+
+  <section class="panel source">
+    <strong>หมายเหตุ:</strong> แบบประเมินนี้ใช้เพื่อคัดกรองและให้ความรู้เบื้องต้น ไม่ใช้แทนการประเมินโดยบุคลากรสุขภาพ<br>
+    <strong>ที่มา:</strong> ดัดแปลงจาก “10 ข้อประเมินบ้านเสี่ยงล้ม” ตามเอกสารต้นแบบของโครงการ ควรระบุชื่อหน่วยงาน ผู้จัดทำ ปีเผยแพร่ และลิงก์ต้นฉบับให้ครบก่อนส่งอาจารย์
+  </section>
+
+  <a class="back secondary" href="index.html">← กลับหน้าหลัก</a>
+</main>
+
+<div class="modal" id="modal">
+  <div class="modal-card">
+    <div class="modal-top">
+      <h3 id="modalTitle">ตัวอย่างการปรับปรุง</h3>
+      <button class="close" id="closeModal">×</button>
+    </div>
+    <div class="before-after">
+      <div class="ba-card bad">
+        <div class="ba-icon" id="badIcon">⚠️</div>
+        <div class="ba-title">ก่อนปรับปรุง</div>
+        <div class="ba-text" id="badText"></div>
+      </div>
+      <div class="ba-card good">
+        <div class="ba-icon" id="goodIcon">✅</div>
+        <div class="ba-title">หลังปรับปรุง</div>
+        <div class="ba-text" id="goodText"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const items = [
+  {
+    title:"สีของพื้น ผนัง เฟอร์นิเจอร์ หรือขั้นบันไดแยกจากกันไม่ชัดเจน",
+    hint:"เช่น สีขอบขั้นบันไดใกล้เคียงกับพื้น หรือโต๊ะสีเดียวกับพื้น",
+    visuals:["🎨 สีใกล้เคียงกัน","🪜 ขอบขั้นมองยาก"],
+    advice:["ใช้สีที่ตัดกันระหว่างพื้น ผนัง เฟอร์นิเจอร์ และขั้นบันได","ติดแถบสีตัดกันหรือแถบกันลื่นบริเวณขอบขั้นบันได","หลีกเลี่ยงโต๊ะ เก้าอี้ หรือของใช้ที่มีสีใกล้เคียงกับพื้นจนมองเห็นยาก"],
+    bad:"พื้น โต๊ะ และขอบขั้นบันไดมีสีใกล้เคียงกัน ทำให้แยกระดับได้ยาก",
+    good:"ใช้สีตัดกันและติดแถบสีที่ขอบขั้น เพื่อให้มองเห็นชัดเจน"
+  },
+  {
+    title:"พื้นลื่น พื้นเปียก หรือมีพรมที่อาจทำให้สะดุด",
+    hint:"พบได้บ่อยในห้องน้ำ ห้องครัว และทางเข้าบ้าน",
+    visuals:["💧 พื้นเปียก","🧶 พรมลื่น"],
+    advice:["เช็ดพื้นให้แห้งทันทีเมื่อเปียก","ใช้แผ่นกันลื่นในห้องน้ำและบริเวณที่เปียกน้ำ","ยึดพรมให้แน่นกับพื้นหรือนำพรมที่ลื่นและขอบม้วนออก"],
+    bad:"พื้นเปียกหรือพรมเคลื่อนตัวง่าย เสี่ยงลื่นและสะดุด",
+    good:"พื้นแห้ง มีแผ่นกันลื่น และยึดพรมแน่นกับพื้น"
+  },
+  {
+    title:"มีสิ่งของวางเกะกะหรือกีดขวางทางเดิน",
+    hint:"เช่น รองเท้า กล่อง สายไฟ หรือเฟอร์นิเจอร์ยื่นออกมา",
+    visuals:["📦 ของเกะกะ","🔌 สายไฟขวาง"],
+    advice:["เก็บสิ่งของและสายไฟออกจากทางเดิน","จัดเฟอร์นิเจอร์ให้มีช่องทางเดินกว้างและมองเห็นชัด","วางของใช้ประจำไว้ในจุดที่หยิบง่าย ไม่ต้องก้มหรือเอื้อมสูง"],
+    bad:"มีรองเท้า กล่อง หรือสายไฟวางขวางทางเดิน",
+    good:"ทางเดินโล่ง ของใช้ถูกจัดเก็บ และสายไฟชิดผนัง"
+  },
+  {
+    title:"แสงสว่างภายในบ้านไม่เพียงพอ",
+    hint:"โดยเฉพาะทางเดิน บันได ห้องน้ำ และบริเวณเปลี่ยนระดับ",
+    visuals:["🌙 จุดมืด","💡 ไฟไม่พอ"],
+    advice:["เพิ่มหลอดไฟให้สว่างเพียงพอและเปลี่ยนหลอดที่ชำรุด","ติดไฟบริเวณหัวเตียง ทางเดิน ห้องน้ำ และบันได","ลดแสงสะท้อนหรือเงามืดที่ทำให้มองระดับพื้นผิดพลาด"],
+    bad:"ทางเดินหรือบันไดมืด มีเงาบัง มองพื้นต่างระดับไม่ชัด",
+    good:"ติดไฟให้ทั่วถึง และเปิดไฟก่อนเดินทุกครั้ง"
+  },
+  {
+    title:"การเปิด–ปิดไฟไม่สะดวกหรืออยู่ไกลจากจุดใช้งาน",
+    hint:"เช่น ต้องเดินในที่มืดก่อนถึงสวิตช์ไฟ",
+    visuals:["🚪 สวิตช์ไกล","🌟 ไฟเซนเซอร์"],
+    advice:["ติดสวิตช์ใกล้ประตูและหัวเตียง","ใช้ไฟกลางคืนหรือไฟเซนเซอร์ตรวจจับการเคลื่อนไหว","เตรียมไฟฉายไว้ใกล้เตียงในตำแหน่งที่หยิบได้ง่าย"],
+    bad:"ต้องลุกและเดินในที่มืดก่อนถึงสวิตช์ไฟ",
+    good:"มีสวิตช์ใกล้มือหรือไฟเซนเซอร์เปิดอัตโนมัติ"
+  },
+  {
+    title:"ห้องน้ำไม่มีราวจับหรือมีพื้นลื่น",
+    hint:"รวมถึงบริเวณโถสุขภัณฑ์และพื้นที่อาบน้ำ",
+    visuals:["🚿 พื้นห้องน้ำ","🦾 ราวจับ"],
+    advice:["ติดราวจับที่มั่นคงบริเวณโถสุขภัณฑ์และพื้นที่อาบน้ำ","ใช้เก้าอี้อาบน้ำหรือฝักบัวแบบถือได้เมื่อจำเป็น","ไม่ใช้ราวแขวนผ้าหรืออ่างล้างหน้าแทนราวจับ"],
+    bad:"พื้นลื่น ไม่มีราวจับ และต้องเกาะอ่างล้างหน้า",
+    good:"มีราวจับมั่นคง แผ่นกันลื่น และที่นั่งอาบน้ำเมื่อจำเป็น"
+  },
+  {
+    title:"ห้องนอนหรือบริเวณข้างเตียงมีสิ่งกีดขวาง",
+    hint:"ทางจากเตียงไปห้องน้ำควรโล่งและมีแสงสว่าง",
+    visuals:["🛏️ ข้างเตียง","🚶 ทางเดิน"],
+    advice:["จัดทางเดินจากเตียงไปประตูและห้องน้ำให้โล่ง","วางโทรศัพท์ แว่นตา กริ่ง และอุปกรณ์ช่วยเดินให้อยู่ใกล้มือ","ใช้ไฟหัวเตียงหรือไฟกลางคืนที่เปิดได้ก่อนลุกจากเตียง"],
+    bad:"ของใช้วางรอบเตียง ทางเดินแคบ และไม่มีไฟหัวเตียง",
+    good:"ข้างเตียงโล่ง มีไฟและของใช้จำเป็นอยู่ในระยะเอื้อม"
+  },
+  {
+    title:"เตียงสูงหรือต่ำเกินไปสำหรับผู้สูงอายุ",
+    hint:"เมื่อนั่งขอบเตียงแล้วควรวางเท้าราบกับพื้นได้อย่างมั่นคง",
+    visuals:["⬆️ สูงเกิน","⬇️ ต่ำเกิน"],
+    advice:["ปรับความสูงให้ผู้สูงอายุนั่งขอบเตียงแล้วเข่าใกล้มุมฉากและฝ่าเท้าวางราบกับพื้น","หลีกเลี่ยงที่นอนนุ่มหรือยุบตัวมากจนลุกยาก","ก่อนลุกให้ค่อย ๆ นั่งห้อยขา สังเกตอาการเวียนศีรษะ แล้วจึงยืน"],
+    bad:"นั่งแล้วเท้าลอย หรือเตียงต่ำจนต้องออกแรงลุกมาก",
+    good:"เมื่อนั่งขอบเตียง เข่าใกล้มุมฉากและฝ่าเท้าวางราบกับพื้น"
+  },
+  {
+    title:"บันไดหรือพื้นต่างระดับไม่มีราวจับและเครื่องหมายที่ชัดเจน",
+    hint:"ขอบขั้นบันไดควรมองเห็นง่ายและไม่มีของวางกีดขวาง",
+    visuals:["🪜 ไม่มีราว","🟨 แถบสีขอบขั้น"],
+    advice:["ติดราวจับที่มั่นคงอย่างน้อยหนึ่งด้านและใช้ทุกครั้ง","ติดแถบสีตัดกันหรือแถบกันลื่นที่ขอบขั้น","เปิดไฟก่อนขึ้นลงบันไดและไม่ถือของจนบดบังการมองเห็น"],
+    bad:"ขอบขั้นสีเดียวกับพื้น ไม่มีราวจับ และแสงไม่พอ",
+    good:"มีราวจับ แถบสีตัดกัน และไฟส่องสว่างตลอดทาง"
+  },
+  {
+    title:"อุปกรณ์ช่วยเดินไม่เหมาะสม ชำรุด หรือวางไม่พร้อมใช้",
+    hint:"เช่น ไม้เท้า Walker หรือไม้ค้ำยันสูงไม่พอดี ยางรองสึก",
+    visuals:["🦯 ไม้เท้า","🦿 Walker"],
+    advice:["ให้บุคลากรสุขภาพช่วยปรับความสูงและแนะนำวิธีใช้ที่ถูกต้อง","ตรวจยางรอง ปลายไม้ ล้อ และเบรกเป็นประจำ","วางอุปกรณ์ในตำแหน่งที่หยิบถึงก่อนยืน และไม่ใช้เฟอร์นิเจอร์แทนอุปกรณ์ช่วยเดิน"],
+    bad:"อุปกรณ์สูงไม่พอดี ยางรองสึก หรือวางไกลจากจุดลุก",
+    good:"ปรับความสูงพอดี อุปกรณ์สมบูรณ์ และวางพร้อมใช้ใกล้ตัว"
+  }
+];
+
+const form = document.getElementById("homeForm");
+items.forEach((item,i)=>{
+  const card=document.createElement("section");
+  card.className="question";
+  card.innerHTML=`
+    <div class="q-main">
+      <div class="num">${i+1}</div>
+      <label>
+        <div class="q-title">${item.title}</div>
+        <div class="hint">${item.hint}</div>
+      </label>
+      <input class="toggle" type="checkbox" name="risk" value="${i}" aria-label="เลือกข้อ ${i+1}">
+    </div>
+    <div class="mini-visual">${item.visuals.map(v=>`<div class="visual-card">${v}</div>`).join("")}</div>
+    <div class="advice">
+      <div class="advice-title">คำแนะนำในการปรับปรุง</div>
+      <ul>${item.advice.map(a=>`<li>${a}</li>`).join("")}</ul>
+      <button type="button" class="more-btn" data-i="${i}">ดูตัวอย่างก่อน–หลัง</button>
+    </div>`;
+  const box=card.querySelector(".toggle");
+  card.querySelector(".q-main").addEventListener("click",(e)=>{
+    if(e.target!==box){box.checked=!box.checked}
+    card.classList.toggle("selected",box.checked);
+  });
+  box.addEventListener("change",()=>card.classList.toggle("selected",box.checked));
+  form.appendChild(card);
+});
+
+const modal=document.getElementById("modal");
+document.addEventListener("click",(e)=>{
+  const btn=e.target.closest(".more-btn");
+  if(!btn)return;
+  const item=items[Number(btn.dataset.i)];
+  document.getElementById("modalTitle").textContent=item.title;
+  document.getElementById("badText").textContent=item.bad;
+  document.getElementById("goodText").textContent=item.good;
+  modal.classList.add("show");
+});
+document.getElementById("closeModal").onclick=()=>modal.classList.remove("show");
+modal.addEventListener("click",(e)=>{if(e.target===modal)modal.classList.remove("show")});
+
+document.getElementById("evaluateBtn").addEventListener("click",()=>{
+  const selected=[...document.querySelectorAll('input[name="risk"]:checked')].map(x=>Number(x.value));
+  const n=selected.length;
+  let icon,level,text;
+  if(n<=2){icon="🟢";level="ความเสี่ยงต่ำ";text="สภาพแวดล้อมโดยรวมค่อนข้างปลอดภัย ควรแก้ไขจุดที่พบและประเมินซ้ำเป็นระยะ";}
+  else if(n<=4){icon="🟡";level="ความเสี่ยงปานกลาง";text="ควรปรับปรุงจุดเสี่ยงตามรายการที่เลือก เพื่อลดโอกาสสะดุด ลื่น หรือหกล้ม";}
+  else{icon="🔴";level="ความเสี่ยงสูง";text="ควรเร่งปรับสภาพแวดล้อม และขอคำแนะนำจากบุคลากรสุขภาพ โดยเฉพาะเมื่อผู้สูงอายุเคยหกล้มหรือเดินไม่มั่นคง";}
+  document.getElementById("resultIcon").textContent=icon;
+  document.getElementById("riskCount").textContent=n;
+  document.getElementById("riskLevel").textContent=level;
+  document.getElementById("riskText").textContent=text;
+  document.getElementById("pickedList").innerHTML=selected.length
+    ? selected.map(i=>`<li>${items[i].title}</li>`).join("")
+    : "<li>ไม่พบรายการเสี่ยงจากคำตอบครั้งนี้</li>";
+  const result=document.getElementById("resultBox");
+  result.classList.add("show");
+  result.scrollIntoView({behavior:"smooth",block:"start"});
+});
+
+document.getElementById("resetBtn").addEventListener("click",()=>{
+  form.reset();
+  document.querySelectorAll(".question").forEach(x=>x.classList.remove("selected"));
+  document.getElementById("resultBox").classList.remove("show");
+  window.scrollTo({top:0,behavior:"smooth"});
+});
+</script>
+</body>
+</html>
