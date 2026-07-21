@@ -61,9 +61,28 @@
     .picked ol{margin:0;padding-left:22px;line-height:1.7}
     .source{padding:18px;margin-top:18px;color:#627984;font-size:13px;line-height:1.65}
     .back{display:block;margin:16px 0 0}
-    .modal{position:fixed;inset:0;background:rgba(19,42,55,.52);display:none;align-items:center;justify-content:center;padding:18px;z-index:99}
+    .modal{
+  position:fixed;
+  inset:0;
+  background:rgba(19,42,55,.52);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  padding:90px 18px 30px;
+  overflow-y:auto;
+  z-index:99;
+}
     .modal.show{display:flex}
-    .modal-card{width:min(100%,500px);background:#fff;border-radius:24px;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.25)}
+    .modal-card{
+  width:min(100%,500px);
+  background:#fff;
+  border-radius:24px;
+  padding:20px;
+  box-shadow:0 24px 70px rgba(0,0,0,.25);
+  margin:auto;
+  max-height:calc(100vh - 120px);
+  overflow-y:auto;
+}
     .modal-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
     .modal h3{margin:0;font-size:20px;color:#176b95}
     .close{border:0;background:#edf4f7;width:36px;height:36px;border-radius:50%;font-size:19px;cursor:pointer}
@@ -117,7 +136,8 @@
 
   <section class="panel source">
     <strong>หมายเหตุ:</strong> แบบประเมินนี้ใช้เพื่อคัดกรองและให้ความรู้เบื้องต้น ไม่ใช้แทนการประเมินโดยบุคลากรสุขภาพ<br>
-    <strong>ที่มา:</strong> ดัดแปลงจากแบบประเมินความเสี่ยงด้านสภาพแวดล้อมภายในบ้านสำหรับผู้สูงอายุ และแนวทางการป้องกันการพลัดตกหกล้มของกรมการแพทย์ กระทรวงสาธารณสุข
+    <strong>เอกสารอ้างอิง</strong><br>
+กรมกิจการผู้สูงอายุ. (2564). <i>บ้านปลอดภัยไม่เสี่ยงล้ม</i>. กระทรวงการพัฒนาสังคมและความมั่นคงของมนุษย์.
   </section>
 
   <a class="back secondary" href="index.html">← กลับหน้าหลัก</a>
@@ -149,7 +169,8 @@ const items = [
   {
     title:"สีของพื้น ผนัง เฟอร์นิเจอร์ หรือขั้นบันไดแยกจากกันไม่ชัดเจน",
     hint:"เช่น สีขอบขั้นบันไดใกล้เคียงกับพื้น หรือโต๊ะสีเดียวกับพื้น",
-    visuals:["🎨 สีใกล้เคียงกัน","🪜 ขอบขั้นมองยาก"],
+    before:"images/environment/before1.jpg",
+after:"images/environment/after1.jpg",
     advice:["ใช้สีที่ตัดกันระหว่างพื้น ผนัง เฟอร์นิเจอร์ และขั้นบันได","ติดแถบสีตัดกันหรือแถบกันลื่นบริเวณขอบขั้นบันได","หลีกเลี่ยงโต๊ะ เก้าอี้ หรือของใช้ที่มีสีใกล้เคียงกับพื้นจนมองเห็นยาก"],
     bad:"พื้น โต๊ะ และขอบขั้นบันไดมีสีใกล้เคียงกัน ทำให้แยกระดับได้ยาก",
     good:"ใช้สีตัดกันและติดแถบสีที่ขอบขั้น เพื่อให้มองเห็นชัดเจน"
