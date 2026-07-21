@@ -650,3 +650,22 @@ font-weight:700;
     margin-bottom:12px;
     line-height:1.7;
 }
+.environment-guide{
+    display:block;
+    width:100%;
+    box-sizing:border-box;
+    margin:18px 0;
+    padding:18px 20px;
+    border-radius:18px;
+    background:linear-gradient(90deg,#ffb347,#ffcc70);
+    color:#173247;
+    text-align:center;
+    text-decoration:none;
+    font-size:22px;
+    font-weight:700;
+    box-shadow:0 4px 12px rgba(0,0,0,.10);
+}
+
+.environment-guide:hover{
+    transform:translateY(-2px);
+}
