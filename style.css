@@ -615,3 +615,38 @@ font-weight:700;
         transform:translateY(0);
     }
 }
+.exercise-tip{
+    margin:25px 0;
+}
+
+.tip-box{
+    background:#eef8ff;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.tip-box p{
+    margin:10px 0;
+    line-height:1.6;
+}
+
+.tip-box details{
+    margin-top:15px;
+}
+
+.tip-box summary{
+    cursor:pointer;
+    font-weight:bold;
+    color:#1565c0;
+}
+
+.tip-box ul{
+    margin-top:10px;
+    padding-left:20px;
+}
+
+.tip-box li{
+    margin-bottom:12px;
+    line-height:1.7;
+}
