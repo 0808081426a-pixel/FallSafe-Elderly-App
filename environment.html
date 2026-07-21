@@ -61,16 +61,16 @@
     .picked ol{margin:0;padding-left:22px;line-height:1.7}
     .source{padding:18px;margin-top:18px;color:#627984;font-size:13px;line-height:1.65}
     .back{display:block;margin:16px 0 0}
-    .modal{position:fixed;inset:0;background:rgba(19,42,55,.52);display:none;align-items:center;justify-content:center;padding:18px;z-index:99}
+    .modal{position:fixed;inset:0;background:rgba(19,42,55,.52);display:none;align-items:flex-start;justify-content:center;padding:90px 18px 30px;overflow-y:auto;z-index:99}
     .modal.show{display:flex}
-    .modal-card{width:min(100%,500px);background:#fff;border-radius:24px;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.25)}
+    .modal-card{width:min(100%,500px);background:#fff;border-radius:24px;padding:20px;box-shadow:0 24px 70px rgba(0,0,0,.25);margin:auto;max-height:calc(100vh - 120px);overflow-y:auto}
     .modal-top{display:flex;justify-content:space-between;gap:12px;align-items:start}
     .modal h3{margin:0;font-size:20px;color:#176b95}
     .close{border:0;background:#edf4f7;width:36px;height:36px;border-radius:50%;font-size:19px;cursor:pointer}
     .before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
     .ba-card{border-radius:17px;padding:16px;text-align:center;min-height:160px;display:flex;flex-direction:column;justify-content:center}
     .bad{background:#fff0f1}.good{background:#edfbf5}
-    .ba-icon{font-size:48px}.ba-title{font-weight:700;margin-top:6px}.ba-text{font-size:13px;color:#617680;line-height:1.55;margin-top:4px}
+    .ba-image{width:100%;height:145px;object-fit:cover;border-radius:13px;margin-bottom:8px}.ba-title{font-weight:700;margin-top:6px}.ba-text{font-size:13px;color:#617680;line-height:1.55;margin-top:4px}
     @media(max-width:560px){
       .top h1{font-size:25px}.q-main{grid-template-columns:auto 1fr auto}.mini-visual{padding-left:17px}
       .actions{grid-template-columns:1fr}.before-after{grid-template-columns:1fr}.top:after{font-size:60px}
@@ -116,8 +116,9 @@
   </section>
 
   <section class="panel source">
-    <strong>หมายเหตุ:</strong> แบบประเมินนี้ใช้เพื่อคัดกรองและให้ความรู้เบื้องต้น ไม่ใช้แทนการประเมินโดยบุคลากรสุขภาพ<br>
-    <strong>ที่มา:</strong> ดัดแปลงจาก “10 ข้อประเมินบ้านเสี่ยงล้ม” ตามเอกสารต้นแบบของโครงการ ควรระบุชื่อหน่วยงาน ผู้จัดทำ ปีเผยแพร่ และลิงก์ต้นฉบับให้ครบก่อนส่งอาจารย์
+    <strong>หมายเหตุ:</strong> แบบประเมินนี้ใช้เพื่อคัดกรองและให้ความรู้เบื้องต้น ไม่ใช้แทนการประเมินโดยบุคลากรสุขภาพ<br><br>
+    <strong>เอกสารอ้างอิง</strong><br>
+    กรมกิจการผู้สูงอายุ. (2564). <i>บ้านปลอดภัยไม่เสี่ยงล้ม</i>. กระทรวงการพัฒนาสังคมและความมั่นคงของมนุษย์.
   </section>
 
   <a class="back secondary" href="index.html">← กลับหน้าหลัก</a>
@@ -131,12 +132,12 @@
     </div>
     <div class="before-after">
       <div class="ba-card bad">
-        <div class="ba-icon" id="badIcon">⚠️</div>
+        <img class="ba-image" id="badImage" src="" alt="ตัวอย่างก่อนปรับปรุง">
         <div class="ba-title">ก่อนปรับปรุง</div>
         <div class="ba-text" id="badText"></div>
       </div>
       <div class="ba-card good">
-        <div class="ba-icon" id="goodIcon">✅</div>
+        <img class="ba-image" id="goodImage" src="" alt="ตัวอย่างหลังปรับปรุง">
         <div class="ba-title">หลังปรับปรุง</div>
         <div class="ba-text" id="goodText"></div>
       </div>
@@ -150,6 +151,8 @@ const items = [
     title:"สีของพื้น ผนัง เฟอร์นิเจอร์ หรือขั้นบันไดแยกจากกันไม่ชัดเจน",
     hint:"เช่น สีขอบขั้นบันไดใกล้เคียงกับพื้น หรือโต๊ะสีเดียวกับพื้น",
     visuals:["🎨 สีใกล้เคียงกัน","🪜 ขอบขั้นมองยาก"],
+    beforeImage:"images/environment/before1.jpg",
+    afterImage:"images/environment/after1.jpg",
     advice:["ใช้สีที่ตัดกันระหว่างพื้น ผนัง เฟอร์นิเจอร์ และขั้นบันได","ติดแถบสีตัดกันหรือแถบกันลื่นบริเวณขอบขั้นบันได","หลีกเลี่ยงโต๊ะ เก้าอี้ หรือของใช้ที่มีสีใกล้เคียงกับพื้นจนมองเห็นยาก"],
     bad:"พื้น โต๊ะ และขอบขั้นบันไดมีสีใกล้เคียงกัน ทำให้แยกระดับได้ยาก",
     good:"ใช้สีตัดกันและติดแถบสีที่ขอบขั้น เพื่อให้มองเห็นชัดเจน"
@@ -158,6 +161,8 @@ const items = [
     title:"พื้นลื่น พื้นเปียก หรือมีพรมที่อาจทำให้สะดุด",
     hint:"พบได้บ่อยในห้องน้ำ ห้องครัว และทางเข้าบ้าน",
     visuals:["💧 พื้นเปียก","🧶 พรมลื่น"],
+    beforeImage:"images/environment/before2.jpg",
+    afterImage:"images/environment/after2.jpg",
     advice:["เช็ดพื้นให้แห้งทันทีเมื่อเปียก","ใช้แผ่นกันลื่นในห้องน้ำและบริเวณที่เปียกน้ำ","ยึดพรมให้แน่นกับพื้นหรือนำพรมที่ลื่นและขอบม้วนออก"],
     bad:"พื้นเปียกหรือพรมเคลื่อนตัวง่าย เสี่ยงลื่นและสะดุด",
     good:"พื้นแห้ง มีแผ่นกันลื่น และยึดพรมแน่นกับพื้น"
@@ -166,6 +171,8 @@ const items = [
     title:"มีสิ่งของวางเกะกะหรือกีดขวางทางเดิน",
     hint:"เช่น รองเท้า กล่อง สายไฟ หรือเฟอร์นิเจอร์ยื่นออกมา",
     visuals:["📦 ของเกะกะ","🔌 สายไฟขวาง"],
+    beforeImage:"images/environment/before3.jpg",
+    afterImage:"images/environment/after3.jpg",
     advice:["เก็บสิ่งของและสายไฟออกจากทางเดิน","จัดเฟอร์นิเจอร์ให้มีช่องทางเดินกว้างและมองเห็นชัด","วางของใช้ประจำไว้ในจุดที่หยิบง่าย ไม่ต้องก้มหรือเอื้อมสูง"],
     bad:"มีรองเท้า กล่อง หรือสายไฟวางขวางทางเดิน",
     good:"ทางเดินโล่ง ของใช้ถูกจัดเก็บ และสายไฟชิดผนัง"
@@ -174,6 +181,8 @@ const items = [
     title:"แสงสว่างภายในบ้านไม่เพียงพอ",
     hint:"โดยเฉพาะทางเดิน บันได ห้องน้ำ และบริเวณเปลี่ยนระดับ",
     visuals:["🌙 จุดมืด","💡 ไฟไม่พอ"],
+    beforeImage:"images/environment/before4.jpg",
+    afterImage:"images/environment/after4.jpg",
     advice:["เพิ่มหลอดไฟให้สว่างเพียงพอและเปลี่ยนหลอดที่ชำรุด","ติดไฟบริเวณหัวเตียง ทางเดิน ห้องน้ำ และบันได","ลดแสงสะท้อนหรือเงามืดที่ทำให้มองระดับพื้นผิดพลาด"],
     bad:"ทางเดินหรือบันไดมืด มีเงาบัง มองพื้นต่างระดับไม่ชัด",
     good:"ติดไฟให้ทั่วถึง และเปิดไฟก่อนเดินทุกครั้ง"
@@ -182,6 +191,8 @@ const items = [
     title:"การเปิด–ปิดไฟไม่สะดวกหรืออยู่ไกลจากจุดใช้งาน",
     hint:"เช่น ต้องเดินในที่มืดก่อนถึงสวิตช์ไฟ",
     visuals:["🚪 สวิตช์ไกล","🌟 ไฟเซนเซอร์"],
+    beforeImage:"images/environment/before5.jpg",
+    afterImage:"images/environment/after5.jpg",
     advice:["ติดสวิตช์ใกล้ประตูและหัวเตียง","ใช้ไฟกลางคืนหรือไฟเซนเซอร์ตรวจจับการเคลื่อนไหว","เตรียมไฟฉายไว้ใกล้เตียงในตำแหน่งที่หยิบได้ง่าย"],
     bad:"ต้องลุกและเดินในที่มืดก่อนถึงสวิตช์ไฟ",
     good:"มีสวิตช์ใกล้มือหรือไฟเซนเซอร์เปิดอัตโนมัติ"
@@ -190,6 +201,8 @@ const items = [
     title:"ห้องน้ำไม่มีราวจับหรือมีพื้นลื่น",
     hint:"รวมถึงบริเวณโถสุขภัณฑ์และพื้นที่อาบน้ำ",
     visuals:["🚿 พื้นห้องน้ำ","🦾 ราวจับ"],
+    beforeImage:"images/environment/before6.jpg",
+    afterImage:"images/environment/after6.jpg",
     advice:["ติดราวจับที่มั่นคงบริเวณโถสุขภัณฑ์และพื้นที่อาบน้ำ","ใช้เก้าอี้อาบน้ำหรือฝักบัวแบบถือได้เมื่อจำเป็น","ไม่ใช้ราวแขวนผ้าหรืออ่างล้างหน้าแทนราวจับ"],
     bad:"พื้นลื่น ไม่มีราวจับ และต้องเกาะอ่างล้างหน้า",
     good:"มีราวจับมั่นคง แผ่นกันลื่น และที่นั่งอาบน้ำเมื่อจำเป็น"
@@ -198,6 +211,8 @@ const items = [
     title:"ห้องนอนหรือบริเวณข้างเตียงมีสิ่งกีดขวาง",
     hint:"ทางจากเตียงไปห้องน้ำควรโล่งและมีแสงสว่าง",
     visuals:["🛏️ ข้างเตียง","🚶 ทางเดิน"],
+    beforeImage:"images/environment/before7.jpg",
+    afterImage:"images/environment/after7.jpg",
     advice:["จัดทางเดินจากเตียงไปประตูและห้องน้ำให้โล่ง","วางโทรศัพท์ แว่นตา กริ่ง และอุปกรณ์ช่วยเดินให้อยู่ใกล้มือ","ใช้ไฟหัวเตียงหรือไฟกลางคืนที่เปิดได้ก่อนลุกจากเตียง"],
     bad:"ของใช้วางรอบเตียง ทางเดินแคบ และไม่มีไฟหัวเตียง",
     good:"ข้างเตียงโล่ง มีไฟและของใช้จำเป็นอยู่ในระยะเอื้อม"
@@ -206,6 +221,8 @@ const items = [
     title:"เตียงสูงหรือต่ำเกินไปสำหรับผู้สูงอายุ",
     hint:"เมื่อนั่งขอบเตียงแล้วควรวางเท้าราบกับพื้นได้อย่างมั่นคง",
     visuals:["⬆️ สูงเกิน","⬇️ ต่ำเกิน"],
+    beforeImage:"images/environment/before8.jpg",
+    afterImage:"images/environment/after8.jpg",
     advice:["ปรับความสูงให้ผู้สูงอายุนั่งขอบเตียงแล้วเข่าใกล้มุมฉากและฝ่าเท้าวางราบกับพื้น","หลีกเลี่ยงที่นอนนุ่มหรือยุบตัวมากจนลุกยาก","ก่อนลุกให้ค่อย ๆ นั่งห้อยขา สังเกตอาการเวียนศีรษะ แล้วจึงยืน"],
     bad:"นั่งแล้วเท้าลอย หรือเตียงต่ำจนต้องออกแรงลุกมาก",
     good:"เมื่อนั่งขอบเตียง เข่าใกล้มุมฉากและฝ่าเท้าวางราบกับพื้น"
@@ -214,6 +231,8 @@ const items = [
     title:"บันไดหรือพื้นต่างระดับไม่มีราวจับและเครื่องหมายที่ชัดเจน",
     hint:"ขอบขั้นบันไดควรมองเห็นง่ายและไม่มีของวางกีดขวาง",
     visuals:["🪜 ไม่มีราว","🟨 แถบสีขอบขั้น"],
+    beforeImage:"images/environment/before9.jpg",
+    afterImage:"images/environment/after9.jpg",
     advice:["ติดราวจับที่มั่นคงอย่างน้อยหนึ่งด้านและใช้ทุกครั้ง","ติดแถบสีตัดกันหรือแถบกันลื่นที่ขอบขั้น","เปิดไฟก่อนขึ้นลงบันไดและไม่ถือของจนบดบังการมองเห็น"],
     bad:"ขอบขั้นสีเดียวกับพื้น ไม่มีราวจับ และแสงไม่พอ",
     good:"มีราวจับ แถบสีตัดกัน และไฟส่องสว่างตลอดทาง"
@@ -222,6 +241,8 @@ const items = [
     title:"อุปกรณ์ช่วยเดินไม่เหมาะสม ชำรุด หรือวางไม่พร้อมใช้",
     hint:"เช่น ไม้เท้า Walker หรือไม้ค้ำยันสูงไม่พอดี ยางรองสึก",
     visuals:["🦯 ไม้เท้า","🦿 Walker"],
+    beforeImage:"images/environment/before10.jpg",
+    afterImage:"images/environment/after10.jpg",
     advice:["ให้บุคลากรสุขภาพช่วยปรับความสูงและแนะนำวิธีใช้ที่ถูกต้อง","ตรวจยางรอง ปลายไม้ ล้อ และเบรกเป็นประจำ","วางอุปกรณ์ในตำแหน่งที่หยิบถึงก่อนยืน และไม่ใช้เฟอร์นิเจอร์แทนอุปกรณ์ช่วยเดิน"],
     bad:"อุปกรณ์สูงไม่พอดี ยางรองสึก หรือวางไกลจากจุดลุก",
     good:"ปรับความสูงพอดี อุปกรณ์สมบูรณ์ และวางพร้อมใช้ใกล้ตัว"
@@ -262,6 +283,8 @@ document.addEventListener("click",(e)=>{
   if(!btn)return;
   const item=items[Number(btn.dataset.i)];
   document.getElementById("modalTitle").textContent=item.title;
+  document.getElementById("badImage").src=item.beforeImage;
+  document.getElementById("goodImage").src=item.afterImage;
   document.getElementById("badText").textContent=item.bad;
   document.getElementById("goodText").textContent=item.good;
   modal.classList.add("show");
