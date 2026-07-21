@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ข้อมูลผู้สูงอายุ | FallGuard+</title>
+<title>ข้อมูลผู้รับบริการ | FallGuard+</title>
 
 <link rel="stylesheet" href="style.css">
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+*{box-sizing:border-box}
+
 body{
     margin:0;
     background:#f5fbff;
@@ -33,6 +35,7 @@ body{
 .elderly-header p{
     margin:0;
     font-size:20px;
+    line-height:1.6;
 }
 
 .elderly-container{
@@ -57,20 +60,39 @@ body{
     font-size:27px;
 }
 
+.privacy-note{
+    margin:0 0 22px;
+    padding:15px 17px;
+    border-radius:16px;
+    background:#eef9ff;
+    color:#315c70;
+    font-size:17px;
+    line-height:1.65;
+    border:1px solid #cfeaf6;
+}
+
 .form-group{
     margin-bottom:20px;
 }
 
-.form-group label{
+.form-group > label{
     display:block;
     font-size:21px;
     font-weight:600;
     margin-bottom:9px;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea{
+.field-note{
+    display:block;
+    margin:7px 2px 0;
+    color:#607d8b;
+    font-size:16px;
+    line-height:1.5;
+}
+
+.form-group > input,
+.form-group > select,
+.form-group > textarea{
     width:100%;
     min-height:58px;
     border:2px solid #cfe9f5;
@@ -84,6 +106,71 @@ body{
 .form-group textarea{
     min-height:100px;
     resize:vertical;
+}
+
+/* แก้ช่องโรคประจำตัวไม่ให้ checkbox ถูกยืดเต็มหน้าจอ */
+.disease-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 12px;
+    margin-top:6px;
+}
+
+.disease-option{
+    display:flex !important;
+    align-items:center;
+    gap:10px;
+    margin:0 !important;
+    padding:12px 13px;
+    min-height:52px;
+    border:2px solid #e1f0f6;
+    border-radius:14px;
+    background:#fbfeff;
+    font-size:18px !important;
+    font-weight:500 !important;
+    line-height:1.45;
+    cursor:pointer;
+}
+
+.disease-option:hover{
+    border-color:#9edcf2;
+    background:#f4fbff;
+}
+
+.disease-option input[type="checkbox"]{
+    appearance:auto;
+    -webkit-appearance:checkbox;
+    width:22px !important;
+    height:22px !important;
+    min-height:0 !important;
+    flex:0 0 22px;
+    margin:0;
+    padding:0;
+    accent-color:#39c99b;
+    cursor:pointer;
+}
+
+.other-disease-row{
+    grid-column:1/-1;
+}
+
+#otherDiseaseText{
+    grid-column:1/-1;
+    width:100%;
+    min-height:56px;
+    margin-top:0;
+    border:2px solid #cfe9f5;
+    border-radius:16px;
+    padding:13px 15px;
+    font-family:"Prompt",sans-serif;
+    font-size:19px;
+    background:#fff;
+}
+
+#otherDiseaseText:disabled{
+    background:#f1f5f7;
+    color:#8a9ba3;
+    cursor:not-allowed;
 }
 
 .save-button,
@@ -110,6 +197,14 @@ body{
 
 .home-button{
     background:#258fc0;
+}
+
+.storage-note{
+    margin:13px 5px 0;
+    text-align:center;
+    color:#607d8b;
+    font-size:15px;
+    line-height:1.55;
 }
 
 .form-message{
@@ -226,11 +321,6 @@ body{
     margin-bottom:20px;
 }
 
-@media(max-width:600px){
-    .card-actions{grid-template-columns:1fr 1fr}
-    .delete-button{grid-column:1/-1}
-}
-
 .assess-button,
 .delete-button{
     min-height:52px;
@@ -276,6 +366,17 @@ body{
     display:block;
     margin-top:20px;
 }
+
+@media(max-width:600px){
+    .elderly-header h1{font-size:25px}
+    .elderly-header p{font-size:17px}
+    .form-card,.list-section{padding:19px}
+    .form-card h2,.list-section h2{font-size:24px}
+    .disease-list{grid-template-columns:1fr}
+    .other-disease-row,#otherDiseaseText{grid-column:auto}
+    .card-actions{grid-template-columns:1fr 1fr}
+    .delete-button{grid-column:1/-1}
+}
 </style>
 </head>
 
@@ -286,31 +387,39 @@ body{
 
     <h1>📋 เลือกรายชื่อเพื่อดูประวัติการประเมิน</h1>
 
-    <p>ครั้งแรกกรุณาเพิ่มข้อมูลผู้สูงอายุก่อน จากนั้นเลือกประเมินหรือดูประวัติ</p>
+    <p>สำหรับผู้สูงอายุอายุ 60 ปีขึ้นไป ครั้งแรกกรุณาเพิ่มข้อมูลผู้รับบริการก่อน จากนั้นเลือกประเมินหรือดูประวัติ</p>
 </header>
 
 <main class="elderly-container">
-<section class="list-section">
-        <h2>📋 เลือกรายชื่อผู้สูงอายุ</h2>
+    <section class="list-section">
+        <h2>📋 เลือกรายชื่อผู้รับบริการ</h2>
 
         <div id="elderlyList">
             <div class="loading-message">กำลังโหลดข้อมูล...</div>
         </div>
     </section>
 
+    <button id="toggleFormButton" class="save-button add-toggle" type="button">
+        ➕ เพิ่มข้อมูลผู้รับบริการ
+    </button>
 
-    <button id="toggleFormButton" class="save-button add-toggle" type="button">➕ เพิ่มข้อมูลผู้สูงอายุ</button>
-<section class="form-card" id="addElderlySection" style="display:none;">
-        <h2>➕ เพิ่มผู้สูงอายุ</h2>
+    <section class="form-card" id="addElderlySection" style="display:none;">
+        <h2>➕ เพิ่มผู้รับบริการ</h2>
+
+        <p class="privacy-note">
+            🔒 กรุณาใช้นามสมมติหรือชื่อเล่นแทนชื่อ–นามสกุลจริง
+            ข้อมูลนี้ใช้เพื่อประเมินและติดตามความเสี่ยงต่อการพลัดตกหกล้มเท่านั้น
+        </p>
 
         <form id="elderlyForm">
 
             <div class="form-group">
-                <label for="name">ชื่อ–นามสกุล</label>
+                <label for="name">ชื่อผู้รับบริการ (นามสมมติ)</label>
                 <input
                     id="name"
                     type="text"
-                    placeholder="กรอกชื่อ–นามสกุล"
+                    placeholder="กรอกชื่อเล่นหรือนามสมมติ"
+                    autocomplete="off"
                     required
                 >
             </div>
@@ -322,9 +431,11 @@ body{
                     type="number"
                     min="60"
                     max="120"
-                    placeholder="กรอกอายุ"
+                    placeholder="กรอกอายุ 60 ปีขึ้นไป"
+                    inputmode="numeric"
                     required
                 >
+                <span class="field-note">แบบประเมินนี้สำหรับผู้สูงอายุอายุ 60 ปีขึ้นไป</span>
             </div>
 
             <div class="form-group">
@@ -336,61 +447,82 @@ body{
                 </select>
             </div>
 
-           <div class="form-group">
-
-<label>โรคประจำตัว (เลือกได้หลายข้อ)</label>
-
-<div class="disease-list">
-
-<label><input type="checkbox" name="disease" value="ไม่มีโรคประจำตัว"> ไม่มีโรคประจำตัว</label><br>
-
-<label><input type="checkbox" name="disease" value="ความดันโลหิตสูง"> ความดันโลหิตสูง</label><br>
-
-<label><input type="checkbox" name="disease" value="เบาหวาน"> เบาหวาน</label><br>
-
-<label><input type="checkbox" name="disease" value="โรคหัวใจ"> โรคหัวใจ</label><br>
-
-<label><input type="checkbox" name="disease" value="โรคหลอดเลือดสมอง"> โรคหลอดเลือดสมอง (Stroke)</label><br>
-
-<label><input type="checkbox" name="disease" value="ข้อเข่าเสื่อม"> ข้อเข่าเสื่อม</label><br>
-
-<label><input type="checkbox" name="disease" value="พาร์กินสัน"> พาร์กินสัน</label><br>
-
-<label><input type="checkbox" name="disease" value="กระดูกพรุน"> กระดูกพรุน</label><br>
-
-<label><input type="checkbox" name="disease" value="สายตาพร่ามัว / ต้อกระจก"> สายตาพร่ามัว / ต้อกระจก</label><br>
-
-<label><input type="checkbox" id="otherDisease"> อื่น ๆ</label>
-
-<input
-type="text"
-id="otherDiseaseText"
-placeholder="ระบุโรค"
-style="margin-top:10px;">
-
-</div>
-
-</div>
-
             <div class="form-group">
-                <label for="caregiver">ชื่อผู้ดูแล</label>
-                <input
-                    id="caregiver"
-                    type="text"
-                    placeholder="กรอกชื่อผู้ดูแล (ถ้ามี)"
-                >
+                <label>โรคประจำตัว (เลือกได้หลายข้อ)</label>
+
+                <div class="disease-list">
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="ไม่มีโรคประจำตัว">
+                        <span>ไม่มีโรคประจำตัว</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="ความดันโลหิตสูง">
+                        <span>ความดันโลหิตสูง</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="เบาหวาน">
+                        <span>เบาหวาน</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="โรคหัวใจ">
+                        <span>โรคหัวใจ</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="โรคหลอดเลือดสมอง">
+                        <span>โรคหลอดเลือดสมอง (Stroke)</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="ข้อเข่าเสื่อม">
+                        <span>ข้อเข่าเสื่อม</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="พาร์กินสัน">
+                        <span>พาร์กินสัน</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="กระดูกพรุน">
+                        <span>กระดูกพรุน</span>
+                    </label>
+
+                    <label class="disease-option">
+                        <input type="checkbox" name="disease" value="สายตาพร่ามัว / ต้อกระจก">
+                        <span>สายตาพร่ามัว / ต้อกระจก</span>
+                    </label>
+
+                    <label class="disease-option other-disease-row">
+                        <input type="checkbox" id="otherDisease">
+                        <span>อื่น ๆ</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="otherDiseaseText"
+                        placeholder="ระบุโรคประจำตัวอื่น ๆ"
+                        disabled
+                    >
+                </div>
             </div>
 
-            <button
-                id="saveButton"
-                class="save-button"
-                type="submit"
-            >
+            <!-- คง input ซ่อนไว้เพื่อไม่ให้ elderly.js เดิมเกิดข้อผิดพลาด
+                 แต่ไม่มีการแสดงหรือเก็บชื่อผู้ดูแลจากผู้ใช้ -->
+            <input id="caregiver" type="hidden" value="">
+
+            <button id="saveButton" class="save-button" type="submit">
                 บันทึกข้อมูล
             </button>
 
-            <div id="formMessage" class="form-message"></div>
+            <p class="storage-note">
+                ข้อมูลจะถูกใช้ภายในแอปเพื่อการประเมินและติดตามผลเท่านั้น
+            </p>
 
+            <div id="formMessage" class="form-message"></div>
         </form>
     </section>
 
@@ -399,18 +531,68 @@ style="margin-top:10px;">
             กลับหน้าหลัก
         </button>
     </a>
-
 </main>
 
 <script>
-document.getElementById("toggleFormButton").addEventListener("click", function(){
-    const section = document.getElementById("addElderlySection");
-    const isHidden = section.style.display === "none";
-    section.style.display = isHidden ? "block" : "none";
-    this.textContent = isHidden ? "✕ ปิดแบบฟอร์ม" : "➕ เพิ่มข้อมูลผู้สูงอายุ";
-    if (isHidden) section.scrollIntoView({behavior:"smooth", block:"start"});
+const toggleFormButton = document.getElementById("toggleFormButton");
+const addElderlySection = document.getElementById("addElderlySection");
+const otherDisease = document.getElementById("otherDisease");
+const otherDiseaseText = document.getElementById("otherDiseaseText");
+const noDiseaseCheckbox = document.querySelector(
+    'input[name="disease"][value="ไม่มีโรคประจำตัว"]'
+);
+const diseaseCheckboxes = [
+    ...document.querySelectorAll('input[name="disease"]')
+];
+
+toggleFormButton.addEventListener("click", function(){
+    const isHidden = addElderlySection.style.display === "none";
+    addElderlySection.style.display = isHidden ? "block" : "none";
+    this.textContent = isHidden
+        ? "✕ ปิดแบบฟอร์ม"
+        : "➕ เพิ่มข้อมูลผู้รับบริการ";
+
+    if (isHidden) {
+        addElderlySection.scrollIntoView({
+            behavior:"smooth",
+            block:"start"
+        });
+    }
+});
+
+otherDisease.addEventListener("change", function(){
+    otherDiseaseText.disabled = !this.checked;
+
+    if (this.checked) {
+        otherDiseaseText.focus();
+    } else {
+        otherDiseaseText.value = "";
+    }
+});
+
+/* เมื่อเลือก “ไม่มีโรคประจำตัว” จะยกเลิกตัวเลือกโรคอื่น */
+noDiseaseCheckbox.addEventListener("change", function(){
+    if (!this.checked) return;
+
+    diseaseCheckboxes.forEach((checkbox) => {
+        if (checkbox !== this) checkbox.checked = false;
+    });
+
+    otherDisease.checked = false;
+    otherDiseaseText.value = "";
+    otherDiseaseText.disabled = true;
+});
+
+/* เมื่อเลือกโรคข้ออื่น จะยกเลิก “ไม่มีโรคประจำตัว” */
+[...diseaseCheckboxes, otherDisease].forEach((checkbox) => {
+    if (checkbox === noDiseaseCheckbox) return;
+
+    checkbox.addEventListener("change", function(){
+        if (this.checked) noDiseaseCheckbox.checked = false;
+    });
 });
 </script>
+
 <script type="module" src="elderly.js"></script>
 
 </body>
