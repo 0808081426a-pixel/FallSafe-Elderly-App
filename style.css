@@ -693,3 +693,15 @@ font-weight:700;
     border-radius:16px;
     background:#000;
 }
+    @media (max-width:600px){
+
+    .guide-video video{
+        display:block;
+        width:65%;
+        max-width:220px;
+        height:auto;
+        margin:0 auto;
+        border-radius:16px;
+    }
+
+}
