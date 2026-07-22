@@ -688,20 +688,22 @@ font-weight:700;
 .guide-video video{
     display:block;
     width:100%;
-    max-width:320px;
-    height:180px;      /* กำหนดความสูง */
+    max-width:300px;
+    aspect-ratio:9 / 16;   /* แนวตั้ง */
+    height:auto;
+    max-height:420px;
     object-fit:contain;
     margin:0 auto;
     border-radius:16px;
     background:#000;
 }
 
+
    @media (max-width:600px){
 
     .guide-video video{
-        width:90%;
-        max-width:280px;
-        height:160px;
+        max-width:240px;
+        max-height:340px;
     }
 
 }
