@@ -688,22 +688,24 @@ font-weight:700;
 .guide-video video{
     display:block;
     width:100%;
-    max-width:520px;
+    max-width:320px;
+    height:180px;      /* กำหนดความสูง */
+    object-fit:contain;
     margin:0 auto;
     border-radius:16px;
     background:#000;
 }
+
    @media (max-width:600px){
 
     .guide-video video{
-        display:block;
-        width:60vw;      /* 90% ของความกว้างหน้าจอ */
-        max-width:220px; /* ไม่เกิน 320px */
-        height:auto;
-        margin:0 auto;
-        border-radius:16px;
+        width:90%;
+        max-width:280px;
+        height:160px;
     }
 
 }
+
+
 
 
