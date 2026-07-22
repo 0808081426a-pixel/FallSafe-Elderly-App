@@ -819,3 +819,109 @@ font-weight:700;
     }
 }
 
+@media (max-width:600px){
+
+    .guide-modal{
+        align-items:flex-start;
+        padding:8px;
+        overflow-y:auto;
+    }
+
+    .guide-box{
+        width:96vw;
+        max-height:94vh;
+        overflow-y:auto;
+        border-radius:20px;
+    }
+
+    .guide-head{
+        padding:14px 42px 12px 14px;
+        border-radius:20px 20px 0 0;
+    }
+
+    .guide-head .guide-emoji{
+        font-size:34px;
+    }
+
+    .guide-head h2{
+        font-size:20px;
+        margin:3px 0;
+        line-height:1.3;
+    }
+
+    .guide-head p{
+        font-size:13px;
+        margin:0;
+    }
+
+    .guide-content{
+        padding:12px;
+    }
+
+    .guide-steps{
+        grid-template-columns:1fr 1fr;
+        gap:7px;
+    }
+
+    .guide-step{
+        grid-template-columns:34px 1fr;
+        gap:7px;
+        padding:8px;
+        border-radius:13px;
+    }
+
+    .guide-number{
+        width:34px;
+        height:34px;
+        font-size:15px;
+    }
+
+    .guide-step h3{
+        font-size:13px;
+        margin:0;
+    }
+
+    .guide-step p{
+        font-size:11px;
+        line-height:1.3;
+    }
+
+    .guide-video{
+        margin-top:12px;
+    }
+
+    .guide-video h3{
+        font-size:17px;
+        margin:0 0 4px;
+    }
+
+    .guide-video-text{
+        font-size:12px;
+        margin:0 0 8px;
+    }
+
+    .guide-video video{
+        display:block;
+        width:150px;
+        height:auto;
+        aspect-ratio:9/16;
+        object-fit:contain;
+        margin:0 auto;
+        border-radius:12px;
+        background:#000;
+    }
+
+    .guide-actions{
+        margin-top:12px;
+    }
+
+    .guide-start{
+        min-height:46px;
+        font-size:17px;
+    }
+
+    .guide-check{
+        font-size:12px;
+        margin-top:8px;
+    }
+}
