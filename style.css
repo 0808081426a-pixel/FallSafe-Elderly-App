@@ -697,8 +697,8 @@ font-weight:700;
 
     .guide-video video{
         display:block;
-        width:90vw;      /* 90% ของความกว้างหน้าจอ */
-        max-width:320px; /* ไม่เกิน 320px */
+        width:60vw;      /* 90% ของความกว้างหน้าจอ */
+        max-width:220px; /* ไม่เกิน 320px */
         height:auto;
         margin:0 auto;
         border-radius:16px;
