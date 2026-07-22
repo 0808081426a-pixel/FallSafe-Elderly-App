@@ -123,12 +123,7 @@
       <h2 id="guideTitle">ยินดีต้อนรับสู่ FallGuard+</h2>
       <p>ใช้งานง่าย เพียงทำตาม 4 ขั้นตอน</p>
     </div>
-<div class="guide-video">
-    <video id="guideVideo" controls playsinline preload="metadata">
-        <source src="videos/guide.mp4" type="video/mp4">
-        เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ
-    </video>
-</div>
+
     <div class="guide-content">
       <div class="guide-steps">
         <div class="guide-step">
@@ -148,7 +143,17 @@
           <div><h3>ดูผลและคำแนะนำ</h3><p>ดูระดับความเสี่ยงและแนวทางป้องกัน</p></div>
         </div>
       </div>
+<div class="guide-video">
 
+    <h3>🎥 วิดีโอแนะนำการใช้งาน</h3>
+<p class="guide-video-text">รับชมวิธีการใช้งานแอปก่อนเริ่มใช้งาน</p>
+
+    <video id="guideVideo" controls playsinline preload="metadata">
+        <source src="videos/guide.mp4" type="video/mp4">
+        เบราว์เซอร์นี้ไม่รองรับการเล่นวิดีโอ
+    </video>
+
+</div>
       <div class="guide-actions">
         <button class="guide-start" id="guideStart" type="button">เริ่มใช้งาน 🚀</button>
         <label class="guide-check">
@@ -172,11 +177,19 @@ function showGuide(){
   document.body.style.overflow = "hidden";
 }
 function hideGuideModal(){
-  if(hideGuide.checked){
-    localStorage.setItem("fallguardGuideHidden", "yes");
-  }
-  guideModal.classList.remove("open");
-  document.body.style.overflow = "";
+
+    const video = document.getElementById("guideVideo");
+    if(video){
+        video.pause();
+        video.currentTime = 0;
+    }
+
+    if(hideGuide.checked){
+        localStorage.setItem("fallguardGuideHidden","yes");
+    }
+
+    guideModal.classList.remove("open");
+    document.body.style.overflow="";
 }
 openGuide.addEventListener("click", showGuide);
 closeGuide.addEventListener("click", hideGuideModal);
